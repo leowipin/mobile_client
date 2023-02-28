@@ -1,0 +1,35 @@
+<ion-content>
+  <div>
+    <ion-buttons slot="start">
+      <ion-img src="assets/img/retroceder.png" (click)="regresar()"></ion-img>
+    </ion-buttons>
+    <div class="tope">
+      <span>
+      </span>
+      <div class="logosepro">
+        <ion-img style="width: 160px; height: 150spx;" src="assets/img/logosepro.png"></ion-img>
+      </div>
+    </div>
+  </div>
+  <div class="calificacion">
+    <ion-label>Tu opinión es importante</ion-label>
+    <ion-img src="assets/img/satisfaccionCliente.png"></ion-img>
+    <ion-label style="font-family:hp265;">
+      <p>Califica tu satisfacción con el </p>
+    </ion-label>
+    <ion-label style="font-family:hp265; margin-bottom: 1em;">
+      <p>el servicio recibido</p>
+    </ion-label>
+    <div class="estrellas">
+      <ion-icon (click)="star(1)" id="1" name="star-outline"></ion-icon>
+      <ion-icon (click)="star(2)" id="2" name="star-outline"></ion-icon>
+      <ion-icon (click)="star(3)" id="3" name="star-outline"></ion-icon>
+      <ion-icon (click)="star(4)" id="4" name="star-outline"></ion-icon>
+      <ion-icon (click)="star(5)" id="5" name="star-outline"></ion-icon>
+    </div>
+    <label class="comentarios">
+      <textarea placeholder="Ingrese su comentario del servicio recibido..."></textarea>
+    </label>
+    <ion-button (click)="seleccionar()" color="success">Calificar</ion-button>
+  </div>
+</ion-content>

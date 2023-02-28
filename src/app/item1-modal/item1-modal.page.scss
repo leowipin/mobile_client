@@ -1,0 +1,56 @@
+ion-content{
+    --background: none;
+    background-image: url("../../assets/img/rayasbottom.png");
+    background-position:bottom;
+    background-repeat: no-repeat; 
+    background-size: 100%;
+    margin-bottom: 50%;
+  }
+ion-buttons{
+    margin-left: 20px;
+    margin-top: 14px;
+    max-width: 40px;
+    ion-img{
+        padding: 2px;
+        width: 60px;
+        opacity: 0.6;
+    }
+}
+
+.tope span {
+    width: 100%;
+    position: absolute;
+    background-color: #aaafb4;
+    height: 26px;
+    top: 62px;
+    z-index: 1;
+}
+
+.logosepro ion-img {
+    position: absolute;
+    top: 18px;
+    left: auto;
+    z-index: 2;
+}
+
+div.logosepro {
+    display: flex;
+    justify-content: center;
+}
+.img-logo{
+    max-width: 70%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 6rem;
+  }
+  .boxed {
+    text-align:justify;
+    max-height: 25rem;
+    max-width: 80%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3rem;
+    overflow: scroll;
+    }

@@ -1,0 +1,40 @@
+<ion-content class="ion-no-padding background ">
+
+  <ion-row class="row logo">
+    <div>
+      <img src="../../assets/app sepro vectores-30.png" class="img-logo">
+    </div>
+  </ion-row>
+
+  <div class="datosinput item-background-color">
+    <form [formGroup]="ionicForm" (ngSubmit)="submitForm()" validate>
+
+      <ion-list class="datos">
+
+        
+        <div class="itemdatos">
+          <ion-label class="centrar-text">Ingresar código de 4 dígitos:</ion-label>
+          <ion-item lines="full">
+            
+            <ion-input  inputmode="numeric" formControlName="mobile" input type="tel " maxlength="4" required ></ion-input>
+          </ion-item>
+          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.mobile.errors?.required">
+            Es necesario un pin de 4 dígitos.
+          </span>
+          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.mobile.errors?.pattern">
+            Ingrese un pin valido.
+          </span>
+        </div>
+
+        <div class="botones">
+          <ion-col>
+            <button ion-button class ="guardar">Aceptar</button>
+          </ion-col>
+        </div>
+      </ion-list>
+    </form>
+    <div class="container-omitir">
+      <a [routerLink]="['/login']">Cambiar número ingresado</a>
+    </div>
+  </div>
+</ion-content>

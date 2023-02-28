@@ -1,0 +1,106 @@
+ion-content{
+  --background: none;
+  background-image: url("../../assets/bg-gris.png");
+  background-position: center; 
+  background-repeat: no-repeat; 
+  background-size: cover; 
+}
+.logo{
+  margin-bottom: 5rem;
+  margin-top: 2rem;
+}
+ion-text{
+  font-family:"hp265";
+}
+.img-logo{
+  max-width: 70%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 6rem;
+}
+
+/*ion-input{
+  background-color: white;
+  color: black;
+  border-radius: 25rem;
+  width: 75%;
+  margin-left: 3rem;
+}
+*/
+ion-button{
+  font-family:'hp556';
+  font-weight: 3rem;
+  --background: none;
+  background-color: #3da630;
+  width: 15rem;
+  border-radius: 25rem;
+  margin-top: 10rem;
+  margin-left: 3rem;
+}
+.datos{
+  margin-top: 7rem;
+  .itemdatos{
+      margin-top: 5%;
+      max-width: 75%;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+  }
+}
+.centrar-text{
+  display: flex;
+  justify-content: center
+}
+.error{
+  font-size: x-small;
+}
+.botones button{
+  text-align:center;
+  width: 10rem;
+  height: 2.3rem;
+  border-radius: 60px ;
+  background-color:#3887bd;
+  color:#ffffff;
+  //margin-right: 5%;
+  justify-content: space-between;
+  font-family:'hp265';
+  font-size: 1.2rem;
+
+}
+.botones {
+  margin-top: 35%;
+  justify-content: space-between;
+  text-align:center;
+  .guardar{
+      background-color:#3887bd;
+      width: 65%;
+      padding: 0;
+  }
+}
+.container-omitir{
+  justify-content: space-between;
+  text-align:center;
+  margin-top: 5%;
+  font-size: 0.7rem;
+}
+a{
+  color: white;
+  text-decoration: none;
+}
+.item-background-color{
+  --ion-item-background:transparent;
+}
+ion-input {
+  background-color: #ffffff;
+  border-radius: 25rem;
+  justify-content: space-between;
+  text-align:center;
+}
+ion-label{
+  justify-content: space-between;
+  text-align:center;
+  color: #ffffff;
+  font-family:'hp265';
+  font-size: 1.1rem;
+}

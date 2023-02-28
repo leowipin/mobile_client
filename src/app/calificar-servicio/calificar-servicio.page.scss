@@ -1,0 +1,75 @@
+ion-buttons {
+    margin-left: 20px;
+    margin-top: 14px;
+    max-width: 40px;
+    ion-img {
+        padding: 2px;
+        width: 60px;
+    }
+}
+
+.tope span {
+    width: 100%;
+    position: absolute;
+    background-color: #aaafb4;
+    height: 26px;
+    top: 62px;
+    z-index: 1;
+}
+
+.logosepro ion-img {
+    position: absolute;
+    top: 18px;
+    left: auto;
+    z-index: 2;
+}
+
+div.logosepro {
+    display: flex;
+    justify-content: center;
+}
+
+.calificacion {
+    width: 100%;
+    margin-top: 6rem;
+    display: flex;
+    flex-direction: column;
+    ion-img{
+        width: 80%;
+        margin: 0 auto;
+    }
+}
+
+.estrellas {
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    color: #aaafb4;
+}
+.comentarios{
+    padding-top: 6%;
+    display: flex;
+    justify-content: center;
+    
+
+}
+.comentarios textarea{
+    width: 15em;
+    height: 7em;
+    font-family: "hp265";
+    padding:2%;
+}
+ion-label{
+    font-family: "BebasBold";
+    font-size: 1.6em;
+    margin: 0 auto;
+    p{
+        font-size: 0.8em;
+    }
+}
+
+ion-button{
+    max-width: 30%;
+    margin: 0 auto;
+    margin-top: 2em;
+}

@@ -1,0 +1,51 @@
+<ion-content>
+
+  <div>
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-img src="assets/img/menuHamburguesa.png"></ion-img>
+      </ion-menu-button>
+    </ion-buttons>
+    <div class="tope">
+      <span>
+      </span>
+      <div class="logosepro">
+        <ion-img style="width: 160px; height: 150spx;" src="assets/img/logosepro.png"></ion-img>
+      </div>
+    </div>
+  </div>
+
+  <div class="sucursales">
+    <ion-list>
+
+      <ion-item>
+        <ion-thumbnail slot="start">
+        </ion-thumbnail>
+        <ion-label></ion-label>
+      </ion-item>
+
+      <ion-item (click)="irPaginaSucursal()">
+        <ion-thumbnail slot="start">
+          <img src="assets/img/sucursalesicono0.png">
+        </ion-thumbnail>
+        <ion-label style="font-family: BebasBold;">MATRIZ NORTE</ion-label>
+      </ion-item>
+
+      <ion-item (click)="irPaginaSucursal()">
+        <ion-thumbnail slot="start">
+          <img src="assets/img/sucursalesicono1.png">
+        </ion-thumbnail>
+        <ion-label style="font-family: BebasBold;">MATRIZ SUR</ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+  <a href="https://www.instagram.com/ingenieriadesoftware/">
+  <div class="creditos">
+    <ion-label> DESARROLLADO POR</ion-label>
+    <ion-img class="islogo" style="width: 4; height: 4;" src="../../assets/img/is.png"></ion-img>
+  </div>
+</a>
+  <div class="back">
+    <ion-img style="width: 10; height: 10;" src="../../assets/img/aguilarojafondo.png"></ion-img>
+  </div>
+</ion-content>

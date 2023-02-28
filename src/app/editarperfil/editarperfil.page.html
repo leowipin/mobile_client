@@ -1,0 +1,153 @@
+
+<ion-content [fullscreen]="true">
+  <div>
+    <ion-buttons slot="start">
+        <ion-img src="assets/img/retroceder.png" (click)="presentAlertEditar()"></ion-img>
+    </ion-buttons>
+    <div class="tope">
+      <span>
+      </span>
+      <div class="logosepro">
+        <ion-img style="width: 160px; height: 150spx;" src="assets/img/logosepro.png"></ion-img>
+      </div>
+    </div>
+  </div>
+
+  <div class="titulo">
+    <h4>EDITAR PERFIL</h4>
+  </div>
+
+  <div class="container">
+    <div class="outer"
+      [ngStyle]="{'background-image': 'url(' + photo + ')'}">
+        <div class="inner" (click)="openOptionSelection()">
+           <ion-icon name="camera" class="camera-icon"></ion-icon>
+        </div>
+     </div>
+  </div>
+
+	
+  <div class="datosinput">
+    <form [formGroup]="ionicForm" (ngSubmit)="submitForm()" validate>
+      <ion-list class="datos">
+        <div class="itemdatos">
+          <ion-label >Nombres</ion-label>
+        <ion-item lines="full">    
+          <ion-input formControlName="name" type="text" required></ion-input>
+        </ion-item>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.required">
+          Es necesario al menos un nombre.
+        </span>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.minlength">
+          Su nombre debe tener al menos 2 caracteres.
+        </span>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.pattern">
+          Ingrese un nombre válido.
+        </span>
+        </div>
+
+        <div class="itemdatos">
+          <ion-label>Apellidos</ion-label>
+          <ion-item lines="full">
+            <ion-input formControlName="lastname" type="text"></ion-input>
+          </ion-item>
+          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.lastname.errors?.required">
+            Es necesario al menos un apellido.
+          </span>
+          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.lastname.errors?.minlength">
+            Su apellido debe tener al menos 2 caracteres.
+          </span>
+          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.lastname.errors?.pattern">
+            Ingrese un apellido válido.
+          </span>
+        </div>
+        
+        <div class="itemdatos">
+          <ion-label>Cédula de identidad</ion-label>
+        <ion-item lines="full">
+          
+          <ion-input  formControlName="cedula" type="tel" maxlength="10" required ></ion-input>
+        </ion-item>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.cedula.errors?.required">
+          Es necesario ingresar su cédula de identidad.
+        </span>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.cedula.errors?.pattern">
+          Solo se permiten caracteres numéricos.
+        </span>
+        <span class="error ion-padding" *ngIf="ingresoCedula()">
+          Ingrese una cedula valida.
+        </span>
+        </div>
+        
+        <div class="itemdatos">
+          <ion-label>Número de celular</ion-label>
+          <ion-item lines="full">
+            
+            <ion-input formControlName="mobile" type="tel" minlength="10" maxlength="10" required inputmode="numeric" ></ion-input>
+          </ion-item>
+          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.mobile.errors?.required">
+            Es necesario un número de celular.
+          </span>
+          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.mobile.errors?.pattern">
+            Ingrese un número de celular valido.
+          </span>
+        </div>
+        
+        <div class="itemdatos">
+          <ion-label>Fecha de nacimiento</ion-label>
+          <ion-item lines="full">
+            <ion-input formControlName="bday" type="text" placeholder="AAAA-MM-DD"></ion-input>
+          </ion-item>
+          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.bday.errors?.required">
+            Ingrese su fecha de nacimiento
+          </span>
+          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.bday.errors?.pattern">
+            Ingrese una fecha válida
+          </span>
+        </div>
+        
+        <div class="itemdatos">
+          <ion-label>Dirección</ion-label>
+          <ion-item lines="full">
+            
+            <ion-input formControlName="direccion" type="text"></ion-input>
+          </ion-item>
+          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.direccion.errors?.required">
+            Es necesario que indique su dirección.
+          </span>
+          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.direccion.errors?.minlength">
+            Su nombre debe tener al menos 2 caracteres. 
+          </span> 
+        </div>
+        
+        <div class="itemdatos">
+          <ion-label >Email</ion-label>
+        <ion-item lines="full">
+          
+          <ion-input formControlName="email" type="email"></ion-input>
+        </ion-item>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.required">
+          Es necesario que escriba un correo.
+        </span>
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.pattern">
+          Por favor, ingrese un correo válido.
+        </span>
+        </div>
+        
+        <ion-row>
+          <div class="botones">
+          <ion-col>
+            <button ion-button class ="guardar"  >Guardar</button> 
+          </ion-col>
+
+
+          </div>
+        </ion-row>
+
+    </ion-list>
+    </form>
+  </div>
+
+  <script src= "app/scripts/validarcedula.js"></script>
+</ion-content>
+

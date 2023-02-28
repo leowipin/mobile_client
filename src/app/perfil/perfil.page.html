@@ -1,0 +1,74 @@
+
+
+<ion-content data-tap-disabled="true">
+  <div>
+    <ion-buttons slot="start">
+        <ion-img src="assets/img/retroceder.png" (click)="home()"></ion-img>
+    </ion-buttons>
+    <div class="tope">
+      <span>
+      </span>
+      <div class="logosepro">
+        <ion-img style="width: 160px; height: 150spx;" src="assets/img/logosepro.png"></ion-img>
+      </div>
+    </div>
+  </div>
+
+  <div class="titulo">
+    <h4>MI PERFIL</h4>
+  </div>
+
+  <span class="circle-grey">
+    <div class="logo">
+      <ion-img  [src]= "perfil" ></ion-img>
+    </div>
+  </span>
+
+  
+
+	<div class="datos2">
+    <ion-list>
+      <ion-label class= "fijo">Nombres</ion-label>
+        <ion-chip outline color="dark" disabled = true>
+          <ion-label>{{nombreur}}</ion-label>
+        </ion-chip>
+        
+        <ion-label class= "fijo">Apellidos</ion-label>
+        <ion-chip outline color="dark" disabled = true>
+          <ion-label>{{apellidour}}</ion-label>
+        </ion-chip>
+
+        <ion-label class= "fijo">Cédula de identidad</ion-label>
+        <ion-chip outline color="dark" disabled = true>
+          <ion-label>{{cedulaur}}</ion-label>
+        </ion-chip>
+
+        <ion-label class= "fijo">Número de celular</ion-label>
+        <ion-chip outline color="dark" disabled = true>
+          <ion-label>{{celularur}}</ion-label>
+        </ion-chip>
+
+        <ion-label class= "fijo">Fecha de nacimiento</ion-label>
+        <ion-chip outline color="dark" disabled = true>
+          <ion-label>{{fechanacimientour}}</ion-label>
+        </ion-chip>
+
+        <ion-label class= "fijo">Dirección</ion-label>
+        <ion-chip outline color="dark" disabled = true>
+          <ion-label>{{direccionur}}</ion-label>
+        </ion-chip>
+
+        <ion-label class= "fijo">Correo electrónico</ion-label>
+        <ion-chip outline color="dark" disabled = true>
+          <ion-label>{{emailur}}</ion-label>
+        </ion-chip>
+
+    </ion-list>
+    </div>
+
+
+  <div class="botones">
+      <button ion-button color="secondary" (click)="editar()">Editar</button>
+    </div>
+
+</ion-content>

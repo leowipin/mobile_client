@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar color="primary" class="buscador">
+    <ion-searchbar [(ngModel)]="autocomplete.input" (ionInput)="UpdateSearchResults()"
+      placeholder="Ingrese su dirección" (ionClear)="ClearAutocomplete()"></ion-searchbar>
+  </ion-toolbar>
+  <ion-list [hidden]="autocompleteItems.length == 0">
+    <ion-item *ngFor="let item of autocompleteItems" (click)="SelectSearchResult(item)">
+      {{ item.description }}
+    </ion-item>
+  </ion-list>
+</ion-header>
+
+<ion-content>
+  <div #map class="map"></div>
+
+  <ion-chip class="miubicacion" (click)="mylocation()">
+    <ion-label class="normal">Mi ubicación actual</ion-label>
+    <ion-label name="locate"></ion-label>
+  </ion-chip>
+  <ion-chip class="aceptar" (click)="aceptar()">
+    <ion-label class="normal">Aceptar</ion-label>
+    <ion-label name="checkmark"></ion-label>
+  </ion-chip>
+</ion-content>

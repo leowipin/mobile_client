@@ -1,0 +1,73 @@
+<ion-content>
+
+  <div>
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-img src="assets/img/menuHamburguesa.png"></ion-img>
+      </ion-menu-button>
+    </ion-buttons>
+    <div class="tope">
+      <span>
+      </span>
+      <div class="logosepro">
+        <ion-img style="width: 160px; height: 150spx;" src="assets/img/logosepro.png"></ion-img>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="datosperfilhome">
+    <ion-grid class= "gridperfil">
+      <ion-row>
+        <ion-col>
+        <div class="logo">
+          <ion-img  src="assets/img/perfilcliente.png"></ion-img>
+        </div>
+        </ion-col>
+        <ion-col class = "coldatosuser">
+          <ion-row>
+             <ion-label class="bienvenido">
+            BIENVENIDO (A)
+          </ion-label>
+          </ion-row>
+          <ion-row>
+            <ion-label class = "user">
+              {{nombreur}} {{apellidour}}
+          </ion-label>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+
+    <ion-list class="opcionesperfil" lines=full>
+      <ion-item button class="ingresoperfil" (click)="perfil()">
+        <ion-icon name="person-sharp"></ion-icon>
+        <ion-label>PERFIL</ion-label>
+      </ion-item>
+      <ion-item class="tarjetas">
+        <ion-icon name="card"></ion-icon>
+        <ion-label>MIS TARJETAS</ion-label>
+      </ion-item>
+      <ion-item class="politicasprivacidad">
+       
+        <ion-img src="assets/img/iconopoliticas.png"></ion-img> 
+     
+        <ion-label>POLÍTICAS DE PRIVACIDAD</ion-label>
+      
+      
+      
+      
+    </ion-item>
+   </ion-list>
+    
+    
+  </div>
+
+
+ 
+
+</ion-content>
+

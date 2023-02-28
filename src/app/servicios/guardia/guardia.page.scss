@@ -1,0 +1,199 @@
+ion-content{ 
+  --ion-background-color:#d8d6d9; 
+  font-family: hp556;
+}
+.front{
+z-index:2;
+position:absolute;
+
+height: 100%;
+width: 100%;
+
+}
+.back{
+position: absolute;
+text-align: buttom;
+z-index:1;
+margin-top: 130%;
+margin-bottom: 0;
+margin-left: 0;
+margin-right: 0;
+}
+
+
+.regresar ion-img{
+  margin-top: 5%;
+  margin-left: 5%;
+  width: 2.3em;
+  height: 2.3em;
+  
+}
+
+.titulo h1{
+  margin: 1rem;
+  padding: 0;
+  border: 0 ;
+  text-align: center;
+  font-weight: bold;
+  color:#828181;
+  font-size: 200%;
+  max-width:650px;
+	margin-left: 20%;
+  margin-right: 20%;
+ 
+}
+.logo ion-img{
+   display:block;
+   margin:auto;
+}
+.datos{
+  margin: 1rem;
+  padding: 0.5rem 3.5rem 0.5rem 3.5rem;
+  border: 2px ;
+  
+}
+
+.seleccion ion-item {
+  --ion-background-color: #ffffff;
+  text-align: center;
+  border-radius: 60px;
+  width: 100%;
+  height: 2.3rem;
+  margin: 0%;
+}
+
+.seleccion ion-icon {
+  margin-right: 0%;
+  top: 0.3em;
+  position: absolute;
+  margin-left: 80%;
+  color: black;
+}
+
+.cantidad-guardias{
+    margin: 0rem;
+    padding: 0.5rem 3.5rem 0.5rem 3.5rem;
+    border: 0px ;
+    
+
+}
+//top rigth bottom left
+
+.solicitar-servicio{
+    margin: 0rem;
+    padding: 1.5rem 3.5rem 0.5rem 3.5rem;
+    border: 0px ;
+}
+
+.dat ion-label{
+
+  margin-left: 5%;
+  color:#828181;
+  font-size: 90%;
+  //opacity: 0.50;
+}
+ion-datetime {
+  height: auto;
+  width: auto;
+
+  
+}
+
+ion-modal {
+  --width: 290px;
+  --height: 460px;
+  --border-radius: 8px;
+}
+
+ion-modal ion-datetime {
+  height: 460px;
+}
+.seleccion ion-label{
+  text-align: center;
+  margin-bottom: 1.5%;
+  margin-top: 0%;
+}
+.horaval{
+  --width: 290px;
+  --height: 200px;
+  font-weight: 500;
+}
+
+
+.solicitar-servicio button{
+  text-align:center;
+  margin-left: 0rem;
+  width: 15rem;
+  height: 2.8rem;
+  border-radius: 60px ;
+  background-color:#3da631;
+  color:#ffffff;
+  font-size: 120%;
+}
+.cancelar-servicio button{
+  text-align:center;
+  margin-left: 0rem;
+  width: 15rem;
+  height: 2.8rem;
+  border-radius: 60px ;
+  background-color:#fc5759;
+  color:#ffffff;
+  font-size: 120%;
+}
+
+.cantidad-guardias .cantidad .decremento {
+  color:#e70808;
+  font-size: 23px;
+}
+.cantidad-guardias .cantidad .aumento {
+  color:#0a0db3;
+  font-size: 23px;
+}
+.cantidad-guardias .cantidad ion-label{
+  background-color:#ffffff;
+  display: flex;
+  text-align: center;
+  border-radius: 60px ;
+  width: 3rem;
+  height: 1.5rem;
+  padding: 0rem 2.5rem 0rem 1.8rem;
+}
+.cantidad-guardias ion-label{
+  color:#828181;
+}
+.cantidad-guardias .cantidad {
+  
+  display: flex;
+  text-align: center;
+
+}
+
+.mapa{
+  margin: 0.5rem;
+  padding: 0.5rem 3.5rem 0.5rem 3.5rem;
+  border: 0px;
+  display: flex;
+  margin-bottom: 1%;
+}
+
+.mapa ion-label{
+  font-family: hp265;
+  font-size: 130%;
+  width:30em;
+}
+
+.mapa button {
+  text-align: center;
+  margin-right: 5%;
+  margin-left: 10%;
+  width: 30em;
+  height: 2.6rem;
+  border-radius: 60px;
+  background-color: #4a7edd;
+  color: #ffffff;
+  font-size: 120%;
+}
+.botones{
+  height: 15em;
+  text-align: center;
+}

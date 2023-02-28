@@ -1,0 +1,229 @@
+.datos{
+    margin: 1rem;
+    padding: 0.5rem 3rem 0.5rem 3rem;
+    border: 2px ;
+    margin-top: 0;
+    justify-items:center;
+    justify-content: space-between;
+    color:black;
+    ion-label{
+        font-family: hp556;
+        font-size: small;
+        font-weight: bold;
+        ;
+    }
+}
+
+ion-content{
+    --ion-background-color: white;
+
+}
+
+div h4{
+    font-weight: bold;
+    color:#912020;
+    text-align: center;
+    margin-top: 30%;
+}
+
+
+.botones button{
+    text-align:center;
+    width: 10rem;
+    height: 2.3rem;
+    border-radius: 60px ;
+    background-color:#3887bd;
+    color:#ffffff;
+    //margin-right: 5%;
+    justify-content: space-between;
+  }
+
+
+
+.datos ion-item{
+    text-align: center;
+    border-radius: 60px ;
+    width: auto;
+    height: 2rem;
+    --border-color: #3a75af;
+      --ion-background-color: #e1e6eb;
+  
+}
+
+.seleccion ion-icon {
+    margin-right: 0%;
+    top: 0.2em;
+    position: absolute;
+    margin-left: 80%;
+    color: black;
+  }
+
+
+.logo{
+    position: relative;
+   margin:auto;
+    
+}
+
+.datos2 ion-chip{
+    width: 95%;
+}
+
+.datos{
+    //margin-top: 7rem;
+    .itemdatos{
+        margin-top: 5%;
+    }
+}
+
+.error{
+    font-size: x-small;
+}
+
+.titulo{
+    h4{
+        color: #bf1a24;
+        font-weight: bold;
+        font-family: 'BebasBold';
+        font-size: x-large;
+    }
+}
+
+ion-chip{
+    border-color: black;
+}
+
+.botones {
+    margin-top: 15%;
+    justify-content: space-between;
+    text-align:center;
+    margin: auto;
+    margin-top: 10%;
+
+    .guardar{
+        background-color:#3da631;
+        width:6rem;
+    }
+    .cancelar{
+        background-color: #fc5759;
+        width: 6rem;
+    }
+}
+
+ion-input{
+    font-family: hp265;
+    font-weight: lighter;
+}   
+
+ion-datetime{
+    font-family: hp265;
+    font-weight: lighter;
+}   
+
+
+ion-datetime {
+    height: auto;
+    width: auto;
+  
+    
+  }
+  
+  ion-modal {
+    --width: 290px;
+    --height: 460px;
+    --border-radius: 8px;
+  }
+  
+  ion-modal ion-datetime {
+    height: 460px;
+  }
+  ion-buttons {
+    position: fixed;
+    margin-left: 20px;
+    margin-top: 14px;
+    max-width: 40px;
+    ion-img {
+        padding: 2px;
+        width: 60px;
+        opacity: 0.6;
+    }
+}
+
+.tope span {
+    width: 100%;
+    position: fixed;
+    background-color: #aaafb4;
+    height: 26px;
+    top: 62px;
+    z-index: 1;
+}
+
+
+
+.logosepro ion-img {
+    position: fixed;
+    top: 18px;
+    left: auto;
+    z-index: 2;
+}
+
+div.logosepro {
+    display: flex;
+    justify-content: center;
+}
+
+/*
+.botones{
+    position: relative;
+    text-align:center;
+    margin-left: 20%;
+    margin-right: 20%;
+    display: flex;
+    justify-content: space-between;
+    
+}*/
+
+.my-custom-class {
+    --background: #e5e5e5;
+  }
+
+
+  /*SCSS para foto*/
+
+  .container {
+    width: 150px;
+    height: 150px;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 0;
+  }
+  .profile-pic {
+    width: 150px;
+    height: 150px;
+  }
+  .outer {
+    width: 80% !important;
+    height: 70% !important;
+
+    margin: auto;
+    border-radius: 100%;
+    position: relative;
+    background-size: 100% 100%;
+  }
+  .inner {
+    background-color: #075E54;
+    width: 45px;
+    height: 45px;
+    border-radius: 100%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .camera-icon {
+    height: 30px;
+    width: 30px;
+    color: white;
+  }

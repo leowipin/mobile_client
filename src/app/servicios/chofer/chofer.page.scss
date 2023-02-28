@@ -1,0 +1,211 @@
+ion-content{ 
+    --ion-background-color:#d8d6d9; 
+    font-family: hp556;
+    //--background-size: cover;
+    
+}
+
+.front{
+  z-index:2;
+  position:absolute;
+  
+  height: 100%;
+  width: 100%;
+  
+}
+.back{
+  position: absolute;
+  text-align: buttom;
+  z-index:1;
+  margin-top: 130%;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
+.regresar ion-img{
+  margin-top: 5%;
+  margin-left: 5%;
+  width: 2.3em;
+  height: 2.3em;
+  
+}
+.titulo h1{
+  margin: 1rem;
+  padding: 0;
+  border: 0 ;
+  text-align: center;
+  font-weight: bold;
+  color:#828181;
+  font-size: 200%;
+  max-width:650px;
+	margin-left: 30%;
+  margin-right: 30%;
+
+}
+.dat ion-label{
+
+  margin-left: 5%;
+  color:#828181;
+  font-size: 90%;
+  //opacity: 0.50;
+}
+ion-datetime {
+  height: auto;
+  width: auto;
+
+  
+}
+.horaval{
+  --width: 290px;
+  --height: 200px;
+  font-weight: 500;
+}
+
+ion-modal {
+  --width: 290px;
+  --height: 460px;
+  --border-radius: 8px;
+}
+
+ion-modal ion-datetime {
+  height: 460px;
+}
+.seleccion ion-label{
+  text-align: center;
+  margin-bottom: 1.5%;
+  margin-top: 0%;
+}
+.ubicacion ion-label{
+  font-family: hp265;
+  font-size: 130%;
+  
+}
+.check-vehiculo ion-label{
+
+  font-size: 90%;
+  text-align: center;
+  margin-left: 10%;
+}
+.check-chofer ion-label{
+
+  font-size: 90%;
+  text-align: center;
+  margin-left: 10%;
+}
+.logo ion-img{
+  font-weight: bold;
+   display:block;
+   margin:auto;
+
+}
+.datos{
+  margin: 1rem;
+  padding: 0.5rem 3.5rem 0.5rem 3.5rem;
+  border: 2px ;
+  
+}
+
+.seleccion ion-item {
+  --ion-background-color: #ffffff;
+  text-align: center;
+  border-radius: 60px;
+  width: 100%;
+  height: 2.3rem;
+  margin: 0%;
+}
+
+.seleccion ion-icon {
+  margin-right: 0%;
+  top: 0.3em;
+  position: absolute;
+  margin-left: 80%;
+  color: black;
+}
+
+.dat{
+  display: flex;
+  flex-direction:column;
+}
+
+//top rigth bottom left
+.mapa{
+    margin: 0.5rem;
+    padding: 0.5rem 3.5rem 0.5rem 3.5rem;
+    border: 0px ;
+   
+}
+
+
+.solicitar-servicio{
+    margin: 0rem;
+    padding: 1.5rem 3.5rem 0.5rem 3.5rem;
+    border: 0px ;
+}
+.ubicacion {
+  display: flex;
+  margin-bottom: 1%;
+
+}
+.ubicacion ion-label{
+  width:30em;
+}
+
+.ubicacion button {
+  text-align: center;
+  margin-right: 5%;
+  margin-left: 10%;
+  width: 30em;
+  height: 2.6rem;
+  border-radius: 60px;
+  background-color: #4a7edd;
+  color: #ffffff;
+  font-size: 120%;
+}
+.botones{
+  height: 15em;
+  text-align: center;
+}
+ion-checkbox{
+  border:0;
+}
+.solicitar-servicio button{
+  text-align:center;
+  margin-left: 0rem;
+  width: 15rem;
+  height: 2.8rem;
+  border-radius: 60px ;
+  background-color:#3da631;
+  color:#ffffff;
+}
+.cancelar-servicio button{
+  text-align:center;
+  margin-left: 0rem;
+  width: 15rem;
+  height: 2.8rem;
+  border-radius: 60px ;
+  background-color:#fc5759;
+  color:#ffffff;
+}
+
+.check-vehiculo{
+    margin: 0.5rem;
+    padding: 0.5rem 3.5rem 0.5rem 3.5rem;
+    border: 0px ;
+}
+.check-chofer{
+    margin: 0.5rem;
+    padding: 0.5rem 3.5rem 0.5rem 3.5rem;
+    border: 0px ;
+}
+
+.botones{
+  text-align:center;
+  font-size: 125%;
+  //font-family: hp265;
+  //font-weight: bold;
+}
+:root {
+  --ion-safe-area-top: 20px;
+  --ion-safe-area-bottom: 22px;
+}
+

@@ -1,0 +1,82 @@
+<ion-content class="ion-no-padding background">
+
+  <ion-row class="row logo">
+    <div class="container-img">
+      <img src="../../assets/app sepro vectores-30.png" class="img-logo">
+    </div>
+  </ion-row>
+
+  <div class="datosinput item-background-color">
+    <form [formGroup]="ionicForm" (ngSubmit)="submitForm()" validate>
+
+      <ion-list class="datos m-0 p-0">
+
+
+        <div class="itemdatos">
+
+          <ion-label class="centrar-text">Email</ion-label>
+          <ion-input formControlName="email" type="text">
+            <ion-icon id="ico-mail" name="mail" item-start class="icono-input"></ion-icon>
+          </ion-input>
+          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.required">
+            Es necesario un coreo electronico.
+          </span>
+          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.email">
+            Ingrese un correo valido.
+          </span>
+
+          <ion-label class="centrar-text mt-2">Contraseña</ion-label>
+          <ion-input type="{{showPassword ? 'text' : 'password'}}" formControlName="password" input maxlength="10"
+            required>
+
+            <button class="btn-eye" type="button" (click)="togglePasswordClick()">
+              <ion-icon [hidden]="showPassword" name="eye-off-outline"></ion-icon>
+              <ion-icon [hidden]="!showPassword" name="eye-outline"></ion-icon>
+            </button>
+          </ion-input>
+          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.required">
+            Es necesario ingresar una contraseña.
+          </span>
+          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.minlength">
+            Ingrese una contraseña mayor a 8 caracteres.
+          </span>
+
+          <!--
+
+                      <ion-label class="centrar-text mt-2">Ingrese número de celular</ion-label>
+          <ion-item lines="full">
+
+            <ion-input inputmode="numeric" formControlName="mobile" input type="tel " maxlength="10" required>
+            </ion-input>
+          </ion-item>
+          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.mobile.errors?.required">
+            Es necesario un número de celular.
+          </span>
+          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.mobile.errors?.pattern">
+            Ingrese un número de celular valido.
+          </span>
+          -->
+
+        </div>
+
+        <div class="botones">
+          <ion-col>
+            <button  ion-button class="ingresar">Ingresar</button>
+          </ion-col>
+        </div>
+      </ion-list>
+    </form>
+    <div id="opciones" class="text-white text-center">
+      <br>
+      <span [routerLink]="['/registrar']">Crear Cuenta</span><br><br>
+      <span hidden>¿Olvidé de mi contraseña?</span>
+
+      <div class="container-omitir">
+        <a [routerLink]="['/servicios']">Omitir Registro</a>
+      </div>
+  
+    </div>
+
+    <span id="lbl-pagina" >www.seproamerica.com.ec</span>
+  </div>
+</ion-content>

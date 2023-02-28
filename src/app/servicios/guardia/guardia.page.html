@@ -1,0 +1,143 @@
+<ion-header>
+  
+</ion-header>
+
+<ion-content class="fondo" >
+  <div class="front">
+    <div class="regresar">
+      <ion-img src="assets/img/retroceder.png" (click)="cancelar()"></ion-img>
+      
+    </div>
+    <div class="titulo">
+      <h1>GUARDIA DE SEGURIDAD</h1>
+      <div class="logo">
+        <ion-img style="width: 100px; height: 100px;" src="assets/img/guardialogo.png"></ion-img>
+      </div>
+    </div>
+    <div class="datos">
+      <form [formGroup]="ionicForm" (ngSubmit)="submitForm()" validate>
+        <ion-list class="dat">
+          <ion-label>Fecha de Inicio</ion-label>
+          
+          
+          <div class="seleccion" id="open-modal">
+            <ion-item button="true" id="open-date-input" >
+              <ion-label>{{dateValue | date: 'dd/MM/yyyy'}}</ion-label>
+              <ion-icon name="calendar-clear-outline"  item-right></ion-icon>
+              <ion-modal trigger="open-modal">
+                
+                <ion-popover trigger="open-date-input" show-backdrop="false">
+                <ng-template>
+                  <ion-content >
+                    <ion-datetime formControlName="fechaInicio" [max]="maxFecha" [min]="minFecha" displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY" #popoverDatetime
+                    presentation="date"
+                    (ionChange)="dateValue =popoverDatetime.value">   
+                    <div slot="title">     
+                    </div>            
+                    <!--<ion-buttons slot="buttons">
+                        <ion-button (click)="confirm()">Good to go!</ion-button>
+                        <ion-button (click)="reset()">Reset</ion-button>
+                      </ion-buttons>-->
+                    </ion-datetime>
+                  </ion-content>
+                </ng-template>
+              </ion-popover>
+              </ion-modal>
+              
+            </ion-item>
+            
+            
+          </div>
+    
+          <ion-label>Hora de Inicio</ion-label>
+          <div class="seleccion" id="open-modal7" >
+            <ion-item button="true" id="open-date-input7" >
+              <ion-label>{{dateValue7 | date: 'hh:mma'}}</ion-label>
+              <ion-icon name="time-outline" item-right></ion-icon>
+              <ion-modal class="horaval" trigger="open-modal7"> 
+                <ion-popover trigger="open-date-input7" show-backdrop="false">
+                <ng-template>
+                    <ion-datetime hour-cycle="h23" formControlName="horaInicio" displayFormat="hh:mma" presentation="time" #popoverDatetime
+                    (ionChange)="dateValue7 =popoverDatetime.value"> 
+                    </ion-datetime>
+                </ng-template>
+              </ion-popover>
+              </ion-modal>
+            </ion-item>
+            
+          </div>
+        
+          <ion-label>Fecha de Finalización</ion-label>
+          <div class="seleccion" id="open-modal8">
+            <ion-item button="true" id="open-date-input8" >
+              <ion-label>{{dateValue8 | date: 'dd/MM/yyyy'}}</ion-label>
+              <ion-icon name="calendar-clear-outline"  item-right></ion-icon>
+              <ion-modal trigger="open-modal8">
+                
+                <ion-popover trigger="open-date-input8" show-backdrop="false">
+                <ng-template>
+                  <ion-content >
+                    <ion-datetime formControlName="fechaFinalizacion" [max]="maxFecha" [min]="minFecha" displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY" #popoverDatetime
+                    presentation="date"
+                    (ionChange)="dateValue8 =popoverDatetime.value">   
+                      <div slot="title">     
+                      </div>
+                      
+                    </ion-datetime>
+                  </ion-content>
+                </ng-template>
+              </ion-popover>
+              </ion-modal>
+              
+            </ion-item>
+          </div>
+
+          <ion-label>Hora de Finalizacion</ion-label>
+          <div class="seleccion" id="open-modal9" >
+            <ion-item button="true" id="open-date-input9" >
+              <ion-label>{{dateValue9 | date: 'hh:mma'}}</ion-label>
+              <ion-icon name="time-outline" item-right></ion-icon>
+              <ion-modal class="horaval" trigger="open-modal9"> 
+                <ion-popover trigger="open-date-input9" show-backdrop="false">
+                <ng-template>
+                    <ion-datetime hour-cycle="h23" formControlName="horaFinalizacion" displayFormat="hh:mma" presentation="time" #popoverDatetime
+                    (ionChange)="dateValue9 =popoverDatetime.value"> 
+                    </ion-datetime>
+                </ng-template>
+              </ion-popover>
+              </ion-modal>
+            </ion-item>
+          </div>
+
+        </ion-list>
+
+      </form>
+    </div>
+    <div class="mapa">
+      <ion-label>Elegir ubicación</ion-label>
+      <button ion-button color="secondary" (click)="addDirection(0)">Abrir mapa</button>
+       
+    </div>
+    <div class="cantidad-guardias">
+        <ion-label>Número de guardias</ion-label>
+        <div class="cantidad">
+          <ion-icon class="decremento" name="remove-circle-outline" (click)="decrement()"></ion-icon>
+          <ion-label> {{currentNumber}}</ion-label>
+           
+          <ion-icon class="aumento" name="add-circle-outline" (click)="increment()"></ion-icon>
+        </div>
+    </div>
+    <div class="botones">
+      <div class="solicitar-servicio">
+        <button ion-button color="secondary" (click)="solicitud()">Solicitar Servicio</button>
+      </div>
+      
+  
+    </div>
+  </div>
+  <div class="back">
+    <ion-img style="width: 100; height: 200;" src="../../assets/img/appseprovectores-01.png"></ion-img>
+  </div>
+  
+
+</ion-content>

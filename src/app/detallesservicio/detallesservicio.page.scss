@@ -1,0 +1,85 @@
+.datos2{
+    margin: 1rem;
+    padding: 0.5rem 2rem 0.5rem 2rem;
+    border: 2px ;
+    margin-top: 35%;
+    justify-items:center;
+    justify-content: space-between;
+
+    .iconos{
+        display: flex;
+        text-align: center;
+        margin-left: 32%;
+        margin-top: 45%;
+        width: 35%;
+        justify-content: space-between;
+
+        ion-icon{
+            color:#4A7EDD;
+        }
+
+    }
+
+    .detalles{
+        margin-top: 15%;
+        margin-left: 10%;
+
+        .fijo{
+            font-weight: bold;
+        }
+    }
+}
+
+.tope span{
+    width:100%;
+   position:absolute;
+   left:0;
+   background-color:#aaafb4;
+   height:26px;
+   top:80px;
+}
+
+.logosepro ion-img{
+    padding-left: 0px;
+    display:block;
+    position:absolute;
+    margin-left: 100px;
+}
+
+
+.logo{
+    display:block;
+   margin:auto; 
+}
+
+ion-chip{
+    width:16rem;
+    height: auto;
+    align-self: center;
+    justify-content: center;
+
+}
+
+span.circle-grey {
+    position:absolute;
+    width:5rem;
+    height:5rem;
+    border-radius: 50%;
+    margin:auto;
+    top: 30%; left: 0; bottom: 10; right: 0;
+}
+
+
+.botones ion-button{
+    text-align:center;
+    width: 10rem;
+    height: 2.3rem;
+    border-radius: 60px ;
+    margin-right: 5%;;
+    justify-content: space-between;
+  }
+
+.botones{
+    margin-left: 5%;
+    display: flex;
+}
