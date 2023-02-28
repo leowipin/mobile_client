@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UbicacionComponent } from 'src/app/ubicacion/ubicacion.component';
+import { UbicacionModule } from 'src/app/ubicacion/ubicacion.module';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { TrackServicioComponent } from './track-servicio.component';
@@ -14,7 +14,7 @@ import { TrackServicioComponent } from './track-servicio.component';
     CommonModule,
     IonicModule,
     FormsModule,
-    UbicacionComponent
+    UbicacionModule
   ],
   exports: [TrackServicioComponent]
 })
