@@ -40,13 +40,23 @@ export class LoginPage implements OnInit {
     if (!this.ionicForm.valid) {  
       return false;
     } else {
-      this.getUsuarioA()
+      this.signIn()
       
     }
   }
 
   redirigir_home(){
     this.navCtrl.navigateForward("/servicios");
+    this.ionicForm.reset();
+  }
+
+  redirigirRegistrar() {
+    this.navCtrl.navigateForward('/registrar');
+    this.ionicForm.reset();
+  }
+  
+  redirigirServicios() {
+    this.navCtrl.navigateForward('/servicios');
     this.ionicForm.reset();
   }
   
@@ -56,7 +66,7 @@ export class LoginPage implements OnInit {
 
 
 
-  getUsuarioA(): void{
+  signIn(): void{
 
     let email: string = this.ionicForm.value.email
     let password: string = this.ionicForm.value.password

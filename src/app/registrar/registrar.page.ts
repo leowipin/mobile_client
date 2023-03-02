@@ -202,7 +202,6 @@ export class RegistrarPage implements OnInit {
 
   
   togglePasswordClick() {
-    console.log("press")
     this.showPassword = !this.showPassword;
   }
 

@@ -20,14 +20,6 @@ ion-content{
     margin-top: 5rem;
   }
 
-  /*ion-input{
-    background-color: white;
-    color: black;
-    border-radius: 25rem;
-    width: 75%;
-    margin-left: 3rem;
-  }
-  */
   ion-button{
     font-family:'hp556';
     font-weight: 3rem;
@@ -65,6 +57,8 @@ ion-content{
   }
   .error{
     font-size: x-small;
+    font-family:'hp265';
+    font-size: 0.9rem;
   }
   .botones button{
     text-align:center;
@@ -73,8 +67,6 @@ ion-content{
     border-radius: 60px ;
     background-color:#3887bd;
     color:#ffffff;
-    //margin-right: 5%;
-    //justify-content: space-between;
     font-family:'hp265';
     font-size: 1.2rem;
   
@@ -96,7 +88,7 @@ ion-content{
   ion-input {
     background-color: #ffffff;
     border-radius: 25rem;
-    justify-content: space-between;
+    text-align: center;
   }
   ion-label{
     justify-content: space-between;
@@ -105,10 +97,6 @@ ion-content{
     font-family:'hp265';
     font-size: 1.1rem;
   }
-
-  
-
-
 
 .btn-eye{
   display: flex;
@@ -124,8 +112,23 @@ ion-content{
 }
 
 #lbl-pagina{
-    
   position: absolute;
   bottom: 5px;
   left: 5px;
+}
+
+.eye-wrapper {
+  position: absolute;
+  left: 10px;
+  top: 50%; 
+  transform: translateY(-50%); 
+  z-index: 10;
+}
+
+.mail-wrapper {
+  position: absolute;
+  left: 1px;
+  top: 50%; 
+  transform: translateY(-40%); 
+  z-index: 10;
 }

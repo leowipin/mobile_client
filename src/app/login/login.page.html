@@ -15,9 +15,16 @@
         <div class="itemdatos">
 
           <ion-label class="centrar-text">Email</ion-label>
-          <ion-input formControlName="email" type="email">
-            <ion-icon id="ico-mail" name="mail" item-start class="icono-input"></ion-icon>
-          </ion-input>
+          <ion-item>
+           <!-- <ion-input formControlName="email" type="email">
+              <ion-icon id="ico-mail" name="mail" item-start class="icono-input"></ion-icon>
+            </ion-input>-->
+            <div class="mail-wrapper">
+              <ion-icon id="ico-mail" name="mail" item-start class="icono-input"></ion-icon>
+            </div>
+            <ion-input formControlName="email" type="email"></ion-input>
+
+          </ion-item>
           <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.required">
             Es necesario un coreo electronico.
           </span>
@@ -26,14 +33,25 @@
           </span>
 
           <ion-label class="centrar-text mt-2">Contraseña</ion-label>
-          <ion-input type="{{showPassword ? 'text' : 'password'}}" formControlName="password"
+         <!--<ion-input type="{{showPassword ? 'text' : 'password'}}" formControlName="password"
             required>
 
             <button class="btn-eye" type="button" (click)="togglePasswordClick()">
               <ion-icon [hidden]="showPassword" name="eye-off-outline"></ion-icon>
               <ion-icon [hidden]="!showPassword" name="eye-outline"></ion-icon>
             </button>
-          </ion-input>
+          </ion-input>-->
+          <ion-item>
+            <div class="eye-wrapper">
+              <button class="btn-eye" type="button" (click)="togglePasswordClick()">
+                <ion-icon [hidden]="showPassword" name="eye-off-outline"></ion-icon>
+                <ion-icon [hidden]="!showPassword" name="eye-outline"></ion-icon>
+              </button>
+            </div>
+            <ion-input type="{{showPassword ? 'text' : 'password'}}" formControlName="password"
+            required> </ion-input>
+          </ion-item>
+          
           <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.required">
             Es necesario ingresar una contraseña.
           </span>
@@ -47,16 +65,16 @@
         </div>
       </ion-list>
     </form>
-    <!--<div id="opciones" class="text-white text-center">
+    <div id="opciones" class="text-white text-center">
       <br>
-      <span [routerLink]="['/registrar']">Crear Cuenta</span><br><br>
-      <span hidden>¿Olvidé de mi contraseña?</span>
+      <a (click)="redirigirRegistrar()">Crear Cuenta</a><br><br>
+      <a hidden>¿Olvidé de mi contraseña?</a>
 
       <div class="container-omitir">
-        <a [routerLink]="['/servicios']">Omitir Registro</a>
+        <a (click)="redirigirServicios()">Omitir Registro</a>
       </div>
   
-    </div>-->
+    </div>
 
   </div>
 </ion-content>

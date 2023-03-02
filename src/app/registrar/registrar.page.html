@@ -15,7 +15,7 @@
     <form [formGroup]="ionicForm" (ngSubmit)="submitForm()" validate>
       <ion-list class="datos">
         <div class="itemdatos">
-          <ion-label>Nombres</ion-label>
+          <ion-label>Nombre</ion-label>
           <ion-item lines="full">
             <ion-input formControlName="name" type="text"></ion-input>
           </ion-item>
@@ -31,13 +31,13 @@
         </div>
 
         <div class="itemdatos">
-          <ion-label>Apellidos</ion-label>
+          <ion-label>Apellido</ion-label>
           <ion-item lines="full">
             <ion-input formControlName="lastname" type="text"></ion-input>
           </ion-item>
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.lastname.errors?.required">
+          <!--<span class="error ion-padding" *ngIf="isSubmitted && errorControl.lastname.errors?.required">
             Es necesario al menos un apellido.
-          </span>
+          </span>-->
           <span class="error ion-padding" *ngIf="isSubmitted && errorControl.lastname.errors?.minlength">
             Su apellido debe tener al menos 2 caracteres.
           </span>
@@ -60,7 +60,7 @@
           </span>
         </div>
 
-        <div class="itemdatos">
+       <!-- <div class="itemdatos">
           <ion-item>
             <ion-label>Género</ion-label>
             <ion-select formControlName="f2_edudetail" placeholder="Escoja uno">
@@ -68,16 +68,16 @@
               <ion-select-option value="M">Masculino</ion-select-option>
             </ion-select>
           </ion-item>
-        </div>
+        </div>-->
 
         <div class="itemdatos">
           <ion-label>Número</ion-label>
           <ion-item lines="full">
 
-            <ion-input formControlName="mobile" input type="tel " maxlength="10"></ion-input>
+            <ion-input formControlName="mobile"  type="tel " maxlength="10"></ion-input>
           </ion-item>
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.mobile.errors?.required">
-            Es necesario ingresar su cédula de identidad.
+          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.mobile.errors?.pattern">
+            Es necesario ingresar su número de teléfono.
           </span>
 
         </div>
@@ -96,11 +96,11 @@
           Solo se permiten caracteres numéricos.
         </span>
         <span class="error ion-padding" *ngIf="ingresoCedula()">
-          Ingrese una cedula valida.
+          Ingrese una cedula válida.
         </span>
         </div>
 
-        <div class="itemdatos">
+       <!-- <div class="itemdatos">
           <ion-label>Fecha de nacimiento</ion-label>
           <ion-item lines="full">
             <ion-input formControlName="bday" type="text" placeholder="AAAA-MM-DD"></ion-input>
@@ -111,18 +111,20 @@
           <span class="error ion-padding" *ngIf="isSubmitted && errorControl.bday.errors?.pattern">
             Ingrese una fecha válida
           </span>
-        </div>
+        </div>-->
 
         <div class="itemdatos">
           <ion-label >Contraseña</ion-label>
           <ion-item lines="full">
-            <ion-input type="{{showPassword ? 'text' : 'password'}}" formControlName="contrasenha" input maxlength="10"
-            required>
-            <button class="btn-eye" type="button" (click)="togglePasswordClick()">
-              <ion-icon [hidden]="showPassword" name="eye-off-outline"></ion-icon>
-              <ion-icon [hidden]="!showPassword" name="eye-outline"></ion-icon>
-            </button>
-          </ion-input>
+            <div class="eye-wrapper">
+              <button class="btn-eye" type="button" (click)="togglePasswordClick()">
+                <ion-icon [hidden]="showPassword" name="eye-off-outline"></ion-icon>
+                <ion-icon [hidden]="!showPassword" name="eye-outline"></ion-icon>
+              </button>
+            </div>
+            <ion-input type="{{showPassword ? 'text' : 'password'}}" formControlName="contrasenha"
+            required> </ion-input>
+            
           </ion-item>
           
           <span class="error ion-padding" *ngIf="isSubmitted && errorControl.contrasenha.errors?.required">
