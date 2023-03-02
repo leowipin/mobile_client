@@ -229,7 +229,7 @@ guardarUsuario(){
   console.log("Terminos aceptados:")
   //Se han completado los campos y se han aceptado los términos de la empresa
   if(this.camposCompletos){
-    this.clienteWAService.create(data)
+    /*this.clienteWAService.create(data)
       .subscribe({
         next: (res) => {
           console.log(res);
@@ -242,7 +242,7 @@ guardarUsuario(){
           this.redirigir()
         },
         error: (e) => console.error(e)
-      });
+      });*/
   } else{
     alert("Debe completar los campos y aceptar los términos y condiciones")
   }

@@ -15,7 +15,7 @@
         <div class="itemdatos">
 
           <ion-label class="centrar-text">Email</ion-label>
-          <ion-input formControlName="email" type="text">
+          <ion-input formControlName="email" type="email">
             <ion-icon id="ico-mail" name="mail" item-start class="icono-input"></ion-icon>
           </ion-input>
           <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.required">
@@ -26,7 +26,7 @@
           </span>
 
           <ion-label class="centrar-text mt-2">Contraseña</ion-label>
-          <ion-input type="{{showPassword ? 'text' : 'password'}}" formControlName="password" input maxlength="10"
+          <ion-input type="{{showPassword ? 'text' : 'password'}}" formControlName="password"
             required>
 
             <button class="btn-eye" type="button" (click)="togglePasswordClick()">
@@ -37,25 +37,6 @@
           <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.required">
             Es necesario ingresar una contraseña.
           </span>
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.minlength">
-            Ingrese una contraseña mayor a 8 caracteres.
-          </span>
-
-          <!--
-
-                      <ion-label class="centrar-text mt-2">Ingrese número de celular</ion-label>
-          <ion-item lines="full">
-
-            <ion-input inputmode="numeric" formControlName="mobile" input type="tel " maxlength="10" required>
-            </ion-input>
-          </ion-item>
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.mobile.errors?.required">
-            Es necesario un número de celular.
-          </span>
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.mobile.errors?.pattern">
-            Ingrese un número de celular valido.
-          </span>
-          -->
 
         </div>
 
@@ -66,7 +47,7 @@
         </div>
       </ion-list>
     </form>
-    <div id="opciones" class="text-white text-center">
+    <!--<div id="opciones" class="text-white text-center">
       <br>
       <span [routerLink]="['/registrar']">Crear Cuenta</span><br><br>
       <span hidden>¿Olvidé de mi contraseña?</span>
@@ -75,8 +56,7 @@
         <a [routerLink]="['/servicios']">Omitir Registro</a>
       </div>
   
-    </div>
+    </div>-->
 
-    <span id="lbl-pagina" >www.seproamerica.com.ec</span>
   </div>
 </ion-content>
