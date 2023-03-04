@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import * as moment from 'moment';
-import { validarCedulaAlg } from '../editarperfil/cedula.validator';
 import { RegisterModel } from '../modelos/register.model';
 import { ClienteWAService } from '../servicios/login-registro/login-registro.service';
+import { SignUp } from '../interfaces/client/signup';
 @Component({
   selector: 'app-registrar',
   templateUrl: './registrar.page.html',
@@ -24,7 +23,6 @@ export class RegistrarPage implements OnInit {
 
   user: RegisterModel = new RegisterModel();
   camposCompletos: boolean = false;
-  //Indicador si registro fue guardado en la base de datos o no
   submitted = false;
 
   showPassword = false;
@@ -35,25 +33,21 @@ export class RegistrarPage implements OnInit {
     public formBuilder: FormBuilder,
     public alertController: AlertController,
     public loaderCtrl: LoadingController,
-    public clienteWAService:ClienteWAService
+    private clienteWAService:ClienteWAService
 
   ) { }
 
   ngOnInit() {
     this.ionicForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(2), Validators.pattern('[a-zA-Z ]*')]],
-      lastname: ['', [Validators.required, Validators.minLength(2), Validators.pattern('[a-zA-Z ]*')]],
-      email: ['', [Validators.required, Validators.pattern('[a-z/.0-9_-]+@[a-z0-9]+[.{1}][a-z]{2,}([.{1}][a-z]{2,})?')]],
-      bday: ['', [Validators.required, Validators.pattern('(?:19[0-9]{2}|20[01][0-9]|2020)[-](?:0[1-9]|1[012])[-](?:0[1-9]|[12][0-9]|3[01])')]],
-      f2_edudetail: ['', [Validators.required]],
-      mobile: ['', [Validators.required,Validators.pattern('^[0-9]{0,7}$')]],
+      name: ['', [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
+      lastname: ['', [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
+      email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')]],
+      //bday: ['', [Validators.required, Validators.pattern('(?:19[0-9]{2}|20[01][0-9]|2020)[-](?:0[1-9]|1[012])[-](?:0[1-9]|[12][0-9]|3[01])')]],
+      //f2_edudetail: ['', [Validators.required]],
+      mobile: ['', [Validators.required,Validators.pattern('[0-9]{10}')]],
       cedula: ['', [Validators.required, Validators.pattern('[0-9]{10}')]],
-      contrasenha:['', [Validators.required, Validators.minLength(8)]],
+      password:['', [Validators.required]],
     }
-     /* ,
-      {
-        validators: validarCedulaAlg
-      }*/
     );
 
   }
@@ -73,32 +67,18 @@ export class RegistrarPage implements OnInit {
   }
 
   submitForm() {
-    var today = moment(new Date());
+   /* var today = moment(new Date());
     var test = moment(new Date(this.ionicForm.value.bday)).format("YYYY-MM-DD");
     var resul = test.toString();
-    var difference = today.diff(test, "y") < 18;
+    var difference = today.diff(test, "y") < 18;*/
 
-    this.isSubmitted = true;
     if (!this.condiciones) {
       this.presentTerms();
-    }
-    if (difference) {
-      this.presentUnderAge();
-    }
-    else if (!this.ionicForm.valid) {
+    } else if (!this.ionicForm.valid) {
       this.presentFields();
-      console.log(this.ionicForm.value)
-      console.log('Please provide all the required values!')
-
       return false;
     } else {
-      console.log(this.ionicForm.value)
-      this.guardarUsuario()
-        
-      
-
-      
-
+      this.signUp() 
     }
   }
 
@@ -133,7 +113,6 @@ export class RegistrarPage implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-            console.log('ORIGEN');
           }
         }
       ]
@@ -141,20 +120,18 @@ export class RegistrarPage implements OnInit {
 
     await alert.present();
     let result = await alert.onDidDismiss();
-    console.log(result);
   }
 
   async presentFields() {
     const alert = await this.alertController.create({
       header: 'Campos incompletos',
-      message: 'Para hacer uso de nuestra aplicación asegúrate de completar todos los campos correctamente',
+      message: 'Asegúrate de completar todos los campos correctamente',
       buttons: [
         {
           text: 'ACEPTAR',
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-            console.log('ORIGEN');
           }
         }
       ]
@@ -162,7 +139,6 @@ export class RegistrarPage implements OnInit {
 
     await alert.present();
     let result = await alert.onDidDismiss();
-    console.log(result);
   }
 
   async presentSuccess() {
@@ -175,7 +151,6 @@ export class RegistrarPage implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-            console.log('ORIGEN');
           }
         }
       ]
@@ -186,8 +161,8 @@ export class RegistrarPage implements OnInit {
     console.log(result);
   }
 
-  redirigir() {
-    this.navCtrl.navigateForward("/servicios");
+  redirigirSignin() {
+    this.navCtrl.navigateForward("/login");
     this.ionicForm.reset()
   }
 
@@ -205,51 +180,34 @@ export class RegistrarPage implements OnInit {
     this.showPassword = !this.showPassword;
   }
 
-/*Función para guardar usuario nuevo que se registre */
-guardarUsuario(){
+signUp(){
+  const data: SignUp = {
+    first_name: this.ionicForm.value.name,
+    last_name: this.ionicForm.value.lastname,
+    email: this.ionicForm.value.email,
+    password: this.ionicForm.value.password,
+    phone_number: this.ionicForm.value.mobile,
+    dni: this.ionicForm.value.cedula,
+  }
+  this.clienteWAService.signup(data).subscribe({
+    next: (response) => {
+      console.log(response)
+      console.log(response.message)
+      this.alertController.create({
+        message: response.message,
+        buttons: ['Dismiss']
+      }).then(alert=> alert.present())
+      this.redirigirSignin()
+      },
+    error: (error) => {
+      let keyError: string = Object.keys(error.error)[0]
+      this.alertController.create({
+        message: error.error[keyError],
+        buttons: ['Dismiss']
+      }).then(alert=> alert.present())
+    }
+  });
   
-  this.camposCompletos = !this.ionicForm.invalid;
-  const data = {
-    apellidos : this.ionicForm.value.lastname,
-    nombres : this.ionicForm.value.name,
-    cedula : this.ionicForm.value.cedula,
-    fechaNac : this.ionicForm.value.bday,
-    sexo : this.ionicForm.value.f2_edudetail,
-    correo : this.ionicForm.value.email,
-    telefono : this.ionicForm.value.mobile,
-    contrasenia : this.ionicForm.value.contrasenha,
-    direccion : this.ionicForm.value.email,
-    rol : '2'
-  };
-  console.log("entra")
-  console.log(data)
-  console.log("Fecha valida:" )
-  console.log("Campos completos: "+this.camposCompletos)
-  console.log("Terminos aceptados:")
-  //Se han completado los campos y se han aceptado los términos de la empresa
-  if(this.camposCompletos){
-    /*this.clienteWAService.create(data)
-      .subscribe({
-        next: (res) => {
-          console.log(res);
-          this.submitted = true;
-          window.localStorage.setItem('usuario_actual',data.correo)
-          console.log("=======================")
-          console.log(window.localStorage.getItem('usuario_actual'))
-          this.ionicForm.reset()
-          this.presentSuccess();
-          this.redirigir()
-        },
-        error: (e) => console.error(e)
-      });*/
-  } else{
-    alert("Debe completar los campos y aceptar los términos y condiciones")
-  }
-  if(this.submitted){
-    console.log("Datos guardados")
-  } else {
-    console.log("Datos no guardados")
-  }
 }
 
 

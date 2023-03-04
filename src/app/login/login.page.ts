@@ -4,6 +4,7 @@ import { NavController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ClienteWAService } from '../servicios/login-registro/login-registro.service';
 import { AuthService } from '../servicios/login-registro/auth.service';
+import { SignIn } from '../interfaces/client/signin';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,11 @@ export class LoginPage implements OnInit {
   ionicForm: FormGroup;
   
   isSubmitted = false;
+
+  data: SignIn = {
+    email: 'John',
+    password: 'password123'
+  }
 
   constructor(private navCtrl: NavController, 
     public formBuilder: FormBuilder, 
@@ -67,10 +73,12 @@ export class LoginPage implements OnInit {
 
 
   signIn(): void{
-
-    let email: string = this.ionicForm.value.email
-    let password: string = this.ionicForm.value.password
-    this.clienteWAService.signin(email, password).subscribe({
+    const data: SignIn = {
+      email: this.ionicForm.value.email,
+      password: this.ionicForm.value.password,
+    }
+    
+    this.clienteWAService.signin(data).subscribe({
       next: (response) => {
         this.alertController.create({
           message:"Inicio de sesion exitoso",

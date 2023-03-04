@@ -122,17 +122,17 @@
                 <ion-icon [hidden]="!showPassword" name="eye-outline"></ion-icon>
               </button>
             </div>
-            <ion-input type="{{showPassword ? 'text' : 'password'}}" formControlName="contrasenha"
+            <ion-input type="{{showPassword ? 'text' : 'password'}}" formControlName="password"
             required> </ion-input>
             
           </ion-item>
           
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.contrasenha.errors?.required">
+          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.required">
             Es necesario ingresar una contraseña.
           </span>
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.contrasenha.errors?.minlength">
+          <!--<span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.minlength">
             Ingrese una contraseña mayor a 8 caracteres.
-          </span>
+          </span>-->
         </div>
 
         <ion-row>

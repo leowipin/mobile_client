@@ -16,14 +16,10 @@
 
           <ion-label class="centrar-text">Email</ion-label>
           <ion-item>
-           <!-- <ion-input formControlName="email" type="email">
-              <ion-icon id="ico-mail" name="mail" item-start class="icono-input"></ion-icon>
-            </ion-input>-->
             <div class="mail-wrapper">
               <ion-icon id="ico-mail" name="mail" item-start class="icono-input"></ion-icon>
             </div>
             <ion-input formControlName="email" type="email"></ion-input>
-
           </ion-item>
           <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.required">
             Es necesario un coreo electronico.
@@ -33,14 +29,6 @@
           </span>
 
           <ion-label class="centrar-text mt-2">Contraseña</ion-label>
-         <!--<ion-input type="{{showPassword ? 'text' : 'password'}}" formControlName="password"
-            required>
-
-            <button class="btn-eye" type="button" (click)="togglePasswordClick()">
-              <ion-icon [hidden]="showPassword" name="eye-off-outline"></ion-icon>
-              <ion-icon [hidden]="!showPassword" name="eye-outline"></ion-icon>
-            </button>
-          </ion-input>-->
           <ion-item>
             <div class="eye-wrapper">
               <button class="btn-eye" type="button" (click)="togglePasswordClick()">
