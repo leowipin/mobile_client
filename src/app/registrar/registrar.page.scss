@@ -15,9 +15,6 @@ ion-content.background{
     background-color: #ffffff;
     padding-top: 1rem;
 }
-.logosepro{
-  height: 7rem;
-}
 .rectangle {
   height: 5rem;
   max-width: 100%;
@@ -191,13 +188,6 @@ ion-datetime {
     margin-left: auto;
     margin-right: auto;
   }
-  .img-logo{
-    max-width: 70%;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 1rem;
-  }
 
 .btn-eye{
   display: flex;
@@ -213,4 +203,18 @@ ion-datetime {
   top: 50%; 
   transform: translateY(-50%); 
   z-index: 10;
+}
+
+.tope{
+  display: flex;
+  justify-content: center;
+  margin-top: -8%;
+  margin-bottom: -5%;
+}
+
+.logosepro{
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  padding-right: 7%;
 }

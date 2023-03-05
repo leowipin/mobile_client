@@ -6,6 +6,9 @@ import { SignIn } from "src/app/interfaces/client/signin";
 import { SignUp } from "src/app/interfaces/client/signup";
 import { SignInResponse } from "src/app/interfaces/response/signin";
 import { SignUpResponse } from "src/app/interfaces/response/signup";
+import { ResetPasswordEmail } from "src/app/interfaces/client/resetPassword";
+import { ResetPasswordResponse } from "src/app/interfaces/response/resetPasswordEmail";
+import { ResetPasswordToken } from "src/app/interfaces/client/resetPasswordToken";
 
 @Injectable({
   providedIn: 'root'
@@ -29,4 +32,15 @@ export class ClienteWAService {
     const endpoint:string = this.DJANGO_DOMAIN_NAME+'users/signup/';
     return this.http.post<SignUpResponse>(endpoint, data)
   }
+
+  sendResetPasswordEmail(data:ResetPasswordEmail): Observable<ResetPasswordResponse>{
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+'users/passwordReset/';
+    return this.http.post<ResetPasswordResponse>(endpoint, data)
+  }
+
+  changePassword(data:ResetPasswordToken): Observable<ResetPasswordResponse>{
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+'users/changePassword/'
+    return this.http.post<ResetPasswordResponse>(endpoint, data)
+  }
+
 }
