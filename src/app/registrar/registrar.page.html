@@ -22,15 +22,9 @@
           <ion-item lines="full">
             <ion-input formControlName="name" type="text"></ion-input>
           </ion-item>
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.required">
-            Es necesario al menos un nombre.
-          </span>
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.minlength">
-            Su nombre debe tener al menos 2 caracteres.
-          </span>
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.pattern">
-            Ingrese un nombre válido.
-          </span>
+          <div *ngIf="ionicForm.get('name').invalid && (ionicForm.get('name').dirty || ionicForm.get('name').touched)" class="error-message">
+            <span class="error ion-padding" *ngIf="ionicForm.get('name').hasError('required')">Ingrese un nombre</span>
+          </div>
         </div>
 
         <div class="itemdatos">
@@ -38,29 +32,24 @@
           <ion-item lines="full">
             <ion-input formControlName="lastname" type="text"></ion-input>
           </ion-item>
-          <!--<span class="error ion-padding" *ngIf="isSubmitted && errorControl.lastname.errors?.required">
+          <!--<span class="error ion-padding" *ngIf=" errorControl.lastname.errors?.required">
             Es necesario al menos un apellido.
           </span>-->
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.lastname.errors?.minlength">
-            Su apellido debe tener al menos 2 caracteres.
-          </span>
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.lastname.errors?.pattern">
-            Ingrese un apellido válido.
-          </span>
+          <div *ngIf="ionicForm.get('lastname').invalid && (ionicForm.get('lastname').dirty || ionicForm.get('lastname').touched)" class="error-message">
+            <span class="error ion-padding" *ngIf="ionicForm.get('lastname').hasError('required')">Ingrese un apellido</span>
+          </div>
         </div>
 
         <div class="itemdatos">
-          <ion-label>Email</ion-label>
+          <ion-label>Correo electrónico</ion-label>
           <ion-item lines="full">
 
             <ion-input formControlName="email" type="text"></ion-input>
           </ion-item>
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.required">
-            Es necesario que escriba un correo.
-          </span>
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.pattern">
-            Por favor, ingrese un correo válido.
-          </span>
+          <div *ngIf="ionicForm.get('email').invalid && (ionicForm.get('email').dirty || ionicForm.get('email').touched)" class="error-message">
+            <span class="error ion-padding" *ngIf="ionicForm.get('email').hasError('required')">Ingrese un correo electrónico</span>
+            <span class="error ion-padding" *ngIf="ionicForm.get('email').hasError('pattern')">Ingrese un correo eletrónico válido</span>
+          </div>
         </div>
 
        <!-- <div class="itemdatos">
@@ -74,33 +63,29 @@
         </div>-->
 
         <div class="itemdatos">
-          <ion-label>Número</ion-label>
+          <ion-label>Teléfono móvil</ion-label>
           <ion-item lines="full">
 
             <ion-input formControlName="mobile"  type="tel " maxlength="10"></ion-input>
           </ion-item>
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.mobile.errors?.pattern">
-            Es necesario ingresar su número de teléfono.
-          </span>
+          <div *ngIf="ionicForm.get('mobile').invalid && (ionicForm.get('mobile').dirty || ionicForm.get('mobile').touched)" class="error-message">
+            <span class="error ion-padding" *ngIf="ionicForm.get('mobile').hasError('required')">Ingrese un numero teléfono</span>
+            <span class="error ion-padding" *ngIf="ionicForm.get('mobile').hasError('pattern')">Ingrese un número de teléfono válido </span>
+          </div>
 
         </div>
 
         
         <div class="itemdatos">
           <ion-label>Cédula de identidad</ion-label>
-        <ion-item lines="full">
-          
-          <ion-input  formControlName="cedula" type="text" maxlength="10" required ></ion-input>
-        </ion-item>
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.cedula.errors?.required">
-          Es necesario ingresar su cédula de identidad.
-        </span>
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.cedula.errors?.pattern">
-          Solo se permiten caracteres numéricos.
-        </span>
-        <span class="error ion-padding" *ngIf="ingresoCedula()">
-          Ingrese una cedula válida.
-        </span>
+          <ion-item lines="full">
+            
+            <ion-input  formControlName="cedula" type="text" maxlength="10" required ></ion-input>
+          </ion-item>
+          <div *ngIf="ionicForm.get('cedula').invalid && (ionicForm.get('cedula').dirty || ionicForm.get('cedula').touched)" class="error-message">
+            <span class="error ion-padding" *ngIf="ionicForm.get('cedula').hasError('required')">Ingrese un numero de cédula</span>
+            <span class="error ion-padding" *ngIf="ionicForm.get('cedula').hasError('pattern')">Ingrese un número de cédula válido </span>
+          </div>
         </div>
 
        <!-- <div class="itemdatos">
@@ -108,10 +93,10 @@
           <ion-item lines="full">
             <ion-input formControlName="bday" type="text" placeholder="AAAA-MM-DD"></ion-input>
           </ion-item>
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.bday.errors?.required">
+          <span class="error ion-padding" *ngIf=" errorControl.bday.errors?.required">
             Ingrese su fecha de nacimiento
           </span>
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.bday.errors?.pattern">
+          <span class="error ion-padding" *ngIf=" errorControl.bday.errors?.pattern">
             Ingrese una fecha válida
           </span>
         </div>-->
@@ -129,13 +114,10 @@
             required> </ion-input>
             
           </ion-item>
-          
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.required">
-            Es necesario ingresar una contraseña.
-          </span>
-          <!--<span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.minlength">
-            Ingrese una contraseña mayor a 8 caracteres.
-          </span>-->
+          <div *ngIf="ionicForm.get('password').invalid && (ionicForm.get('password').dirty || ionicForm.get('password').touched)" class="error-message">
+            <span class="error ion-padding" *ngIf="ionicForm.get('password').hasError('required')">Ingrese una contraseña</span>
+            <span class="error ion-padding" *ngIf="ionicForm.get('password').hasError('minlength')">La contraseña debe contener mínimo 4 caracteres</span>
+          </div>
         </div>
 
         <ion-row>

@@ -18,8 +18,6 @@ export class RegistrarPage implements OnInit {
   maxFecha: string = (new Date().getFullYear() - 18).toString();
   minFecha: string = (new Date().getFullYear() - 80).toString();
 
-  isSubmitted = false;
-
 
   user: RegisterModel = new RegisterModel();
   camposCompletos: boolean = false;
@@ -44,9 +42,9 @@ export class RegistrarPage implements OnInit {
       email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')]],
       //bday: ['', [Validators.required, Validators.pattern('(?:19[0-9]{2}|20[01][0-9]|2020)[-](?:0[1-9]|1[012])[-](?:0[1-9]|[12][0-9]|3[01])')]],
       //f2_edudetail: ['', [Validators.required]],
-      mobile: ['', [Validators.required,Validators.pattern('[0-9]{10}')]],
-      cedula: ['', [Validators.required, Validators.pattern('[0-9]{10}')]],
-      password:['', [Validators.required]],
+      mobile: ['', [Validators.required,Validators.pattern('^09\d{8}$')]],
+      cedula: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+      password:['', [Validators.required, Validators.minLength(4)]],
     }
     );
 
@@ -195,7 +193,7 @@ signUp(){
       console.log(response.message)
       this.alertController.create({
         message: response.message,
-        buttons: ['Dismiss']
+        buttons: ['Aceptar']
       }).then(alert=> alert.present())
       this.redirigirSignin()
       },
@@ -203,7 +201,7 @@ signUp(){
       let keyError: string = Object.keys(error.error)[0]
       this.alertController.create({
         message: error.error[keyError],
-        buttons: ['Dismiss']
+        buttons: ['Aceptar']
       }).then(alert=> alert.present())
     }
   });

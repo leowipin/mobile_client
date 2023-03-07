@@ -21,13 +21,10 @@
             </div>
             <ion-input formControlName="email" type="email"></ion-input>
           </ion-item>
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.required">
-            Es necesario un coreo electronico.
-          </span>
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.email">
-            Ingrese un correo valido.
-          </span>
-
+          <div *ngIf="ionicForm.get('email').invalid && (ionicForm.get('email').dirty || ionicForm.get('email').touched)" class="error-message">
+            <span class="error ion-padding" *ngIf="ionicForm.get('email').hasError('required')">Ingrese un correo electrónico</span>
+            <span class="error ion-padding" *ngIf="ionicForm.get('email').hasError('pattern')">Ingrese un correo eletrónico válido</span>
+          </div>
           <ion-label class="centrar-text mt-2">Contraseña</ion-label>
           <ion-item>
             <div class="eye-wrapper">
@@ -40,9 +37,10 @@
             required> </ion-input>
           </ion-item>
           
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.password.errors?.required">
-            Es necesario ingresar una contraseña.
-          </span>
+          <div *ngIf="ionicForm.get('password').invalid && (ionicForm.get('password').dirty || ionicForm.get('password').touched)" class="error-message">
+            <span class="error ion-padding" *ngIf="ionicForm.get('password').hasError('required')">Ingrese una contraseña</span>
+            <span class="error ion-padding" *ngIf="ionicForm.get('password').hasError('minlength')">La contraseña debe contener mínimo 4 caracteres</span>
+          </div>
 
         </div>
 

@@ -31,8 +31,8 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     this.ionicForm = this.formBuilder.group({
-      password: ['', [Validators.required]],
-      email: ['', [Validators.required,  Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(4)]],
+      email: ['', [Validators.required,   Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')]],
     })
   }
 
@@ -46,7 +46,6 @@ export class LoginPage implements OnInit {
       return false;
     } else {
       this.signIn()
-      
     }
   }
 
@@ -81,7 +80,7 @@ export class LoginPage implements OnInit {
       next: (response) => {
         this.alertController.create({
           message:"Inicio de sesion exitoso",
-          buttons: ['Dismiss']
+          buttons: ['Aceptar']
         }).then(alert=> alert.present())
         this.redirigir_home()
         },
@@ -89,7 +88,7 @@ export class LoginPage implements OnInit {
         let keyError: string = Object.keys(error.error)[0]
         this.alertController.create({
           message: error.error[keyError],
-          buttons: ['Dismiss']
+          buttons: ['Aceptar']
         }).then(alert=> alert.present())
       }
     });
@@ -110,85 +109,123 @@ export class LoginPage implements OnInit {
 @Component({
   selector: 'my-modal',
   template: `
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>
-          Restablecimiento
-        </ion-title>
-        <ion-buttons slot="end">
-          <ion-button (click)="dismiss()">
-            <ion-icon slot="icon-only" name="close"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Restablecer</ion-title>
+    <ion-buttons slot="end">
+          <ion-button (click)="dismiss()">Cerrar</ion-button>
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
-    <ion-content class="item-datos">
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title>Ingresa tu correo</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <p>Te llegará un correo de restablecimiento de contraseña con un token adjunto el cual debes de usar para cambiar tu contraseña.</p>
-          <ion-item>
-            <ion-label position="floating">Correo electrónico</ion-label>
-            <ion-input type="email" [(ngModel)]="email"></ion-input>
-          </ion-item>
-          <ion-button expand="block" (click)="sendResetPasswordEmail()">Enviar</ion-button>
-        </ion-card-content>
-      </ion-card>
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title>Cambia tu contraseña</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <ion-item>
-            <ion-label position="floating">Token</ion-label>
-            <ion-input type="text" [(ngModel)]="token"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">Nueva contraseña</ion-label>
-            <ion-input type="{{showPassword ? 'text' : 'password'}}" [(ngModel)]="password"></ion-input>
-            <ion-icon slot="end" [name]="showPassword ? 'eye-outline' : 'eye-off-outline'" (click)="togglePassword()"></ion-icon>
-          </ion-item>
-          <ion-button expand="block" (click)="changePassword()">Cambiar</ion-button>
-        </ion-card-content>
-      </ion-card>
-    </ion-content>
+<ion-content>
+  <form [formGroup]="sendEmailForm" (ngSubmit)="submitForm()">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Ingresa tu correo</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Te llegará un correo de restablecimiento de contraseña con un código adjunto el cual debes de usar para cambiar tu contraseña.</p>
+        <ion-item>
+          <ion-label position="floating">Correo electrónico</ion-label>
+          <ion-input type="email" formControlName="email"></ion-input>
+        </ion-item>
+        <div *ngIf="sendEmailForm.get('email').invalid && (sendEmailForm.get('email').dirty || sendEmailForm.get('email').touched)" class="error-message">
+          <div *ngIf="sendEmailForm.get('email').hasError('required')">Ingrese un correo electrónico</div>
+          <div *ngIf="sendEmailForm.get('email').hasError('pattern')">Ingrese un correo electrónico válido</div>
+        </div>
+        <ion-button expand="block" type="submit" [disabled]="!sendEmailForm.valid">Enviar</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </form>
+  <form [formGroup]="resetPasswordForm" (ngSubmit)="submitForm2()">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Cambia tu contraseña</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="floating">Código</ion-label>
+          <ion-input type="text" formControlName="token"  maxlength="6"></ion-input>
+        </ion-item>
+        <div *ngIf="resetPasswordForm.get('token').invalid && (resetPasswordForm.get('token').dirty || resetPasswordForm.get('token').touched)" class="error-message">
+          <div *ngIf="resetPasswordForm.get('token').hasError('required')">Ingrese el código</div>
+          <div *ngIf="resetPasswordForm.get('token').hasError('pattern')">El código debe contener 6 caracteres alfanuméricos</div>
+        </div>
+        <ion-item>
+          <ion-label position="floating">Nueva contraseña</ion-label>
+          <ion-input type="{{showPassword ? 'text' : 'password'}}" formControlName="password" minlength="4"></ion-input>
+          <ion-icon slot="end" [name]="showPassword ? 'eye-outline' : 'eye-off-outline'" (click)="togglePassword()"></ion-icon>
+        </ion-item>
+        <div *ngIf="resetPasswordForm.get('password').invalid && (resetPasswordForm.get('password').dirty || resetPasswordForm.get('password').touched)" class="error-message">
+          <div *ngIf="resetPasswordForm.get('password').hasError('required')">Ingrese una contraseña</div>
+          <div *ngIf="resetPasswordForm.get('password').hasError('minlength')">La contraseña debe contener mínimo 4 caracteres</div>
+        </div>
+        <ion-button expand="block" type="submit" [disabled]="!resetPasswordForm.valid">Enviar</ion-button>
+    </ion-card-content>
+  </ion-card>
+</form>
   `,
   styleUrls: ['./my-modal.scss']
 })
 export class MyModalComponent {
-  email: string;
-  password:string;
+  sendEmailForm: FormGroup;
+  resetPasswordForm: FormGroup;
+  showPassword = false;
+  email:string;
   token:string;
-  showPassword: boolean = false;
+  password:string;
 
-  constructor(private modalController: ModalController, private clienteWAService: ClienteWAService, private alertController: AlertController) {
+  constructor(private modalController: ModalController, private clienteWAService: ClienteWAService, private alertController: AlertController,public formBuilder: FormBuilder) {
+  }
+
+  ngOnInit() {
+    this.sendEmailForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')]],
+    });
+    this.resetPasswordForm = this.formBuilder.group({
+      token: ['', [Validators.required, Validators.pattern(/^\w{6}$/)]],
+      password: ['', [Validators.required, Validators.minLength(4)]],
+    });
   }
 
   dismiss() {
     this.modalController.dismiss();
   }
 
-  sendResetPasswordEmail(){
-    const data: ResetPasswordEmail = {
-      email: this.email,
+  submitForm() {
+    if (!this.sendEmailForm.valid) {  
+      return false;
+    } else {
+      this.sendResetPasswordEmail()
     }
     
+  }
+
+  submitForm2(){
+    if (!this.resetPasswordForm.valid) {  
+      return false;
+    } else {
+      this.changePassword()
+    }
+  }
+
+  sendResetPasswordEmail(){
+    const data: ResetPasswordEmail = {
+      email: this.sendEmailForm.value.email,
+    }
     this.clienteWAService.sendResetPasswordEmail(data).subscribe({
       next: (response) => {
         this.alertController.create({
           message: response.message,
-          buttons: ['Ok']
+          buttons: ['Aceptar']
         }).then(alert=> alert.present())
-        //this.redirigir_home()
         },
       error: (error) => {
         let keyError: string = Object.keys(error.error)[0]
         this.alertController.create({
           message: error.error[keyError],
-          buttons: ['Ok']
+          buttons: ['Aceptar']
         }).then(alert=> alert.present())
       }
     });
@@ -197,27 +234,26 @@ export class MyModalComponent {
 
   changePassword(){
     const data: ResetPasswordToken = {
-      token: this.token,
-      password: this.password
+      token: this.resetPasswordForm.value.token,
+      password: this.resetPasswordForm.value.password
     }
     this.clienteWAService.changePassword(data).subscribe({
       next: (response) =>{
         this.alertController.create({
           message: response.message,
-          buttons: ['Ok']
+          buttons: ['Aceptar']
         }).then(alert=> alert.present())
       },
       error: (error) =>{
         let keyError: string = Object.keys(error.error)[0]
         this.alertController.create({
           message: error.error[keyError],
-          buttons: ['Ok']
+          buttons: ['Aceptar']
         }).then(alert=> alert.present())
       }
     })
   }
 
-  
   togglePassword() {
     this.showPassword = !this.showPassword;
   }
