@@ -125,19 +125,6 @@ export class ServiciosPage implements OnInit {
     console.log(result);
   }
 
-  openFirst() {
-    this.menu.enable(true, 'first');
-    this.menu.open('first');
-  }
-
-  openEnd() {
-    this.menu.open('end');
-  }
-
-  openCustom() {
-    this.menu.enable(true, 'custom');
-    this.menu.open('custom');
-  }
 
   async dibujarRuta() {
     if (this.origen.lat==0 && this.origen.lng==0 && this.destino.lat==0 && this.destino.lng==0){

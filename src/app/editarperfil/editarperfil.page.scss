@@ -41,10 +41,7 @@ div h4{
 
 
 .datos ion-item{
-    text-align: center;
     border-radius: 60px ;
-    width: auto;
-    height: 2rem;
     --border-color: #3a75af;
       --ion-background-color: #e1e6eb;
   
@@ -226,4 +223,8 @@ div.logosepro {
     height: 30px;
     width: 30px;
     color: white;
+  }
+  .datos .email-input ion-item{
+    --border-color: #3a75af;
+      --ion-background-color: #9e9e9e;
   }

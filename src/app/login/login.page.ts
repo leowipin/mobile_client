@@ -78,11 +78,7 @@ export class LoginPage implements OnInit {
     
     this.clienteWAService.signin(data).subscribe({
       next: (response) => {
-        this.alertController.create({
-          message:"Inicio de sesion exitoso",
-          buttons: ['Aceptar']
-        }).then(alert=> alert.present())
-        this.redirigir_home()
+        this.redirigirServicios()
         },
       error: (error) => {
         let keyError: string = Object.keys(error.error)[0]

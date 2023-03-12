@@ -11,7 +11,7 @@
       <ion-content scroll-y=true>
         <ion-menu-toggle auto-hide="false" text-center>
           <p align="center"><ion-img menuClose src="assets/img/backcliente.png" (click)="openPage()"></ion-img></p>
-          <p ion-text header-subtitle> Hayleen Carrillo{{nombreur}} {{apellidour}}</p>
+          <p ion-text header-subtitle>{{nombreur}} {{apellidour}}</p>
         </ion-menu-toggle>
         
         <div class="front">
@@ -118,7 +118,7 @@
           <div class="cerrarsesion">
             <ion-item lines="none">
               <ion-img src="assets/img/cerrarsesion.png"></ion-img>
-              <button [routerLink]="'/login'" ion-button>CERRAR SESION</button>
+              <button ion-button (click)="signOut()">CERRAR SESION</button>
             </ion-item>  
             
           </div>

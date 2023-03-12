@@ -8,6 +8,8 @@ import { EditarperfilPageRoutingModule } from './editarperfil-routing.module';
 import { EditarperfilPage } from './editarperfil.page';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ClienteWAService } from '../servicios/login-registro/login-registro.service';
+
 
 @NgModule({
   imports: [
@@ -17,6 +19,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     EditarperfilPageRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [EditarperfilPage]
+  declarations: [EditarperfilPage],
+  providers:[ClienteWAService]
 })
 export class EditarperfilPageModule {}

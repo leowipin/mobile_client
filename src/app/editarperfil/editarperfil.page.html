@@ -14,7 +14,7 @@
   </div>
 
   <div class="titulo">
-    <h4>EDITAR PERFIL</h4>
+    <h4>PERFIL</h4>
   </div>
 
   <div class="container">
@@ -119,21 +119,31 @@
             Su nombre debe tener al menos 2 caracteres. 
           </span> 
         </div>
-        
+
         <div class="itemdatos">
-          <ion-label >Email</ion-label>
+          <ion-label >Gender</ion-label>
         <ion-item lines="full">
-          
-          <ion-input formControlName="email" type="email"></ion-input>
+          <ion-select formControlName="gender">
+            <ion-select-option value="masculino">masculino</ion-select-option>
+            <ion-select-option value="femenino">femenino</ion-select-option>
+            <ion-select-option value="indefinido">indefinido</ion-select-option>
+          </ion-select>
         </ion-item>
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.required">
-          Es necesario que escriba un correo.
-        </span>
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.pattern">
-          Por favor, ingrese un correo válido.
+        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.gender.errors?.required">
+          This field is required.
         </span>
         </div>
         
+        <div class="itemdatos">
+          <ion-label >Email</ion-label>
+        <div class="email-input" >
+          <ion-item lines="full">
+            <div>{{email}}</div>
+          </ion-item>
+        </div>
+        </div>
+
+
         <ion-row>
           <div class="botones">
           <ion-col>

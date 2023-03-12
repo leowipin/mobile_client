@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { tap } from 'rxjs/operators';
@@ -7,8 +7,11 @@ import { SignUp } from "src/app/interfaces/client/signup";
 import { SignInResponse } from "src/app/interfaces/response/signin";
 import { SignUpResponse } from "src/app/interfaces/response/signup";
 import { ResetPasswordEmail } from "src/app/interfaces/client/resetPassword";
-import { ResetPasswordResponse } from "src/app/interfaces/response/resetPasswordEmail";
+import { MessageResponse } from "src/app/interfaces/response/message";
 import { ResetPasswordToken } from "src/app/interfaces/client/resetPasswordToken";
+import { Names } from "src/app/interfaces/client/name";
+import { ClientData } from "src/app/interfaces/client/clientData";
+
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +27,7 @@ export class ClienteWAService {
     return this.http.post<SignInResponse>(endpoint, data).pipe(
       tap(response => {
         localStorage.setItem('token', response.token);
+        location.reload();
       }),
     );
   }
@@ -33,14 +37,26 @@ export class ClienteWAService {
     return this.http.post<SignUpResponse>(endpoint, data)
   }
 
-  sendResetPasswordEmail(data:ResetPasswordEmail): Observable<ResetPasswordResponse>{
+  sendResetPasswordEmail(data:ResetPasswordEmail): Observable<MessageResponse>{
     const endpoint:string = this.DJANGO_DOMAIN_NAME+'users/passwordReset/';
-    return this.http.post<ResetPasswordResponse>(endpoint, data)
+    return this.http.post<MessageResponse>(endpoint, data)
   }
 
-  changePassword(data:ResetPasswordToken): Observable<ResetPasswordResponse>{
-    const endpoint:string = this.DJANGO_DOMAIN_NAME+'users/changePassword/'
-    return this.http.post<ResetPasswordResponse>(endpoint, data)
+  changePassword(data:ResetPasswordToken): Observable<MessageResponse>{
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+'users/changePassword/';
+    return this.http.post<MessageResponse>(endpoint, data)
+  }
+
+  getNames(token:string): Observable<Names>{
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+'users/clientNames/';
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+    return this.http.get<Names>(endpoint, { headers: headers })
+  }
+
+  getClientData(token:string): Observable<ClientData>{
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+'users/client/';
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+    return this.http.get<ClientData>(endpoint, { headers: headers })
   }
 
 }

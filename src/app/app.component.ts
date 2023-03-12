@@ -3,6 +3,7 @@ import { NavController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { saveConfig } from '@ionic/core';
 import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner/ngx'
+import { ClienteWAService } from './servicios/login-registro/login-registro.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,7 @@ export class AppComponent {
   nombreur: any;
   apellidour: any;
 
-  constructor(private route: ActivatedRoute, private navCtrl: NavController, private barcodeScanner: BarcodeScanner) { }
+  constructor(private route: ActivatedRoute, private navCtrl: NavController, private barcodeScanner: BarcodeScanner, private clienteWAService: ClienteWAService) { }
 
   myDate: String = new Date().toISOString();
 
@@ -24,15 +25,38 @@ export class AppComponent {
 
 
   ngOnInit() {
-/*
-    this.route.queryParams.subscribe(params => {
-      console.log(params); // { order: "popular" 
-      this.recibido = params;
-      this.nombreur = this.recibido.datos.name;
-      this.apellidour = this.recibido.datos.lastname;
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.navCtrl.navigateRoot('/servicios');
+    } else{
+      this.navCtrl.navigateRoot('/login')
     }
-    );
-  */
+    // Actualizar detalles del usuario en el menú de hamburguesas
+    this.actualizarUsuario();
+  }
+  
+  actualizarUsuario() {
+    // Recuperar token del LocalStorage
+    const token = localStorage.getItem('token');
+  
+    if (token) {
+      // Hacer una solicitud HTTP para obtener detalles del usuario
+      this.clienteWAService.getNames(token).subscribe(
+        (response) => {
+          // Actualizar detalles del usuario en el menú de hamburguesas
+          this.nombreur = response.first_name;
+          this.apellidour = response.last_name;
+        },
+        (error) => {
+          // Manejar el error de la solicitud HTTP
+          console.log(error);
+        }
+      );
+    } else {
+      // Si el token no está presente en el LocalStorage, mostrar el menú de hamburguesas con el nombre y apellido por defecto
+      this.nombreur = "Nombre";
+      this.apellidour = "Apellido";
+    }
   }
 
 // Idealmente con el QR Generado por el BackEnd 
@@ -44,6 +68,11 @@ export class AppComponent {
     }).catch(err => {
       console.log('Error', err);
     });
+  }
+
+  signOut() {
+    localStorage.removeItem('token');
+    location.reload();
   }
 
 

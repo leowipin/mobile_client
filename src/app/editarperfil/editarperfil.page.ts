@@ -4,12 +4,13 @@ import { NavController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators, ValidationErrors, ValidatorFn } from "@angular/forms";
 import * as validarcedula from 'src/scripts/validarcedula.js';
 import { validarCedulaAlg } from 'src/app/editarperfil/cedula.validator';
-
 import { ModalController } from '@ionic/angular';
 import { ProfilePhotoOptionComponent } from '../components/profile-photo-option/profile-photo-option.component';
+import { ClienteWAService } from '../servicios/login-registro/login-registro.service';
 
-import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { CameraResultType, CameraSource, Camera } from '@capacitor/camera';
 import * as moment from 'moment';
+import { ClientData } from '../interfaces/client/clientData';
 
 
 @Component({
@@ -20,6 +21,7 @@ import * as moment from 'moment';
 export class EditarperfilPage implements OnInit {
 
   photo = 'assets/img/perfilcliente.png';
+  
 
   public validador = true;
   ionicForm: FormGroup;
@@ -36,10 +38,35 @@ export class EditarperfilPage implements OnInit {
   cedulau: null;
   direccionu: null;
 
-  constructor(private modalController: ModalController, private navCtrl: NavController, public formBuilder: FormBuilder, public alertController: AlertController) { }
+  email: string;
+
+
+  constructor(private modalController: ModalController, private navCtrl: NavController, public formBuilder: FormBuilder, public alertController: AlertController, private clienteWAService: ClienteWAService,) { }
 
   ngOnInit() {
     this.initForm();
+    this.getClientData();
+  }
+
+  getClientData() {
+    console.log("getdata")
+    const token = localStorage.getItem('token');
+      
+    this.clienteWAService.getClientData(token).subscribe({
+      next: (response) => {
+        this.ionicForm.patchValue({
+          name: response.first_name,
+          lastname: response.last_name,
+          cedula: response.dni,
+          mobile: response.phone_number,
+          bday: response.birthdate,
+          direccion: response.address,
+          gender: response.gender,
+        });
+        this.email = response.email;
+        },
+      error: (error) => {}
+    });
   }
 
   initForm() {
@@ -50,6 +77,7 @@ export class EditarperfilPage implements OnInit {
       bday: ['', [Validators.required, Validators.pattern('(?:19[0-9]{2}|20[01][0-9]|2020)[-](?:0[1-9]|1[012])[-](?:0[1-9]|[12][0-9]|3[01])')]],
       mobile: ['', [Validators.required, Validators.pattern('^09[0-9]{8}$')]],
       cedula: ['', [Validators.required, Validators.pattern('[0-9]{10}')]],
+      gender: ['', [Validators.required]],
       direccion: ['', [Validators.required, Validators.minLength(2), Validators.pattern('[a-zA-Z0-9- .#]*')]],
     },
       {
@@ -196,7 +224,7 @@ export class EditarperfilPage implements OnInit {
 
 
   finEdicion() {
-    this.navCtrl.navigateForward("/perfil", {
+    this.navCtrl.navigateForward("/homeperfil", {
       queryParams: {
         datos: this.ionicForm.value, nombreusua: this.nombreu, apellidousua: this.apellidou,
         emailusua: this.emailu, fechanacimientousua: this.fechanacimientou, celularusua: this.celularu, cedulausua: this.cedulau,
@@ -245,19 +273,22 @@ export class EditarperfilPage implements OnInit {
 
   }
 
-  async takePicture(type) {
+  async takePicture(type:string) {
+    let sourceType: CameraSource;
+    if (type === 'Camera') {
+      sourceType = CameraSource.Camera;
+    } else {
+      console.log("else")
+      sourceType = CameraSource.Photos;
+    }
     const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: false,
       resultType: CameraResultType.Base64,
-      source: CameraSource.Photos
-    }).then(res => {
-      //alert(res.base64String); 
-      this.photo = 'data:image/jpeg;base64,' + res.base64String;
+      source: sourceType
     });
-    console.log(this.photo)
-    //this.photo = image.webPath;
-
+    this.photo = 'data:image/jpeg;base64,' + image.base64String;
+    console.log(this.photo);
   }
 
   async openOptionSelection() {
@@ -274,11 +305,5 @@ export class EditarperfilPage implements OnInit {
       });
     return await modal.present();
   }
-
-
-
-
-
-
 
 }
