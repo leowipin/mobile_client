@@ -6,7 +6,7 @@ import { ClienteWAService } from '../servicios/login-registro/login-registro.ser
 import { AuthService } from '../servicios/login-registro/auth.service';
 import { SignIn } from '../interfaces/client/signin';
 import { ModalController, NavParams} from '@ionic/angular';
-import { ResetPasswordEmail } from '../interfaces/client/resetPassword';
+import { ClientEmail } from '../interfaces/client/clientEmail';
 import { ResetPasswordToken } from '../interfaces/client/resetPasswordToken';
 @Component({
   selector: 'app-login',
@@ -207,7 +207,7 @@ export class MyModalComponent {
   }
 
   sendResetPasswordEmail(){
-    const data: ResetPasswordEmail = {
+    const data: ClientEmail = {
       email: this.sendEmailForm.value.email,
     }
     this.clienteWAService.sendResetPasswordEmail(data).subscribe({

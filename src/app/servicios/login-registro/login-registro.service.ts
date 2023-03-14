@@ -6,11 +6,12 @@ import { SignIn } from "src/app/interfaces/client/signin";
 import { SignUp } from "src/app/interfaces/client/signup";
 import { SignInResponse } from "src/app/interfaces/response/signin";
 import { SignUpResponse } from "src/app/interfaces/response/signup";
-import { ResetPasswordEmail } from "src/app/interfaces/client/resetPassword";
+import { ClientEmail } from "src/app/interfaces/client/clientEmail";
 import { MessageResponse } from "src/app/interfaces/response/message";
 import { ResetPasswordToken } from "src/app/interfaces/client/resetPasswordToken";
 import { Names } from "src/app/interfaces/client/name";
 import { ClientData } from "src/app/interfaces/client/clientData";
+import { ClientNewPassword } from "src/app/interfaces/client/clientNewPassword";
 
 
 @Injectable({
@@ -37,7 +38,7 @@ export class ClienteWAService {
     return this.http.post<SignUpResponse>(endpoint, data)
   }
 
-  sendResetPasswordEmail(data:ResetPasswordEmail): Observable<MessageResponse>{
+  sendResetPasswordEmail(data:ClientEmail): Observable<MessageResponse>{
     const endpoint:string = this.DJANGO_DOMAIN_NAME+'users/passwordReset/';
     return this.http.post<MessageResponse>(endpoint, data)
   }
@@ -57,6 +58,24 @@ export class ClienteWAService {
     const endpoint:string = this.DJANGO_DOMAIN_NAME+'users/client/';
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     return this.http.get<ClientData>(endpoint, { headers: headers })
+  }
+
+  modifyClientData(token:string, data:ClientData): Observable<MessageResponse>{
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+'users/client/';
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+    return this.http.put<MessageResponse>(endpoint, data, { headers: headers })
+  }
+
+  sendChangeEmail(data:ClientEmail, token:string): Observable<MessageResponse>{
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+'users/changeEmail/';
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+    return this.http.post<MessageResponse>(endpoint, data, { headers: headers })
+  }
+
+  sendNewPasswordEmail(data:ClientNewPassword, token:string): Observable<MessageResponse>{
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+'users/changeNewPassword/';
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+    return this.http.post<MessageResponse>(endpoint, data, { headers: headers })
   }
 
 }

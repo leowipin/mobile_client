@@ -11,6 +11,8 @@ import { ClienteWAService } from '../servicios/login-registro/login-registro.ser
 import { CameraResultType, CameraSource, Camera } from '@capacitor/camera';
 import * as moment from 'moment';
 import { ClientData } from '../interfaces/client/clientData';
+import { ClientEmail } from '../interfaces/client/clientEmail';
+import { ClientNewPassword } from '../interfaces/client/clientNewPassword';
 
 
 @Component({
@@ -49,7 +51,6 @@ export class EditarperfilPage implements OnInit {
   }
 
   getClientData() {
-    console.log("getdata")
     const token = localStorage.getItem('token');
       
     this.clienteWAService.getClientData(token).subscribe({
@@ -65,24 +66,63 @@ export class EditarperfilPage implements OnInit {
         });
         this.email = response.email;
         },
-      error: (error) => {}
+      error: (error) => {
+        let keyError: string = Object.keys(error.error)[0]
+        this.alertController.create({
+          header: 'Error al mostrar datos',
+          message: error.error[keyError],
+          buttons: ['Aceptar']
+        }).then(alert=> alert.present())
+      }
     });
+  }
+
+  modifyData(){
+    const data: ClientData = {
+      first_name: this.ionicForm.value.name,
+      last_name: this.ionicForm.value.lastname,
+      dni: this.ionicForm.value.cedula,
+      phone_number: this.ionicForm.value.mobile,
+      birthdate:this.ionicForm.value.bday,
+      address: this.ionicForm.value.direccion,
+      gender: this.ionicForm.value.gender,
+      email: this.ionicForm.value.email
+    }
+    const token = localStorage.getItem('token');
+    this.clienteWAService.modifyClientData(token, data).subscribe({
+      next: (response) => {
+        this.alertController.create({
+          header: 'Guardar datos',
+          message: response.message,
+          buttons: ['Aceptar']
+        }).then(alert=> alert.present())
+        },
+      error: (error) => {
+        let keyError: string = Object.keys(error.error)[0]
+        this.alertController.create({
+          header: 'Error al guardar',
+          message: error.error[keyError],
+          buttons: ['Aceptar']
+        }).then(alert=> alert.present())
+      }
+    });
+
   }
 
   initForm() {
     this.ionicForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(2), Validators.pattern('[a-zA-Z ]*')]],
       lastname: ['', [Validators.required, Validators.minLength(2), Validators.pattern('[a-zA-Z ]*')]],
-      email: ['', [Validators.required, Validators.pattern('[a-z/.0-9_-]+@[a-z0-9]+[.{1}][a-z]{2,}([.{1}][a-z]{2,})?')]],
+      //email: ['', [Validators.required, Validators.pattern('[a-z/.0-9_-]+@[a-z0-9]+[.{1}][a-z]{2,}([.{1}][a-z]{2,})?')]],
       bday: ['', [Validators.required, Validators.pattern('(?:19[0-9]{2}|20[01][0-9]|2020)[-](?:0[1-9]|1[012])[-](?:0[1-9]|[12][0-9]|3[01])')]],
       mobile: ['', [Validators.required, Validators.pattern('^09[0-9]{8}$')]],
       cedula: ['', [Validators.required, Validators.pattern('[0-9]{10}')]],
       gender: ['', [Validators.required]],
       direccion: ['', [Validators.required, Validators.minLength(2), Validators.pattern('[a-zA-Z0-9- .#]*')]],
     },
-      {
+      /*{
         validators: validarCedulaAlg
-      });
+      }*/);
   }
 
   ingresoCedula() {
@@ -104,14 +144,21 @@ export class EditarperfilPage implements OnInit {
 
 
   submitForm() {
-    this.isSubmitted = true;
     //!this.ionicForm.valid
     var today = moment(new Date());
     var test = moment(new Date(this.ionicForm.value.bday)).format("YYYY-MM-DD");
-    var resul = test.toString();
     var difference = today.diff(test, "y") < 18;
-
-    if (this.ionicForm.value.name == '' || this.ionicForm.value.lastname == '' || this.ionicForm.value.email == '' || this.ionicForm.value.bday == '') {
+    this.isSubmitted = true;
+    if (difference) { 
+      this.presentUnderAge();
+      return false;
+    } else if(!this.ionicForm.valid){      
+      this.presentAlertIncompleto();
+      return false;
+    } else {
+      this.modifyData()
+    }
+    /*if (this.ionicForm.value.name == '' || this.ionicForm.value.lastname == '' || this.ionicForm.value.email == '' || this.ionicForm.value.bday == '') {
       console.log('Campos incompletos!')
       console.log(this.ionicForm.value)
 
@@ -134,7 +181,7 @@ export class EditarperfilPage implements OnInit {
 
       return true
 
-    }
+    }*/
   }
 
   async presentUnderAge() {
@@ -161,7 +208,6 @@ export class EditarperfilPage implements OnInit {
 
   async presentAlertEditar() {
     const alert = await this.alertController.create({
-      header: 'Editar datos',
       message: '¿Está seguro de salir?',
       buttons: [
         {
@@ -169,13 +215,11 @@ export class EditarperfilPage implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-            console.log('Salió de editar datos');
             this.finEdicion()
           }
         }, {
           text: 'No',
           handler: () => {
-            console.log('Sigue editando');
           }
         }
       ]
@@ -188,7 +232,7 @@ export class EditarperfilPage implements OnInit {
 
   async presentAlertGuardar() {
     const alert = await this.alertController.create({
-      header: 'Editar datos',
+      header: 'Guardar datos',
       message: 'Sus datos han sido guardados correctamente.',
       buttons: [
         {
@@ -212,9 +256,9 @@ export class EditarperfilPage implements OnInit {
   async presentAlertIncompleto() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Editar perfil',
+      header: 'Guardar datos',
       //subHeader: 'Subtitle',
-      message: 'Para editar su perfil debe completar todos los campos solicitados',
+      message: 'Para que sus datos sean guardados debe completar los campos solicitados correctamente',
       buttons: ['OK']
     });
 
@@ -306,4 +350,216 @@ export class EditarperfilPage implements OnInit {
     return await modal.present();
   }
 
+  async changeEmailModal() {
+    const modal = await this.modalController.create({
+      component: MyEmailModalComponent,
+      componentProps: { value: 123 }
+    });
+    return await modal.present();
+  }
+
+  async changePasswordModal() {
+    const modal = await this.modalController.create({
+      component: MyPasswordModalComponent,
+      componentProps: { value: 123 }
+    });
+    return await modal.present();
+  }
+
+}
+
+@Component({
+  selector: 'my-modal-email',
+  template: `
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Cambiar correo</ion-title>
+    <ion-buttons slot="end">
+          <ion-button (click)="dismiss()">Cerrar</ion-button>
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="sendEmailForm" (ngSubmit)="submitForm()">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Ingresa tu correo</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Recibirás un correo de confirmación a la nueva dirección de correo que ingreses. Por favor, revisa tu bandeja de entrada y en caso de no encontrarlo, verifica también la carpeta de correo no deseado. Es importante que confirmes el correo correspondiente para completar el cambio de correo. Cierra sesión cuando el cambio esté hecho.</p>
+        <ion-item>
+          <ion-label position="floating">Correo electrónico</ion-label>
+          <ion-input type="email" formControlName="email"></ion-input>
+        </ion-item>
+        <div *ngIf="sendEmailForm.get('email').invalid && (sendEmailForm.get('email').dirty || sendEmailForm.get('email').touched)" class="error-message">
+          <div *ngIf="sendEmailForm.get('email').hasError('required')">Ingrese un correo electrónico</div>
+          <div *ngIf="sendEmailForm.get('email').hasError('pattern')">Ingrese un correo electrónico válido</div>
+        </div>
+        <ion-button expand="block" type="submit" [disabled]="!sendEmailForm.valid">Enviar</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </form>`,
+  styleUrls: ['./my-modal.scss']
+})
+export class MyEmailModalComponent implements OnInit {
+  sendEmailForm: FormGroup;
+  showPassword = false;
+  email:string;
+
+  constructor(private modalController: ModalController, private clienteWAService: ClienteWAService, private alertController: AlertController,public formBuilder: FormBuilder) {
+  }
+
+  ngOnInit() {
+    this.sendEmailForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')]],
+    });
+  }
+
+  dismiss() {
+    this.modalController.dismiss();
+  }
+
+  submitForm() {
+    if (!this.sendEmailForm.valid) {  
+      return false;
+    } else {
+      this.sendEmail()
+    }
+  }
+  sendEmail(){
+    const data: ClientEmail = {
+      email:this.email = this.sendEmailForm.value.email
+    }
+    const token = localStorage.getItem('token');
+    this.clienteWAService.sendChangeEmail(data, token).subscribe({
+      next: (response) => {
+        this.alertController.create({
+          header: 'Envio email',
+          message: response.message,
+          buttons: ['Aceptar']
+        }).then(alert=> alert.present())
+      },
+      error: (error) => {
+        let keyError: string = Object.keys(error.error)[0]
+        this.alertController.create({
+          header: 'Error email',
+          message: error.error[keyError],
+          buttons: ['Aceptar']
+        }).then(alert=> alert.present())
+      }
+    });
+  }
+
+}
+
+@Component({
+  selector: 'my-modal-password',
+  template: `
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Cambiar contraseña</ion-title>
+    <ion-buttons slot="end">
+          <ion-button (click)="dismiss()">Cerrar</ion-button>
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="changePasswordForm" (ngSubmit)="submitForm()">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Cambia tu contraseña</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+      <p>Recibirás un correo de confirmación a la dirección de correo asociada a tu cuenta. Por favor, revisa tu bandeja de entrada y en caso de no encontrarlo, verifica también la carpeta de correo no deseado. Es importante que confirmes el correo correspondiente para completar el cambio de contraseña.</p>
+        <ion-item>
+          <ion-label position="floating">Contraseña actual</ion-label>
+          <ion-input type="{{showPassword ? 'text' : 'password'}}" formControlName="password" minlength="4"></ion-input>
+          <ion-icon slot="end" [name]="showPassword ? 'eye-outline' : 'eye-off-outline'" (click)="togglePassword()"></ion-icon>
+        </ion-item>
+        <div *ngIf="changePasswordForm.get('password').invalid && (changePasswordForm.get('password').dirty || changePasswordForm.get('password').touched)" class="error-message">
+          <div *ngIf="changePasswordForm.get('password').hasError('required')">Ingrese una contraseña</div>
+          <div *ngIf="changePasswordForm.get('password').hasError('minlength')">La contraseña debe contener mínimo 4 caracteres</div>
+        </div>
+        <ion-item>
+          <ion-label position="floating">Contraseña nueva</ion-label>
+          <ion-input type="{{showNewPassword ? 'text' : 'password'}}" formControlName="newPassword" minlength="4"></ion-input>
+          <ion-icon slot="end" [name]="showNewPassword ? 'eye-outline' : 'eye-off-outline'" (click)="toggleNewPassword()"></ion-icon>
+        </ion-item>
+        <div *ngIf="changePasswordForm.get('newPassword').invalid && (changePasswordForm.get('newPassword').dirty || changePasswordForm.get('newPassword').touched)" class="error-message">
+          <div *ngIf="changePasswordForm.get('newPassword').hasError('required')">Ingrese una contraseña</div>
+          <div *ngIf="changePasswordForm.get('newPassword').hasError('minlength')">La contraseña debe contener mínimo 4 caracteres</div>
+        </div>
+        <ion-button expand="block" type="submit" [disabled]="!changePasswordForm.valid">Enviar</ion-button>
+    </ion-card-content>
+  </ion-card>
+</form>
+  `,
+  styleUrls: ['./my-modal.scss']
+})
+export class MyPasswordModalComponent {
+  changePasswordForm: FormGroup;
+  showPassword = false;
+  showNewPassword = false;
+  email:string;
+  newPassword:string;
+  password:string;
+
+  constructor(private modalController: ModalController, private clienteWAService: ClienteWAService, private alertController: AlertController,public formBuilder: FormBuilder) {
+  }
+
+  ngOnInit() {
+    this.changePasswordForm = this.formBuilder.group({
+      newPassword: ['', [Validators.required, Validators.minLength(4)]],
+      password: ['', [Validators.required, Validators.minLength(4)]],
+    });
+  }
+
+  dismiss() {
+    this.modalController.dismiss();
+  }
+
+  submitForm(){
+    if (!this.changePasswordForm.valid) {  
+      return false;
+    } else {
+      this.changePassword()
+    }
+  }
+
+  changePassword(){
+    const data: ClientNewPassword = {
+      password:this.changePasswordForm.value.password,
+      new_password:this.changePasswordForm.value.newPassword,
+    }
+    const token = localStorage.getItem('token');
+    this.clienteWAService.sendNewPasswordEmail(data, token).subscribe({
+      next: (response) => {
+        this.alertController.create({
+          header: 'Envio email',
+          message: response.message,
+          buttons: ['Aceptar']
+        }).then(alert=> alert.present())
+      },
+      error: (error) => {
+        let keyError: string = Object.keys(error.error)[0]
+        this.alertController.create({
+          header: 'Error email',
+          message: error.error[keyError],
+          buttons: ['Aceptar']
+        }).then(alert=> alert.present())
+      }
+    });
+  }
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
+
+  toggleNewPassword() {
+    this.showNewPassword = !this.showNewPassword;
+  }
+
+  
 }

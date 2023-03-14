@@ -9,6 +9,8 @@ import { EditarperfilPage } from './editarperfil.page';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ClienteWAService } from '../servicios/login-registro/login-registro.service';
+import { MyEmailModalComponent } from './editarperfil.page';
+import { MyPasswordModalComponent } from './editarperfil.page';
 
 
 @NgModule({
@@ -17,9 +19,10 @@ import { ClienteWAService } from '../servicios/login-registro/login-registro.ser
     FormsModule,
     IonicModule,
     EditarperfilPageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    
   ],
-  declarations: [EditarperfilPage],
+  declarations: [EditarperfilPage, MyEmailModalComponent, MyPasswordModalComponent],
   providers:[ClienteWAService]
 })
 export class EditarperfilPageModule {}
