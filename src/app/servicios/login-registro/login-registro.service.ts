@@ -13,7 +13,6 @@ import { Names } from "src/app/interfaces/client/name";
 import { ClientData } from "src/app/interfaces/client/clientData";
 import { ClientNewPassword } from "src/app/interfaces/client/clientNewPassword";
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -76,6 +75,12 @@ export class ClienteWAService {
     const endpoint:string = this.DJANGO_DOMAIN_NAME+'users/changeNewPassword/';
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     return this.http.post<MessageResponse>(endpoint, data, { headers: headers })
+  }
+
+  deleteAccount(password:string, token:string): Observable<MessageResponse>{
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+`users/client/?password=${password}`
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+    return this.http.delete<MessageResponse>(endpoint, { headers: headers })
   }
 
 }

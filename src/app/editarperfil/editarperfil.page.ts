@@ -14,7 +14,6 @@ import { ClientData } from '../interfaces/client/clientData';
 import { ClientEmail } from '../interfaces/client/clientEmail';
 import { ClientNewPassword } from '../interfaces/client/clientNewPassword';
 
-
 @Component({
   selector: 'app-editarperfil',
   templateUrl: './editarperfil.page.html',
@@ -366,6 +365,14 @@ export class EditarperfilPage implements OnInit {
     return await modal.present();
   }
 
+  async deleteAccountModal() {
+    const modal = await this.modalController.create({
+      component: MyDeleteModalComponent,
+      componentProps: { value: 123 }
+    });
+    return await modal.present();
+  }
+
 }
 
 @Component({
@@ -562,4 +569,100 @@ export class MyPasswordModalComponent {
   }
 
   
+}
+
+@Component({
+  selector: 'my-modal-delete',
+  template: `
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Eliminar cuenta</ion-title>
+    <ion-buttons slot="end">
+          <ion-button (click)="dismiss()">Cerrar</ion-button>
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="deleteAccountForm" (ngSubmit)="submitForm()">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Ingresa tu contraseña</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Al presionar el botón de eliminar, se procederá a la eliminación de tu cuenta. Por favor, ten en cuenta que esta acción no se puede deshacer</p>
+        <ion-item>
+          <ion-label position="floating">Contraseña</ion-label>
+          <ion-input type="{{showPassword ? 'text' : 'password'}}" formControlName="password" minlength="4"></ion-input>
+          <ion-icon slot="end" [name]="showPassword ? 'eye-outline' : 'eye-off-outline'" (click)="togglePassword()"></ion-icon>
+        </ion-item>
+        <div *ngIf="deleteAccountForm.get('password').invalid && (deleteAccountForm.get('password').dirty || deleteAccountForm.get('password').touched)" class="error-message">
+          <div *ngIf="deleteAccountForm.get('password').hasError('required')">Ingrese una contraseña</div>
+          <div *ngIf="deleteAccountForm.get('password').hasError('minlength')">La contraseña debe contener mínimo 4 caracteres</div>
+        </div>
+        <ion-button expand="block" type="submit" [disabled]="!deleteAccountForm.valid">Eliminar</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </form>`,
+  styleUrls: ['./my-modal.scss']
+})
+export class MyDeleteModalComponent implements OnInit {
+  deleteAccountForm: FormGroup;
+  showPassword = false;
+  password:string;
+
+  constructor(private modalController: ModalController, private clienteWAService: ClienteWAService, private alertController: AlertController,public formBuilder: FormBuilder) {
+  }
+
+  ngOnInit() {
+    this.deleteAccountForm = this.formBuilder.group({
+      password: ['', [Validators.required, Validators.minLength(4)]],
+    });
+  }
+
+  dismiss() {
+    this.modalController.dismiss();
+  }
+
+  submitForm() {
+    if (!this.deleteAccountForm.valid) {  
+      return false;
+    } else {
+      this.deleteAccount()
+    }
+  }
+  deleteAccount(){
+    const password = this.deleteAccountForm.value.password
+    const token = localStorage.getItem('token');
+    this.clienteWAService.deleteAccount(password, token).subscribe({
+      next: (response) => {
+        this.alertController.create({
+          header: 'Eliminar cuenta',
+          message: response.message,
+          buttons: [
+            {
+              text: 'Aceptar',
+              handler: () => {
+                localStorage.removeItem('token');
+                location.reload();
+              }
+            }
+          ]
+        }).then(alert=> alert.present())
+      },
+      error: (error) => {
+        let keyError: string = Object.keys(error.error)[0]
+        this.alertController.create({
+          header: 'Error eliminar cuenta',
+          message: error.error[keyError],
+          buttons: ['Aceptar']
+        }).then(alert=> alert.present())
+      }
+    });
+  }
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
+
 }

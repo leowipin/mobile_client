@@ -157,7 +157,7 @@ export class LoginPage implements OnInit {
           <div *ngIf="resetPasswordForm.get('password').hasError('required')">Ingrese una contraseña</div>
           <div *ngIf="resetPasswordForm.get('password').hasError('minlength')">La contraseña debe contener mínimo 4 caracteres</div>
         </div>
-        <ion-button expand="block" type="submit" [disabled]="!resetPasswordForm.valid">Enviar</ion-button>
+        <ion-button expand="block" type="submit" [disabled]="!resetPasswordForm.valid">Cambiar</ion-button>
     </ion-card-content>
   </ion-card>
 </form>

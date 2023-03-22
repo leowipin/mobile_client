@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ClienteWAService } from '../servicios/login-registro/login-registro.service';
 import { MyEmailModalComponent } from './editarperfil.page';
 import { MyPasswordModalComponent } from './editarperfil.page';
+import { MyDeleteModalComponent } from './editarperfil.page';
 
 
 @NgModule({
@@ -22,7 +23,7 @@ import { MyPasswordModalComponent } from './editarperfil.page';
     ReactiveFormsModule,
     
   ],
-  declarations: [EditarperfilPage, MyEmailModalComponent, MyPasswordModalComponent],
+  declarations: [EditarperfilPage, MyEmailModalComponent, MyPasswordModalComponent, MyDeleteModalComponent],
   providers:[ClienteWAService]
 })
 export class EditarperfilPageModule {}

@@ -42,7 +42,7 @@ export class RegistrarPage implements OnInit {
       email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')]],
       //bday: ['', [Validators.required, Validators.pattern('(?:19[0-9]{2}|20[01][0-9]|2020)[-](?:0[1-9]|1[012])[-](?:0[1-9]|[12][0-9]|3[01])')]],
       //f2_edudetail: ['', [Validators.required]],
-      mobile: ['', [Validators.required,Validators.pattern('^09\d{8}$')]],
+      mobile: ['', [Validators.required,Validators.pattern('^[0-9]{10}$')]],
       cedula: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
       password:['', [Validators.required, Validators.minLength(4)]],
     }

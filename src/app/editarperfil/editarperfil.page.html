@@ -142,17 +142,37 @@
         </div>
 
         <div class="itemdatos">
-          <ion-label class="change-email"> <a (click)="changeEmailModal()">Cambiar correo electrónico</a> </ion-label>
+            <ion-label>
+              <button type="button" class="btn btn-primary btn-light rounded-pill border-0" style="font-size: 14px;" (click)="changeEmailModal()">
+                Cambiar correo electrónico
+              </button>
+            </ion-label>
         </div>
 
         <div class="itemdatos">
-          <ion-label class="change-email"> <a (click)="changePasswordModal()">Cambiar contraseña</a> </ion-label>
+          <ion-label>
+            <button type="button" class="btn btn-primary btn-light rounded-pill border-0" style="font-size: 14px;" (click)="changePasswordModal()">
+              Cambiar contraseña
+            </button>
+          </ion-label>
+        </div>
+
+        <div class="itemdatos">
+          <ion-label> 
+            <button type="button" class="btn btn-danger rounded-pill border-0" style="font-size: 14px;" (click)="deleteAccountModal()">
+              Eliminar cuenta
+            </button>
+          </ion-label>
         </div>
         
         <ion-row>
           <div class="botones">
           <ion-col>
-            <button ion-button  class ="guardar">Guardar</button> 
+            <ion-label>
+              <button type="submit" class="btn btn-success rounded-pill border-0 guardar">
+                Guardar
+              </button>
+            </ion-label>
           </ion-col>
 
 
