@@ -60,7 +60,7 @@ export class LoginPage implements OnInit {
   }
   
   redirigirServicios() {
-    this.navCtrl.navigateForward('/servicios');
+    this.navCtrl.navigateForward('/servicios-empresa');
     this.ionicForm.reset();
   }
   

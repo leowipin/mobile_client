@@ -148,6 +148,15 @@ const routes: Routes = [
     path: 'calificar-servicio',
     loadChildren: () => import('./calificar-servicio/calificar-servicio.module').then( m => m.CalificarServicioPageModule)
   },
+  {
+    path: 'servicios-empresa',
+    loadChildren: () => import('./servicios-empresa/servicios-empresa.module').then( m => m.ServiciosEmpresaPageModule)
+  },
+  {
+    path: 'servicio-detalle',
+    loadChildren: () => import('./servicio-detalle/servicio-detalle.module').then( m => m.ServicioDetallePageModule)
+  },
+
 
 
 

@@ -27,7 +27,7 @@ export class AppComponent {
   ngOnInit() {
     const token = localStorage.getItem('token');
     if (token) {
-      this.navCtrl.navigateRoot('/servicios');
+      this.navCtrl.navigateRoot('/servicios-empresa');
     } else{
       this.navCtrl.navigateRoot('/login')
     }

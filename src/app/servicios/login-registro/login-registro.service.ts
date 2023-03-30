@@ -12,6 +12,8 @@ import { ResetPasswordToken } from "src/app/interfaces/client/resetPasswordToken
 import { Names } from "src/app/interfaces/client/name";
 import { ClientData } from "src/app/interfaces/client/clientData";
 import { ClientNewPassword } from "src/app/interfaces/client/clientNewPassword";
+import { ServicesName, ServicesNameList } from "src/app/interfaces/client/servicesName";
+import { ServiceData } from "src/app/interfaces/client/serviceData";
 
 @Injectable({
   providedIn: 'root'
@@ -81,6 +83,18 @@ export class ClienteWAService {
     const endpoint:string = this.DJANGO_DOMAIN_NAME+`users/client/?password=${password}`
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     return this.http.delete<MessageResponse>(endpoint, { headers: headers })
+  }
+
+  getServicesName(token:string): Observable<ServicesNameList>{
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+'services/serviceNames/';
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+    return this.http.get<ServicesNameList>(endpoint, { headers: headers })
+  }
+
+  getServiceData(token:string, id:string):Observable<ServiceData>{
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+`services/service/?id=${id}`;
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+    return this.http.get<ServiceData>(endpoint, { headers: headers })
   }
 
 }

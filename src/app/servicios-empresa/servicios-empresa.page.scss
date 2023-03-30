@@ -1,0 +1,104 @@
+ion-content{ 
+    --ion-background-color:#ffffff; 
+    font-family: hp556;
+}
+.front{
+    
+    height: 100%;
+    width: 100%;
+    
+  }
+  .back{
+    position: absolute;
+    text-align: buttom;
+    z-index:0;
+    bottom: 0;
+
+  }
+
+.title{
+    text-align:center;
+    //position:relative;
+    margin-top: 9%;
+  
+}
+.title ion-label{
+    color:#bf1a24;
+    font-size: 6vw;
+    font-family:BebasBold;
+}
+
+ion-menu-button {
+    margin-left: 20px;
+    min-width: 50px;
+    ion-img{
+        padding: 2px;
+        width: 60px;
+        opacity: 0.6;
+    }
+}
+
+ion-label{
+    font-family: hp556;
+    font-size:small;
+    font-weight:bold;
+}
+
+.tope span {
+    width: 100%;
+    position: absolute;
+    background-color: #aaafb4;
+    height: 26px;
+    top: 50px;
+    z-index: 1;
+}
+
+.logosepro ion-img {
+    position: absolute;
+    top: 6px;
+    left: auto;
+    z-index: 2;
+}
+
+div.logosepro {
+    display: flex;
+    justify-content: center;
+}
+
+.service-name{
+    font-family: hp556;
+    display: flex;
+    justify-content: center;
+    font-size: 3vw;
+    text-align: center;
+    margin-left: 5%;
+    margin-right: 5%;
+    border-radius: 0 !important; 
+    padding: 0 !important; 
+    margin-top: 0% !important;
+    margin-bottom: 0% !important;
+    color:black;
+
+}
+
+a {
+    text-decoration: none;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    
+}
+.detail-button{
+    width: 75%;
+}
+.title-service{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    font-size: 4vw;
+}

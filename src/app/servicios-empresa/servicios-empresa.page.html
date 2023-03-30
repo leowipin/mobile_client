@@ -1,0 +1,138 @@
+<ion-content>
+  <ion-grid *ngIf="servicesNamesList">
+    <ion-row>
+      <div class="front">
+        <div>
+          <ion-buttons slot="start">
+            <ion-menu-button>
+              <ion-img src="assets/img/menuHamburguesa.png"></ion-img>
+            </ion-menu-button>
+          </ion-buttons>
+          <div class="tope">
+            <span> </span>
+            <div class="logosepro">
+              <ion-img
+                style="width: 160px; height: 150spx"
+                src="assets/img/logosepro.png"
+              ></ion-img>
+            </div>
+          </div>
+        </div>
+        <div class="title">
+          <ion-label class="center">ELIJE EL SERVICIO QUE NECESITES</ion-label>
+        </div>
+      </div>
+      <div class="back">
+        <ion-img
+          style="width: 10; height: 10"
+          src="../../assets/img/aguilarojafondo.png"
+        ></ion-img>
+      </div>
+    </ion-row>
+    <ng-container *ngFor="let service of servicesNamesList; let i = index">
+      <ion-row *ngIf="i % 2 === 0">
+        <ng-container *ngFor="let item of servicesNamesList.slice(i, i + 2)">
+          <ion-col size="6">
+            <a [routerLink]="['/servicios-empresa/servicio-detalle', item.id]">
+              <ion-card>
+                <ion-label class="title-service">{{item.name}}</ion-label>
+                <ion-card-content class="card-service">
+                  <ion-img src="../../assets/img/guardialogo.png"></ion-img>
+                  <ion-label class="btn-container">
+                    <button
+                      type="button"
+                      class="btn btn-primary rounded-pill border-0 detail-button"
+                      style="font-size: 4vw"
+                    >
+                      Detalles
+                    </button>
+                  </ion-label>
+                </ion-card-content>
+              </ion-card>
+            </a>
+          </ion-col>
+        </ng-container>
+      </ion-row>
+    </ng-container>
+    <!--<ion-row>
+      <ion-col size="6">
+        <a routerLink="servicio-detalle">
+          <ion-card>
+            <ion-label class="title-service">Chofer designado</ion-label>
+            <ion-card-content class="card-service">
+              <ion-img src="../../assets/img/guardialogo.png"></ion-img>
+              <ion-label class="btn-container">
+                <button
+                  type="button"
+                  class="btn btn-primary rounded-pill border-0 detail-button"
+                  style="font-size: 4vw"
+                >
+                  Detalles
+                </button>
+              </ion-label>
+            </ion-card-content>
+          </ion-card>
+        </a>
+      </ion-col>
+      <ion-col size="6">
+        <a routerLink="servicio-detalle">
+          <ion-card>
+            <ion-label class="title-service">Chofer designado</ion-label>
+            <ion-card-content class="card-service">
+              <ion-img src="../../assets/img/guardialogo.png"></ion-img>
+              <ion-label class="btn-container">
+                <button
+                  type="button"
+                  class="btn btn-primary rounded-pill border-0 detail-button"
+                  style="font-size: 4vw"
+                >
+                  Detalles
+                </button>
+              </ion-label>
+            </ion-card-content>
+          </ion-card>
+        </a>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6">
+        <a routerLink="servicio-detalle">
+          <ion-card>
+            <ion-label class="title-service">Chofer designado</ion-label>
+            <ion-card-content class="card-service">
+              <ion-img src="../../assets/img/guardialogo.png"></ion-img>
+              <ion-label class="btn-container">
+                <button
+                  type="button"
+                  class="btn btn-primary rounded-pill border-0 detail-button"
+                  style="font-size: 4vw"
+                >
+                  Detalles
+                </button>
+              </ion-label>
+            </ion-card-content>
+          </ion-card>
+        </a>
+      </ion-col>
+      <ion-col size="6">
+        <a routerLink="servicio-detalle">
+          <ion-card>
+            <ion-label class="title-service">Chofer designado</ion-label>
+            <ion-card-content class="card-service">
+              <ion-img src="../../assets/img/guardialogo.png"></ion-img>
+              <ion-label class="btn-container">
+                <button
+                  type="button"
+                  class="btn btn-primary rounded-pill border-0 detail-button"
+                  style="font-size: 4vw"
+                >
+                  Detalles
+                </button>
+              </ion-label>
+            </ion-card-content>
+          </ion-card>
+        </a>
+      </ion-col>
+    </ion-row>-->
+  </ion-grid>
+</ion-content>
