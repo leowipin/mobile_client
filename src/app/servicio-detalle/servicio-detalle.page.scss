@@ -72,7 +72,7 @@ ion-content{
     color: black;
   }
   
-  .cantidad-guardias{
+  .cantidad-container{
       margin: 0rem;
       
       border: 0px ;
@@ -143,15 +143,15 @@ ion-content{
     font-size: 120%;
   }
   
-  .cantidad-guardias .cantidad .decremento {
+  .cantidad-container .cantidad .decremento {
     color:#e70808;
     font-size: 23px;
   }
-  .cantidad-guardias .cantidad .aumento {
+  .cantidad-container .cantidad .aumento {
     color:#0a0db3;
     font-size: 23px;
   }
-  .cantidad-guardias .cantidad ion-label{
+  .cantidad-container .cantidad ion-label{
     background-color:#ffffff;
     display: flex;
     text-align: center;
@@ -160,10 +160,10 @@ ion-content{
     height: 1.5rem;
     padding: 0rem 2.5rem 0rem 1.8rem;
   }
-  .cantidad-guardias ion-label{
+  .cantidad-container ion-label{
     color:#828181;
   }
-  .cantidad-guardias .cantidad {
+  .cantidad-container .cantidad {
     
     display: flex;
     text-align: center;

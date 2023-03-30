@@ -113,25 +113,41 @@
             <ion-label>Elegir ubicación</ion-label>
             <button class="btn btn-primary rounded-pill border-0" (click)="addDirection(0)">Abrir mapa</button>
           </div>
-          <div class="cantidad-guardias" *ngIf="numero_guardia_is_optional">
-            <ion-label class="label-num">Número de guardias</ion-label>
-            <div class="cantidad">
-              <ion-icon class="decremento" name="remove-circle-outline" (click)="decrement()"></ion-icon>
-              <ion-label> {{currentNumber}}</ion-label>
-              <ion-icon class="aumento" name="add-circle-outline" (click)="increment()"></ion-icon>
+
+          <div *ngFor="let staff of serviceData.staff; let i = index">
+            <div *ngIf="serviceData.staff_is_optional[i]" class="checks">
+              <ion-checkbox></ion-checkbox>
+              <ion-label>Incluir {{staff}}</ion-label>
             </div>
           </div>
-          <div class="checks" *ngIf="candado_is_optional">
-            <ion-checkbox></ion-checkbox>
-            <ion-label>Incluir candado satelital</ion-label>
+
+          <div *ngFor="let staff of serviceData.staff; let i = index">
+            <div class="cantidad-container" *ngIf="serviceData.staff_number_is_optional[i]">
+              <ion-label class="label-num">Cantidad de {{staff}}</ion-label>
+              <div class="cantidad">
+                <ion-icon class="decremento" name="remove-circle-outline" (click)="decrement(1)"></ion-icon>
+                <ion-label> {{currentNumber}}</ion-label>
+                <ion-icon class="aumento" name="add-circle-outline" (click)="increment(1)"></ion-icon>
+              </div>
+            </div>
           </div>
-          <div class="checks" *ngIf="vehiculo_is_optional">
-            <ion-checkbox></ion-checkbox>
-            <ion-label>Incluir vehículo</ion-label>
+          
+          <div *ngFor="let equipment of serviceData.equipment let i = index">
+            <div *ngIf="serviceData.equipment_is_optional[i]" class="checks">
+              <ion-checkbox></ion-checkbox>
+              <ion-label>Incluir {{equipment}}</ion-label>
+            </div>
           </div>
-          <div class="checks" *ngIf="choferguardaespalda_is_optional">
-            <ion-checkbox></ion-checkbox>
-            <ion-label>Incluir chofer guardaespaldas</ion-label>
+
+          <div *ngFor="let equipment of serviceData.equipment; let i = index">
+            <div class="cantidad-container" *ngIf="serviceData.equipment_number_is_optional[i]">
+              <ion-label class="label-num">Cantidad de {{equipment}}</ion-label>
+              <div class="cantidad">
+                <ion-icon class="decremento" name="remove-circle-outline" (click)="decrement(2)"></ion-icon>
+                <ion-label> {{currentNumber2}}</ion-label>
+                <ion-icon class="aumento" name="add-circle-outline" (click)="increment(2)"></ion-icon>
+              </div>
+            </div>
           </div>
         </ion-list>
         <div class="botones">
@@ -143,15 +159,6 @@
       <ion-label>Elegir ubicación</ion-label>
       <button ion-button color="secondary" (click)="addDirection(0)">Abrir mapa</button>
        
-    </div>-->
-    <!--<div class="cantidad-guardias">
-        <ion-label>Número de guardias</ion-label>
-        <div class="cantidad">
-          <ion-icon class="decremento" name="remove-circle-outline" (click)="decrement()"></ion-icon>
-          <ion-label> {{currentNumber}}</ion-label>
-           
-          <ion-icon class="aumento" name="add-circle-outline" (click)="increment()"></ion-icon>
-        </div>
     </div>-->
     
   </div>

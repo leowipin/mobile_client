@@ -54,14 +54,26 @@ export class ServicioDetallePage implements OnInit {
   dirOrigen:any;
   dirDestino:any;
   currentNumber = 1;
-
-  increment() {
-    this.currentNumber++;
+  currentNumber2 = 1;
+  increment(numero:number) {
+    if(numero === 1){
+      this.currentNumber++;
+    }
+    else{
+      this.currentNumber2++;
+    }
   }
 
-  decrement() {
+  decrement(numero:number) {
     if (this.currentNumber > 1) {
-      this.currentNumber--;
+      if(numero === 1){
+        this.currentNumber--;
+      }
+    }
+    if (this.currentNumber2 > 1){
+      if(numero === 2){
+        this.currentNumber2--;
+      }
     }
   }
 
