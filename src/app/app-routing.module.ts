@@ -25,22 +25,6 @@ const routes: Routes = [
     path: 'servicios/n',
     children: [
       {
-        path: 'chofer',
-        loadChildren: () => import('./servicios/chofer/chofer.module').then( m => m.ChoferPageModule)
-      },
-      {
-        path: 'custodia',
-        loadChildren: () => import('./servicios/custodia/custodia.module').then( m => m.CustodiaPageModule)
-      },
-      {
-        path: 'guardia',
-        loadChildren: () => import('./servicios/guardia/guardia.module').then( m => m.GuardiaPageModule)
-      },
-      {
-        path: 'transporte',
-        loadChildren: () => import('./servicios/transporte/transporte.module').then( m => m.TransportePageModule)
-      },
-      {
         path: 'solicitud/:id',
         loadChildren: () => import('./servicios/solicitud-servicio/solicitud-servicio.module').then( m => m.SolicitudServicioPageModule)
       },

@@ -3,6 +3,7 @@ export interface ServiceData {
     name: string;
     description: string;
     set_price: boolean;
+    requires_origin_and_destination: boolean;
     staff: string[];
     staff_is_optional: boolean[];
     staff_number_is_optional: boolean[];

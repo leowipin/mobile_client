@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 declare var google: any;
 
@@ -6,10 +7,8 @@ declare var google: any;
   providedIn: 'root'
 })
 export class UbicacionService {
-
-  //apiKey = "AIzaSyARkLozSqbcq3v4He-7DPVqZCEXAOXJ_ZQ";
   
-  apiKey = "AIzaSyADtLU610nbylQGYQC9He-G70K-ASShP4M";// version gratis hasta el 15/02/2022
+  apiKey = environment.googleMapsApiKey;
 
   mapsLoaded = false;
 

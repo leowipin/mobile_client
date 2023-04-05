@@ -73,14 +73,7 @@ export class CustodiaPage implements OnInit {
 
 
   }
-  ngOnInit() {
-    this.ionicForm = this.formBuilder.group({
-      fechaInicio: [""],
-      horaInicio: [""],
 
-    })
-
-  }
   async presentAlertFechas() {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
@@ -165,6 +158,15 @@ export class CustodiaPage implements OnInit {
       }
     });
     console.log(this.ionicForm.value);
+  }
+
+  ngOnInit() {
+    this.ionicForm = this.formBuilder.group({
+      fechaInicio: [""],
+      horaInicio: [""],
+
+    })
+
   }
   cancelar() {
     this.navCtrl.navigateForward("/servicios");

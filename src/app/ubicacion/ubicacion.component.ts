@@ -51,20 +51,25 @@ export class UbicacionComponent implements OnInit {
   }
 
   UpdateSearchResults() {
+    console.log(this.autocomplete.input)
     if (this.autocomplete.input == '') {
       this.autocompleteItems = [];
       return;
     }
     this.GoogleAutocomplete.getPlacePredictions({ input: this.autocomplete.input },
       (predictions, status) => {
-
         this.autocompleteItems = [];
-        this.zone.run(() => {
-          predictions.forEach((prediction) => {
-            //console.log(prediction)
-            this.autocompleteItems.push(prediction);
+        if (status === 'OK') {
+          this.zone.run(() => {
+            predictions.forEach((prediction) => {
+              //console.log(prediction)
+              this.autocompleteItems.push(prediction);
+            });
           });
-        });
+        } else {
+          // Handle the case where status is not 'OK'
+          console.error('Error retrieving place predictions:', status);
+        }
       });
   }
 
@@ -206,6 +211,10 @@ export class UbicacionComponent implements OnInit {
   aceptar() {
     //console.log('click aceptar -> ', this.positionSet);
     this.modalController.dismiss({ pos: this.positionSet, dir: this.direction })
+  }
+
+  async closeModal() {
+    await this.modalController.dismiss();
   }
 
 }

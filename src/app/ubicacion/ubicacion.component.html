@@ -1,7 +1,14 @@
 <ion-header>
-  <ion-toolbar color="primary" class="buscador">
-    <ion-searchbar [(ngModel)]="autocomplete.input" (ionInput)="UpdateSearchResults()"
+  <ion-toolbar color="primary" >
+    <div class="buscador">
+      <ion-searchbar [(ngModel)]="autocomplete.input" (ionInput)="UpdateSearchResults()"
       placeholder="Ingrese su dirección" (ionClear)="ClearAutocomplete()"></ion-searchbar>
+      <ion-buttons slot="end">
+        <ion-button (click)="closeModal()" class="close-icon">
+          <ion-icon name="close" color="light"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </div>
   </ion-toolbar>
   <ion-list [hidden]="autocompleteItems.length == 0">
     <ion-item *ngFor="let item of autocompleteItems" (click)="SelectSearchResult(item)">

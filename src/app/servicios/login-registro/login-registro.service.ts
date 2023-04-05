@@ -92,7 +92,7 @@ export class ClienteWAService {
   }
 
   getServiceData(token:string, id:string):Observable<ServiceData>{
-    const endpoint:string = this.DJANGO_DOMAIN_NAME+`services/service/?id=${id}`;
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+`services/serviceByID/?id=${id}`;
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     return this.http.get<ServiceData>(endpoint, { headers: headers })
   }

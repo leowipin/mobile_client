@@ -24,14 +24,18 @@
 
 .search{
     position: fixed;
-    top: 45px;
     left: 0px;
+}
+
+.buscador{
+    display: flex;
+    margin-top: 1rem;
+}
+
+.close-icon{
+    margin-bottom: 20px;
 }
 
 ion-header{
     margin: 0;
-}
-
-ion-searchbar{
-    margin-top: 1rem;
 }

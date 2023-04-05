@@ -2,20 +2,21 @@
   
 </ion-header>
 
-<ion-content class="fondo" *ngIf="serviceData" >
+<ion-content class="fondo">
   <div class="front">
     <div class="titulo">
       <div class="header-container">
         <div class="regresar">
           <ion-img src="assets/img/retroceder.png" (click)="cancelar()"></ion-img>
         </div>
-        <h1>{{serviceData.name}}</h1>
+        <h1 *ngIf="serviceData">{{serviceData.name}}</h1>
+        <h1 *ngIf="!serviceData"></h1>
       </div>
       <div class="logo">
-        <ion-img style="width: 100px; height: 100px;" src="assets/img/guardialogo.png"></ion-img>
+        <ion-img style="width: 100px; height: 100px;" src="assets/img/guardialogo.png" *ngIf="serviceData"></ion-img>
       </div>
     </div>
-    <div class="datos">
+    <div class="datos" *ngIf="serviceData">
       <form [formGroup]="ionicForm" (ngSubmit)="submitForm()" validate>
         <ion-list class="dat">
           
@@ -34,10 +35,6 @@
                     (ionChange)="dateValue =popoverDatetime.value">   
                     <div slot="title">     
                     </div>            
-                    <!--<ion-buttons slot="buttons">
-                        <ion-button (click)="confirm()">Good to go!</ion-button>
-                        <ion-button (click)="reset()">Reset</ion-button>
-                      </ion-buttons>-->
                     </ion-datetime>
                   </ion-content>
                 </ng-template>
@@ -94,7 +91,7 @@
           </div>
 
           <div class="seleccion" id="open-modal9" *ngIf="staff_price_bool">
-            <ion-label>Hora de Finalizacion</ion-label>
+            <ion-label>Hora de Finalización</ion-label>
             <ion-item button="true" id="open-date-input9" >
               <ion-label>{{dateValue9 | date: 'hh:mma'}}</ion-label>
               <ion-icon name="time-outline" item-right></ion-icon>
@@ -109,10 +106,22 @@
               </ion-modal>
             </ion-item>
           </div>
-          <div class="mapa">
-            <ion-label>Elegir ubicación</ion-label>
-            <button class="btn btn-primary rounded-pill border-0" (click)="addDirection(0)">Abrir mapa</button>
+
+          <div *ngIf="serviceData.requires_origin_and_destination; else singleLocation" class="mapa">
+            <ion-label>Ubicación origen</ion-label>
+            <button type="button" class="btn btn-primary rounded-pill border-0" (click)="addDirection(0)">Abrir mapa</button>
           </div>
+          <div *ngIf="serviceData.requires_origin_and_destination" class="mapa">
+            <ion-label>Ubicación de destino</ion-label>
+            <button type="button" class="btn btn-primary rounded-pill border-0"(click)="addDirection(1)">Abrir mapa</button>
+          </div>
+          <ng-template #singleLocation>
+            <div class="mapa">
+              <ion-label>Elegir ubicación</ion-label>
+              <button type="button" class="btn btn-primary rounded-pill border-0" (click)="addDirection(0)">Abrir mapa</button>
+            </div>
+          </ng-template>
+          
 
           <div *ngFor="let staff of serviceData.staff; let i = index">
             <div *ngIf="serviceData.staff_is_optional[i]" class="checks">

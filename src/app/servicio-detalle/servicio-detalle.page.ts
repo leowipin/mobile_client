@@ -5,6 +5,9 @@ import { UbicacionComponent } from 'src/app/ubicacion/ubicacion.component';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import * as moment from 'moment';
 import { ClienteWAService } from '../servicios/login-registro/login-registro.service';
+import { ServiceData } from '../interfaces/client/serviceData';
+import { environment } from 'src/environments/environment';
+
 
 
 @Component({
@@ -14,6 +17,8 @@ import { ClienteWAService } from '../servicios/login-registro/login-registro.ser
 })
 export class ServicioDetallePage implements OnInit {
 
+  apiKey = environment.googleMapsApiKey;
+  
   ionicForm: FormGroup;
   defaultDate = "1970-12-16";
   //maxFecha: string = (new Date().getFullYear() + 1).toString();
@@ -33,7 +38,7 @@ export class ServicioDetallePage implements OnInit {
   haydirDestino: boolean=false;
   duracion:any;
 
-  serviceData:any;
+  serviceData:ServiceData;
   staff_price_bool:boolean = false;
   candado_is_optional:boolean = false;
   vehiculo_is_optional:boolean = false;
@@ -42,14 +47,14 @@ export class ServicioDetallePage implements OnInit {
   candado:boolean;
   vehiculo:boolean;
   guardaespalda:boolean;
-  /*origen = {
-    lat: -2.1676746,
-    lng: -79.8956897
+  origen = {
+    lat: -2.19616,
+    lng: -79.88621
   };
   destino = {
-    lat: -2.1676746,
-    lng: -79.8956897
-  };*/
+    lat: -2.19616,
+    lng: -79.88621
+  };
 
   dirOrigen:any;
   dirDestino:any;
@@ -144,32 +149,38 @@ export class ServicioDetallePage implements OnInit {
     var hoy=moment(new Date());
     var difdiahoy=fechainicio.diff(hoy,"d");
     var difhorahoy=fechainicio.diff(hoy,"h");
+    
 
-
-    if (fi== "" || ff== "" || hi== "" || hf== "") { //si hay campos vacios
-      this.presentAlert();
-      return null
-    }else{
+    if (this.serviceData.requires_origin_and_destination) {
+      if (fi== "" || hi== "" || (this.origen.lat == -2.19616 && this.origen.lng == -79.88621) || (this.destino.lat == -2.19616 && this.destino.lng == -79.88621)) {
+        this.presentAlert();
+        return null
+      } else{
         if(difdiahoy==0 && difhorahoy<1){        
           this.mensaje="La hora de Inicio del servicio debe ser mínimo 1 hora después de la hora actual";
           this.presentAlertFechas();
           return null
-        }else{
-          if(fechafin<fechainicio){
-            this.mensaje="La fecha de finalización no puede ser menor a la fecha de inicio.";
-            this.presentAlertFechas();
-            return null
-          }else if(horas<3){
-            this.mensaje="El servicio debe durar un mínimo de 3 horas.";
-            this.presentAlertFechas();
-            return null
-          }else{
-            // servicio solicitud endpoint
-          }
+        }
+      }
+    } else{
+        if(fi== "" || hi== "" || ff== "" || hf== "" || (this.origen.lat == -2.19616 && this.origen.lng == -79.88621)){
+          this.presentAlert();
+          return null
+        } else{
+            if(fechafin<fechainicio){
+              this.mensaje="La fecha de finalización no puede ser menor a la fecha de inicio.";
+              this.presentAlertFechas();
+              return null
+            } else if(horas<3){
+                this.mensaje="El servicio debe durar un mínimo de 3 horas.";
+                this.presentAlertFechas();
+                return null
+            }
         }
     }
+    this.solicitando();
   }
-  /*solicitando(){
+  solicitando(){ // ENDPOINT HERE this queriparams are necessary
     this.navCtrl.navigateForward("/servicios/n/solicitud/hola", {
       queryParams: {
         servicio: "Guardia", datos: this.ionicForm.value, cantGuardia: this.currentNumber,
@@ -177,7 +188,7 @@ export class ServicioDetallePage implements OnInit {
       }
     });
     console.log(this.ionicForm.value);
-  }*/
+  }
 
   ngOnInit() {
     this.ionicForm = this.formBuilder.group({
@@ -268,7 +279,26 @@ export class ServicioDetallePage implements OnInit {
     let result = await alert.onDidDismiss();
   }
 
+  async presentAlertDestino() {
+    const alert = await this.alertController.create({
+      header: 'Ubicación de Destino',
+      message: 'Seleccione con el puntero su ubicación de destino y luego de click en el botón de Aceptar. También puede usar el buscador de lugares o activar su ubicación mediante GPS',
+      buttons: [
+        {
+          text: 'ACEPTAR',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('ORIGEN');
+          }
+        }
+      ]
+    });
 
+    await alert.present();
+    let result = await alert.onDidDismiss();
+    console.log(result);
+  }
   async presentAlertDirOrigen() {
     const alert = await this.alertController.create({
       header: 'Ubicación de Origen',
@@ -289,43 +319,93 @@ export class ServicioDetallePage implements OnInit {
     let result = await alert.onDidDismiss();
   }
 
-  /*async addDirection(tipo: number) {
+  async presentAlertDirDestino() {
+    const alert = await this.alertController.create({
+      header: 'Ubicación de Destino',
+      message: 'Su servicio termina en: '+ this.dirDestino,
+      buttons: [
+        {
+          text: 'ACEPTAR',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('ORIGEN');
+            this.haydirDestino=true;
+            console.log(this.haydirDestino);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+    let result = await alert.onDidDismiss();
+    console.log(result);
+  }
+
+  
+
+  async addDirection(tipo: number) {
 
     if (tipo === 0) {
-      const modalAdd = await this.modalController.create({
-        component: UbicacionComponent,
-        mode: 'ios',
-        swipeToClose: true,
-        componentProps: { position: this.origen }
-      });
-
-      await modalAdd.present();
-      this.presentAlertOrigen();
-      const { data } = await modalAdd.onWillDismiss();
-      if (data) {
-        this.origen = data.pos;
-        this.dirOrigen = data.dir;
-        console.log('Origen -> ', this.origen);
-        this.presentAlertDirOrigen();
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+          if(!this.haydirOrigen){
+            this.origen.lat = position.coords.latitude;
+            this.origen.lng = position.coords.longitude;
+          }
+          const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.origen.lat},${this.origen.lng}&key=${this.apiKey}`);
+          const data = await response.json();
+          console.log(data.results)
+          if (data.results && data.results.length > 0) {
+            const modalAdd = await this.modalController.create({
+              component: UbicacionComponent,
+              mode: 'ios',
+              swipeToClose: true,
+              componentProps: { position: this.origen }
+            });
+      
+            await modalAdd.present();
+            this.presentAlertOrigen();
+            const { data } = await modalAdd.onWillDismiss();
+            if (data) {
+              this.origen = data.pos;
+              this.dirOrigen = data.dir;
+              this.presentAlertDirOrigen();
+            }
+          }
+        });
       }
-
-    }
-    else if (tipo === 1) {
-      const modalAdd = await this.modalController.create({
-        component: UbicacionComponent,
-        mode: 'ios',
-        swipeToClose: true,
-        componentProps: { position: this.destino }
-      });
-
-      await modalAdd.present();
-      const { data } = await modalAdd.onWillDismiss();
-      if (data) {
-        this.destino = data.pos;
-        console.log('Destino -> ', this.destino);
+    } else if (tipo === 1) {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(async (position) => {
+          if(!this.haydirDestino){
+            this.destino.lat = position.coords.latitude;
+            this.destino.lng = position.coords.longitude;
+          }
+          const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.destino.lat},${ this.destino.lng}&key=${this.apiKey}`);
+          const data = await response.json();
+          console.log(data.results)
+          if (data.results && data.results.length > 0) {
+            const modalAdd = await this.modalController.create({
+              component: UbicacionComponent,
+              mode: 'ios',
+              swipeToClose: true,
+              componentProps: { position: this.destino }
+            });
+      
+            await modalAdd.present();
+            this.presentAlertDestino();
+            const { data } = await modalAdd.onWillDismiss();
+            if (data) {
+              this.destino = data.pos;
+              this.dirDestino = data.dir;
+              this.presentAlertDirDestino();
+            }
+          }
+        });
       }
     }
-  }*/
+  }
 }
 
 function addDaysToDate(date, days){
