@@ -65,7 +65,7 @@
           </div>
         
           
-          <div class="seleccion" id="open-modal8" *ngIf="staff_price_bool">
+          <div class="seleccion" id="open-modal8" *ngIf="!requires_origin_and_destination">
             <ion-label>Fecha de Finalización</ion-label>
             <ion-item button="true" id="open-date-input8" >
               <ion-label>{{dateValue8 | date: 'dd/MM/yyyy'}}</ion-label>
@@ -90,7 +90,7 @@
             </ion-item>
           </div>
 
-          <div class="seleccion" id="open-modal9" *ngIf="staff_price_bool">
+          <div class="seleccion" id="open-modal9" *ngIf="!requires_origin_and_destination">
             <ion-label>Hora de Finalización</ion-label>
             <ion-item button="true" id="open-date-input9" >
               <ion-label>{{dateValue9 | date: 'hh:mma'}}</ion-label>
@@ -125,7 +125,7 @@
 
           <div *ngFor="let staff of serviceData.staff; let i = index">
             <div *ngIf="serviceData.staff_is_optional[i]" class="checks">
-              <ion-checkbox></ion-checkbox>
+              <ion-checkbox (ionChange)="updateIncludeStaff($event)"></ion-checkbox>
               <ion-label>Incluir {{staff}}</ion-label>
             </div>
           </div>
@@ -143,7 +143,7 @@
           
           <div *ngFor="let equipment of serviceData.equipment let i = index">
             <div *ngIf="serviceData.equipment_is_optional[i]" class="checks">
-              <ion-checkbox></ion-checkbox>
+              <ion-checkbox (ionChange)="updateIncludeEquipment($event)"></ion-checkbox>
               <ion-label>Incluir {{equipment}}</ion-label>
             </div>
           </div>

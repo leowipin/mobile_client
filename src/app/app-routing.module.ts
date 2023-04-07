@@ -22,13 +22,8 @@ const routes: Routes = [
 
   },
   {
-    path: 'servicios/n',
-    children: [
-      {
-        path: 'solicitud/:id',
-        loadChildren: () => import('./servicios/solicitud-servicio/solicitud-servicio.module').then( m => m.SolicitudServicioPageModule)
-      },
-    ]
+    path: 'servicio-solicitud',
+    loadChildren: () => import('./servicios/solicitud-servicio/solicitud-servicio.module').then( m => m.SolicitudServicioPageModule)
   },
   {
     path: 'perfil',

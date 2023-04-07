@@ -13,7 +13,7 @@ declare var google: any;
 })
 export class SolicitudServicioPage implements OnInit {
   value: string;
-  datosrecibidos: any;
+  datosRecibidos: any;
   fechaInicio: any;
   fechaFinalizacion: any;
   horaInicio: any;
@@ -22,6 +22,9 @@ export class SolicitudServicioPage implements OnInit {
   direccionDestino: any;
   seleccion: any;
   haymetodopago: boolean=false;
+  duration:number;
+  formattedDuration:string;
+  total:any;
   
 
   origen = {
@@ -41,7 +44,21 @@ export class SolicitudServicioPage implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       console.log(params); // { order: "popular" }
-      this.datosrecibidos = params;
+      this.datosRecibidos = params
+      this.duration = Math.ceil(params.duration);
+      if(params.total===0){
+        this.total = "pendiente"
+      } else{
+        this.total = params.total
+      }
+      let hours = Math.floor(params.duration);
+      let minutes = Math.floor((params.duration - hours) * 60);
+      let seconds = Math.round(((params.duration - hours) * 60 - minutes) * 60);
+      this.formattedDuration = `${hours} horas con ${minutes} minutos y ${seconds} segundos`;
+
+      console.log(this.formattedDuration);
+      console.log(this.duration);
+      /*this.datosrecibidos = params;
       console.log(this.datosrecibidos); // popular
       this.fechaInicio = moment(this.datosrecibidos.datos.fechaInicio).format("DD/MM/YYYY");
       this.fechaFinalizacion = moment(this.datosrecibidos.datos.fechaFinalizacion).format("DD/MM/YYYY");
@@ -49,11 +66,14 @@ export class SolicitudServicioPage implements OnInit {
       this.horaFinalizacion = moment(this.datosrecibidos.datos.horaFinalizacion).format("hh:mma");
       this.origen = this.datosrecibidos.origen;
       this.destino = this.datosrecibidos.destino;
-      this.findPlaces(this.origen,this.destino);
+      this.findPlaces(this.origen,this.destino);*/
     }
     );
   }
-  regresar() {
+  cancelar() {
+    this.navCtrl.navigateForward(`/servicio-detalle/${this.datosRecibidos.serviceID}`);
+  }
+  /*regresar() {
     if (this.datosrecibidos.servicio == 'Chofer') {
       this.navCtrl.navigateForward("/servicios/n/chofer");
     }
@@ -166,5 +186,5 @@ export class SolicitudServicioPage implements OnInit {
         }
       })
       .catch((e) => window.alert("Geocoder failed due to: " + e));
-  }
+  }*/
 }

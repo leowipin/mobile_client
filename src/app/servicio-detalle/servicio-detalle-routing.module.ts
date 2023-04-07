@@ -6,8 +6,18 @@ import { ServicioDetallePage } from './servicio-detalle.page';
 const routes: Routes = [
   {
     path: '',
-    component: ServicioDetallePage
-  }
+    children: [
+      {
+        path: 'servicio-solicitud',
+        loadChildren: () => import('../servicios/solicitud-servicio/solicitud-servicio.module').then( m => m.SolicitudServicioPageModule)
+      },
+      {
+        path: '',
+        component: ServicioDetallePage
+      },
+    ]
+  },
+  
 ];
 
 @NgModule({

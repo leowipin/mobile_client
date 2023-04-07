@@ -1,8 +1,7 @@
 <ion-content>
-  
   <div>
     <ion-buttons slot="start">
-        <ion-img src="assets/img/retroceder.png" (click)="regresar()"></ion-img>
+        <ion-img src="assets/img/retroceder.png" [routerLink]="['/servicios-empresa/servicio-detalle', datosRecibidos.serviceID]"></ion-img>
     </ion-buttons>
     <div class="tope">
       <span>
@@ -24,158 +23,105 @@
   </div>
   <div class="datos">
     
-    <div class="datosChofer" *ngIf=" datosrecibidos.servicio == 'Chofer'" >
+    <div class="datosPedido">
       
-    
           <ion-label class="negrita ">Servicio:</ion-label>
-          <ion-label> {{datosrecibidos.servicio}}</ion-label>
+          <ion-label> {{datosRecibidos.serviceName}}</ion-label>
         
           <ion-label class="negrita "> <br/>Fecha de inicio:</ion-label>
-          <ion-label> {{fechaInicio}}</ion-label>
+          <ion-label> {{datosRecibidos.startDate}}</ion-label>
 
           <ion-label class="negrita "> <br/>Hora de inicio: </ion-label>
-          <ion-label> {{horaInicio}}</ion-label>
+          <ion-label> {{datosRecibidos.startTime}}</ion-label>
 
-          <ion-label class="negrita "> <br/>Fecha de Finalización: </ion-label>
-          <ion-label> {{fechaFinalizacion}}</ion-label>
+          <ng-container  *ngIf="!datosRecibidos.requiresDestination">
+            <ion-label class="negrita "> <br/>Fecha de Finalización: </ion-label>
+            <ion-label> {{datosRecibidos.endDate}}</ion-label>
+          </ng-container>
+          
+          <ng-container  *ngIf="!datosRecibidos.requiresDestination">
+            <ion-label class="negrita "> <br/>Hora de Finalización: </ion-label>
+            <ion-label> {{datosRecibidos.endTime}}</ion-label>
+          </ng-container>
 
-          <ion-label class="negrita "> <br/>Hora de Finalización: </ion-label>
-          <ion-label> {{horaFinalizacion}}</ion-label>
+          <ng-container  *ngIf="!datosRecibidos.requiresDestination">
+            <ion-label class="negrita "> <br/>Duración: </ion-label>
+            <ion-label> {{formattedDuration}} </ion-label>
+          </ng-container>
 
-          <ion-label class="negrita "> <br/>Duración: </ion-label>
-          <ion-label>{{datosrecibidos.duracion}} </ion-label>
+          <ion-label class="negrita "> <br/>Lugar origen: </ion-label>
+          <ion-label> {{datosRecibidos.dirOrigin}}</ion-label>
 
-          <ion-label class="negrita "> <br/>Lugar: </ion-label>
-          <ion-label> {{direccionOrigen}}</ion-label>
+          <ng-container  *ngIf="datosRecibidos.requiresDestination">
+            <ion-label class="negrita "> <br/>Lugar destino: </ion-label>
+            <ion-label> {{datosRecibidos.dirDestination}}</ion-label>
+          </ng-container>
 
-          <ion-label class="negrita "> <br/>Vehículo: </ion-label>
-          <ion-label *ngIf=" datosrecibidos.valorvehiculo == true" > Sí</ion-label>
-          <ion-label *ngIf=" datosrecibidos.valorvehiculo != true" > No</ion-label>
+          <ng-container *ngFor="let staff of datosRecibidos.staff; let i = index">
+            <ng-container *ngIf="datosRecibidos.staffIsOptional[i] && datosRecibidos.staffSelected[i]">
+              <ion-label class="negrita"> <br/> {{staff}}:</ion-label>
+              <ion-label> si</ion-label>
+            </ng-container>
+            <ng-container *ngIf="datosRecibidos.staffIsOptional[i] && !datosRecibidos.staffSelected[i]">
+              <ion-label class="negrita"> <br/> {{staff}}:</ion-label>
+              <ion-label> no</ion-label>
+            </ng-container>
+          </ng-container>
 
-          <ion-label class="negrita "> <br/>Chofer Guardespaldas: </ion-label>
-          <ion-label *ngIf=" datosrecibidos.valorguardaespaldas == true" > Sí</ion-label>
-          <ion-label *ngIf=" datosrecibidos.valorguardaespaldas != true" > No</ion-label>
+          <ng-container *ngFor="let staff of datosRecibidos.staff; let i = index">
+            <ng-container *ngIf="datosRecibidos.staffNumberOptional[i]">
+              <ion-label class="negrita"> <br/> cantidad de {{staff}}:</ion-label>
+              <ion-label> {{datosRecibidos.staffNumberRequired[i]}} </ion-label>
+            </ng-container>
+          </ng-container>
+
+          <ng-container *ngFor="let equipment of datosRecibidos.equipment; let i = index">
+            <ng-container *ngIf="datosRecibidos.equipmentIsOptional[i] && datosRecibidos.equipmentSelected[i]">
+              <ion-label class="negrita"> <br/> {{equipment}}:</ion-label>
+              <ion-label> si</ion-label>
+            </ng-container>
+            <ng-container *ngIf="datosRecibidos.equipmentIsOptional[i] && !datosRecibidos.equipmentSelected[i]">
+              <ion-label class="negrita"> <br/> {{equipment}}:</ion-label>
+              <ion-label> no</ion-label>
+            </ng-container>
+          </ng-container>
+
+          <ng-container *ngFor="let equipment of datosRecibidos.equipment; let i = index">
+            <ng-container *ngIf="datosRecibidos.equipmentNumberOptional[i]">
+              <ion-label class="negrita"> <br/> cantidad de {{equipment}}:</ion-label>
+              <ion-label> {{datosRecibidos.equipmentNumberRequired[i]}} </ion-label>
+            </ng-container>
+          </ng-container>
+
           <ion-label class="negrita "> <br/>Monto: </ion-label>
-          <ion-label> Pendiente</ion-label>
+          <ng-container *ngIf="total === 'pendiente'">
+            <ion-label> {{total}} </ion-label>
+          </ng-container>
+          <ng-container *ngIf="total !== 'pendiente'">
+            <ion-label> {{total}} dólares </ion-label>
+          </ng-container>
       
     </div>
-    <div class="datosChofer" *ngIf=" datosrecibidos.servicio == 'Custodia'" >
-      
-    
-      <ion-label class="negrita ">Servicio:</ion-label>
-      <ion-label> {{datosrecibidos.servicio}}</ion-label>
-    
-      <ion-label class="negrita "> <br/>Fecha de inicio:</ion-label>
-      <ion-label> {{fechaInicio}}</ion-label>
-
-      <ion-label class="negrita "> <br/>Hora de inicio: </ion-label>
-      <ion-label> {{horaInicio}}</ion-label>
-
-      <ion-label class="negrita "> <br/>Lugar de origen: </ion-label>
-      <ion-label> {{direccionOrigen}}</ion-label>
-      <ion-label class="negrita "> <br/>Lugar de destino: </ion-label>
-      <ion-label> {{direccionDestino}}</ion-label>
-
-      <ion-label class="negrita "> <br/>Número de vehículos: </ion-label>
-      <ion-label> {{datosrecibidos.cantVehiculo}}</ion-label>
-
-      <ion-label class="negrita "> <br/>Incluir candado satelital:</ion-label>
-      <ion-label *ngIf=" datosrecibidos.valorcandado == true" > Sí</ion-label>
-      <ion-label *ngIf=" datosrecibidos.valorcandado != true" > No</ion-label>
-      <ion-label class="negrita "> <br/>Monto: </ion-label>
-      <ion-label> Pendiente</ion-label>
-      <div class="botonruta" >
-        <button (click)="dibujarRuta()" class="ruta">
-            <label >Ver ruta</label>
-            <ion-img src="assets/img/ruta.png"></ion-img>
-        </button>
-      </div>
-  
-  
-    </div>
-    <div class="datosChofer" *ngIf=" datosrecibidos.servicio == 'Guardia'" >
-      <ion-label class="negrita ">Servicio:</ion-label>
-      <ion-label> {{datosrecibidos.servicio}}</ion-label>
-    
-      <ion-label class="negrita "> <br/>Fecha de inicio:</ion-label>
-      <ion-label> {{fechaInicio}}</ion-label>
-
-      <ion-label class="negrita "> <br/>Hora de inicio: </ion-label>
-      <ion-label> {{horaInicio}}</ion-label>
-
-      <ion-label class="negrita "> <br/>Fecha de Finalización: </ion-label>
-      <ion-label> {{fechaFinalizacion}}</ion-label>
-
-      <ion-label class="negrita "> <br/>Hora de Finalización: </ion-label>
-      <ion-label> {{horaFinalizacion}}</ion-label>
-
-      <ion-label class="negrita "> <br/>Duración: </ion-label>
-          <ion-label>{{datosrecibidos.duracion}} </ion-label>
-
-      <ion-label class="negrita "> <br/>Lugar: </ion-label>
-      <ion-label> {{direccionOrigen}}</ion-label>
-
-
-      <ion-label class="negrita "> <br/>Número de guardias: </ion-label>
-      <ion-label> {{datosrecibidos.cantGuardia}}</ion-label>
-      <ion-label class="negrita "> <br/>Monto: </ion-label>
-      <ion-label> Pendiente</ion-label>
-
-
-  
-    </div>
-    <div class="datosChofer" *ngIf=" datosrecibidos.servicio == 'Transporte'" >
-      <ion-label class="negrita ">Servicio:</ion-label>
-      <ion-label> {{datosrecibidos.servicio}}</ion-label>
-    
-      <ion-label class="negrita "> <br/>Fecha de inicio:</ion-label>
-      <ion-label> {{fechaInicio}}</ion-label>
-
-      <ion-label class="negrita "> <br/>Hora de inicio: </ion-label>
-      <ion-label> {{horaInicio}}</ion-label>
-
-      <ion-label class="negrita "> <br/>Lugar de origen: </ion-label>
-      <ion-label> {{direccionOrigen}}</ion-label>
-      <ion-label class="negrita "> <br/>Lugar de destino: </ion-label>
-      <ion-label> {{direccionDestino}}</ion-label>
-      <ion-label class="negrita "> <br/>Monto: </ion-label>
-      <ion-label> Pendiente</ion-label>
-      <div class="botonruta" >
-        <label >Ver ruta</label>
-        <button (click)="dibujarRuta()" class="ruta">
-            
-            <ion-img  src="assets/img/ruta.png"></ion-img>
-        </button>
-      </div>
-
-      
-
-  
-    </div>
-    
-    
-
   </div>
-  <!--Elegir metodo de pago en la solicitud del servicio-->
+  
   <div class="metodo-pago">
     <ion-label > Elegir metodo de pago</ion-label>
-    <ion-select [(ngModel)]="value" (ionChange)="obtenermetodo(value)" okText="Aceptar" cancelText="Cancelar">
+    <ion-select [(ngModel)]="value" okText="Aceptar" cancelText="Cancelar">
       <ion-select-option value="tarjeta">TARJETA CREDITO/DEBITO</ion-select-option>
       <ion-select-option value="efectivo">EFECTIVO</ion-select-option>
     </ion-select>
+    
 
   </div>
   <div class="botones">
     <div class="confirmar-servicio">
-      <button ion-button color="secondary" (click)="confirmar()">Confirmar</button>
+      <button ion-button color="secondary" [routerLink]="['/servicios-empresa']">Confirmar</button>
     </div>
     <div class="cancelar-servicio">
-      <button ion-button color="secondary" (click)="cancelar() " >Cancelar</button>
+      <button ion-button color="secondary" [routerLink]="['/servicios-empresa/servicio-detalle', datosRecibidos.serviceID]" >Cancelar</button>
     </div>
 
   </div>
-  
-  
   
 
 </ion-content>

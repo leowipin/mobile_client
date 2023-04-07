@@ -52,4 +52,32 @@ export class UbicacionService {
     });
 
   }
+  calculateDistance(origin: { lat: number, lng: number }, destination: { lat: number, lng: number }): Promise<number> {
+    return new Promise((resolve, reject) => {
+      if (!this.mapsLoaded) {
+        reject('API Maps no cargada');
+        return;
+      }
+
+      let originLatLng = new google.maps.LatLng(origin.lat, origin.lng);
+      let destinationLatLng = new google.maps.LatLng(destination.lat, destination.lng);
+
+      let service = new google.maps.DistanceMatrixService();
+      service.getDistanceMatrix(
+          {
+              origins: [originLatLng],
+              destinations: [destinationLatLng],
+              travelMode: 'DRIVING',
+          },
+          (response, status) => {
+              if (status === 'OK') {
+                  let distance = response.rows[0].elements[0].distance.value;
+                  resolve(distance);
+              } else {
+                  reject(status);
+              }
+          }
+      );
+    });
+  }
 }
