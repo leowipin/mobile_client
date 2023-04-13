@@ -5,26 +5,30 @@ ion-grid.main {
     margin: 1.2rem 0;
 }
 
+ion-grid.content{
+    width: 70%;
+}
+
 ion-row {
+    align-items: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
 }
 
 /* Estilos específicos para cada clase de ion-row */
 
 ion-row.header {
+    height: 9%;
     justify-content: center;
-    height: 10%;
 }
 
 ion-row.header span {
-    width: 100%;
-    position: fixed;
     background-color: #FFDDDD;
     height: 26px;
-    top: 56px;
+    position: fixed;
+    top: 10%;
+    width: 100%;
     z-index: -1;
 }
 
@@ -34,13 +38,63 @@ ion-grid.content {
 }
 
 ion-row.header div{
-    position: absolute;
     left: 30px;
-    top: 10px;
+    position:absolute;
+    top:10px;
 }
 
 ion-row.header div ion-img{
-    width: 2.3em;
-    height: 2.3em;
+    height:2.3em;
+    width:2.3em;
 }
 
+.row-titulo{
+    height:10%;
+}
+
+.titulo ion-label {
+    border:3px solid #bf1a24;
+    border-radius:60px;
+    color:#bf1a24;
+    display:block;
+    font-size:120%;
+    text-align:center;
+}
+
+.titulo {
+   font-family:hp556;
+   width:100%;
+}
+
+.data {
+   display:flex; 
+}
+
+ion-row.img-status ion-img {
+   max-height:100%;
+   max-width:100%;
+}
+
+ion-row.img-status {
+   height:19%;
+   margin-bottom:3%;
+   margin-top:3%;
+}
+ion-row.datas{
+   align-items:flex-start;
+   font-family:hp265;
+   height:60%;
+   justify-content:flex-start;
+}
+
+ion-row.row-buttons{
+   height:6%;
+}
+
+.buttons{
+   align-items:center;
+   display:flex;
+   font-family:hp556;
+   justify-content:space-between;
+   width:100%;
+}

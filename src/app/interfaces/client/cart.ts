@@ -7,4 +7,5 @@ export interface Order {
     date_request: Date,
     status: string,
     service_name: string,
+    requires_origin_and_destination:boolean,
   }

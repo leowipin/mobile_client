@@ -1,6 +1,5 @@
 export interface OrderData {
     service: string,
-    phone_account: string|null,
     date_request: Date,
     start_date: Date,
     start_time: string,
@@ -17,11 +16,11 @@ export interface OrderData {
     staff: string[],
     staff_is_optional: string[],
     staff_selected: boolean[],
-    staff_number_optional: boolean[],
+    staff_number_is_optional: boolean[],
     staff_number: number[],
     equipment: string[],
     equipment_is_optional: string[],
     equipment_selected: boolean[],
-    equipment_number_optional: boolean[],
+    equipment_number_is_optional: boolean[],
     equipment_number: number[],
 }

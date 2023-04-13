@@ -80,7 +80,6 @@ export class SolicitudServicioPage implements OnInit {
       this.navCtrl.navigateForward("/estado-solicitud");
       let orderData: OrderData = {
         service: this.datosRecibidos.serviceID,
-        phone_account: null,
         date_request: this.datosRecibidos.dateRequest,
         start_date: this.datosRecibidos.startDate,
         start_time: this.datosRecibidos.startTime,
@@ -93,16 +92,16 @@ export class SolicitudServicioPage implements OnInit {
         destination_lng: this.datosRecibidos.destinationLng,
         total: this.datosRecibidos.total,
         payment_method: this.value,
-        status: "aprobado",
+        status: "aceptado",
         staff: this.datosRecibidos.staff,
         staff_is_optional: this.datosRecibidos.staffIsOptional,
         staff_selected: this.datosRecibidos.staffSelected,
-        staff_number_optional: this.datosRecibidos.staffNumberOptional,
+        staff_number_is_optional: this.datosRecibidos.staffNumberOptional,
         staff_number: this.datosRecibidos.staffNumberRequired,
         equipment: this.datosRecibidos.equipment,
         equipment_is_optional: this.datosRecibidos.equipmentIsOptional,
         equipment_selected: this.datosRecibidos.equipmentSelected,
-        equipment_number_optional: this.datosRecibidos.equipmentNumberOptional,
+        equipment_number_is_optional: this.datosRecibidos.equipmentNumberOptional,
         equipment_number: this.datosRecibidos.equipmentNumberRequired
       };
       console.log(orderData)

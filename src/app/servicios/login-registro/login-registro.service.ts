@@ -28,8 +28,8 @@ export class ClienteWAService {
   constructor(private http: HttpClient) { }
 
   signin(data: SignIn): Observable<SignInResponse>{
-    //const endpoint:string = this.DJANGO_DOMAIN_NAME+'users/clientSignin/';
-    const endpoint:string = this.DJANGO_TEST_DOMAIN_NAME+'users/clientSignin/';
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+'users/clientSignin/';
+    //const endpoint:string = this.DJANGO_TEST_DOMAIN_NAME+'users/clientSignin/';
     return this.http.post<SignInResponse>(endpoint, data).pipe(
       tap(response => {
         localStorage.setItem('token', response.token);
@@ -54,8 +54,8 @@ export class ClienteWAService {
   }
 
   getNames(token:string): Observable<Names>{
-    //const endpoint:string = this.DJANGO_DOMAIN_NAME+'users/clientNames/';
-    const endpoint:string = this.DJANGO_TEST_DOMAIN_NAME+'users/clientNames/';
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+'users/clientNames/';
+    //const endpoint:string = this.DJANGO_TEST_DOMAIN_NAME+'users/clientNames/';
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     return this.http.get<Names>(endpoint, { headers: headers })
   }
@@ -91,30 +91,37 @@ export class ClienteWAService {
   }
 
   getServicesName(token:string): Observable<ServicesNameList>{
-    //const endpoint:string = this.DJANGO_DOMAIN_NAME+'services/serviceNames/';
-    const endpoint:string = this.DJANGO_TEST_DOMAIN_NAME+'services/serviceNames/';
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+'services/serviceNames/';
+    //const endpoint:string = this.DJANGO_TEST_DOMAIN_NAME+'services/serviceNames/';
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     return this.http.get<ServicesNameList>(endpoint, { headers: headers })
   }
 
   getServiceData(token:string, id:string):Observable<ServiceData>{
-    //const endpoint:string = this.DJANGO_DOMAIN_NAME+`services/serviceByID/?id=${id}`;
-    const endpoint:string = this.DJANGO_TEST_DOMAIN_NAME+`services/serviceByID/?id=${id}`;
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+`services/serviceByID/?id=${id}`;
+    //const endpoint:string = this.DJANGO_TEST_DOMAIN_NAME+`services/serviceByID/?id=${id}`;
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     return this.http.get<ServiceData>(endpoint, { headers: headers })
   }
 
   createOrder(data:OrderData, token:string): Observable<MessageResponse>{
-    //const endpoint:string = this.DJANGO_DOMAIN_NAME+'services/orderClient/';
-    const endpoint:string = this.DJANGO_TEST_DOMAIN_NAME+'services/orderClient/';
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+'services/orderClient/';
+    //const endpoint:string = this.DJANGO_TEST_DOMAIN_NAME+'services/orderClient/';
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     return this.http.post<MessageResponse>(endpoint, data, { headers: headers })
   }
 
   getCart(token:string): Observable<Cart>{
-    //const endpoint:string = this.DJANGO_DOMAIN_NAME+'services/serviceNames/';
-    const endpoint:string = this.DJANGO_TEST_DOMAIN_NAME+'services/orderClientNames/';
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+'services/orderClientNames/';
+    //const endpoint:string = this.DJANGO_TEST_DOMAIN_NAME+'services/orderClientNames/';
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     return this.http.get<Cart>(endpoint, { headers: headers })
+  }
+
+  getOrder(token:string, id:string): Observable<OrderData>{
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+`services/orderClient/?id=${id}`;
+    //const endpoint:string = this.DJANGO_TEST_DOMAIN_NAME+`services/orderClient/?id=${id}`;
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+    return this.http.get<OrderData>(endpoint, { headers: headers })
   }
 }

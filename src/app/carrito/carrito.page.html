@@ -14,7 +14,7 @@
       </ion-row>
       <ng-container *ngIf="cart">
         <ion-row *ngFor="let item of cart" class="order-row">
-          <div class="order-pill" [routerLink]="['/carrito/pedido-carrito', item.id]">
+          <div class="order-pill" [routerLink]="['/carrito/pedido-carrito', item.id, item.service_name, item.requires_origin_and_destination]">
             <ion-label class="order-name">{{ item.service_name }}</ion-label>
             <ion-label class="order-status">{{ item.status }}</ion-label>
             <ion-label class="order-date">{{ item.date_request }}</ion-label>
