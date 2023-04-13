@@ -30,6 +30,7 @@ export class ServicioDetallePage implements OnInit {
   maxiFecha2= addDaysToDate(new Date(), 1);
   minFecha2: string= (this.maxiFecha2.getFullYear()).toString()+"-"+(this.maxiFecha2.getMonth()+1).toString()+"-"+(this.maxiFecha2.getDate()).toString() ;
   maxFecha2: string = (new Date().getFullYear() + 2).toString();
+  dateRequest: any;
   fechaInicio: any;
   horaInicio: any;
   fechaFinalizacion: any;
@@ -191,7 +192,7 @@ export class ServicioDetallePage implements OnInit {
 
   submitForm() {
     let validationValue = this.validations();
-    
+    this.dateRequest = moment().format("YYYY-MM-DD");
     //staff lists
     this.staff_number_required = new Array(this.serviceData.staff.length);
     let staff_selected = new Array(this.serviceData.staff.length);
@@ -201,7 +202,7 @@ export class ServicioDetallePage implements OnInit {
       } else {
         this.staff_number_required[i] = this.serviceData.staff_number_is_optional[i] ? this.currentNumber : 1;
       }
-      staff_selected[i] = this.staff_number_required[i] === 1
+      staff_selected[i] = this.include_staff
     }
     let choferIndex = this.serviceData.staff.indexOf('chofer');
     let choferGuardaespaldasIndex = this.serviceData.staff.indexOf('chofer guardaespaldas');
@@ -221,7 +222,7 @@ export class ServicioDetallePage implements OnInit {
         } else {
             this.equipment_number_required[i] = this.serviceData.equipment_number_is_optional[i] ? this.currentNumber2 : 1;
         }
-        equipment_selected[i] = this.equipment_number_required[i] === 1
+        equipment_selected[i] = this.include_equipment
     }
 
     // staff total price
@@ -232,7 +233,7 @@ export class ServicioDetallePage implements OnInit {
       let staffNumber = this.staff_number_required[i];
       totalStaff += baseHours * pricePerHour * staffNumber;
     }
-
+    
     //equipment total price
     let totalEquipment:number = 0;
     for (let i = 0; i < this.equipment_number_required.length; i++) {
@@ -245,6 +246,7 @@ export class ServicioDetallePage implements OnInit {
       serviceID: this.serviceData.id,
       serviceName: this.serviceData.name,
       requiresDestination: this.serviceData.requires_origin_and_destination,
+      dateRequest: this.dateRequest,
       startDate: this.fechaInicio,
       endDate: this.fechaFinalizacion,
       startTime: this.horaInicio,
@@ -271,7 +273,7 @@ export class ServicioDetallePage implements OnInit {
       equipmentNumberRequired: this.equipment_number_required,
       total: 0
     };
-
+    // here create the object with the interface Order
     //distance traveled
     let distanceTraveled:number=0;
     if(this.serviceData.requires_origin_and_destination && this.serviceData.set_price){
@@ -341,8 +343,9 @@ export class ServicioDetallePage implements OnInit {
       next: (response) => {
         this.serviceData = response;
         this.requires_origin_and_destination = response.requires_origin_and_destination
-        this.staff_number_required = new Array(this.serviceData.staff.length).fill(1);
+        this.staff_number_required = new Array(this.serviceData.staff.length).fill(1); // ¿?
         this.presentAlertInfoService(response.name, response.description)
+        console.log(response)
       },
       error: (error) => {
         this.alertController.create({

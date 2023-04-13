@@ -24,10 +24,11 @@
 .titulo ion-label {
     font-size: 2vm;
     text-align: center;
-    border: 3px solid #4a4a4a;
+    border: 3px solid #bf1a24;
     display: block;
     border-radius: 60px;
     font-size: 120%;
+    color: #bf1a24
 }
 
 .datos {
@@ -58,23 +59,11 @@
 }
 
 .confirmar-servicio button {
-    text-align: center;
-    margin-left: 0rem;
-    width: 6rem;
-    height: 2.3rem;
-    border-radius: 60px;
-    background-color: #38bd4e;
-    color: #ffffff;
+    font-family: hp556;
 }
 
 .cancelar-servicio button {
-    text-align: center;
-    margin-left: 0rem;
-    width: 6rem;
-    height: 2.3rem;
-    border-radius: 60px;
-    background-color: #c43834;
-    color: #ffffff;
+    font-family: hp556;
 }
 
 .ruta {
@@ -109,7 +98,7 @@
 }
 
 .metodo-pago ion-select {
-    background-color: #d8d6d7;
+    background-color: #FFDDDD;
     border-radius: 60px;
 }
 
@@ -126,7 +115,7 @@ ion-buttons{
 .tope span {
     width: 100%;
     position: absolute;
-    background-color: #aaafb4;
+    background-color: #FFDDDD;
     height: 26px;
     top: 62px;
     z-index: 1;

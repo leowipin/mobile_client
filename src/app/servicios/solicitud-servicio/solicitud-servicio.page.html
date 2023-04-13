@@ -49,13 +49,13 @@
             <ion-label> {{formattedDuration}} </ion-label>
           </ng-container>
 
-          <ion-label class="negrita "> <br/>Lugar origen: </ion-label>
+          <!--<ion-label class="negrita "> <br/>Lugar origen: </ion-label>
           <ion-label> {{datosRecibidos.dirOrigin}}</ion-label>
 
           <ng-container  *ngIf="datosRecibidos.requiresDestination">
             <ion-label class="negrita "> <br/>Lugar destino: </ion-label>
             <ion-label> {{datosRecibidos.dirDestination}}</ion-label>
-          </ng-container>
+          </ng-container>-->
 
           <ng-container *ngFor="let staff of datosRecibidos.staff; let i = index">
             <ng-container *ngIf="datosRecibidos.staffIsOptional[i] && datosRecibidos.staffSelected[i]">
@@ -111,16 +111,15 @@
       <ion-select-option value="efectivo">EFECTIVO</ion-select-option>
     </ion-select>
     
-
   </div>
   <div class="botones">
-    <div class="confirmar-servicio">
-      <button ion-button color="secondary" [routerLink]="['/servicios-empresa']">Confirmar</button>
-    </div>
     <div class="cancelar-servicio">
-      <button ion-button color="secondary" [routerLink]="['/servicios-empresa/servicio-detalle', datosRecibidos.serviceID]" >Cancelar</button>
+      <button class="btn btn-danger rounded-pill border-0" [routerLink]="['/servicios-empresa/servicio-detalle', datosRecibidos.serviceID]">Cancelar</button>
     </div>
-
+    <div class="confirmar-servicio">
+      <button class="btn btn-success rounded-pill border-0" (click)="sendOrder()">Confirmar</button> 
+    </div>
+    
   </div>
   
 

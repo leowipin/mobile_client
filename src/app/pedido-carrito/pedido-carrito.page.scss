@@ -1,0 +1,46 @@
+/* Estilos generales para ion-grid e ion-row */
+
+ion-grid.main {
+    height: 90%;
+    margin: 1.2rem 0;
+}
+
+ion-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Estilos específicos para cada clase de ion-row */
+
+ion-row.header {
+    justify-content: center;
+    height: 10%;
+}
+
+ion-row.header span {
+    width: 100%;
+    position: fixed;
+    background-color: #FFDDDD;
+    height: 26px;
+    top: 56px;
+    z-index: -1;
+}
+
+ion-grid.content {
+    height: 90%;
+    margin-top: 1.2rem;
+}
+
+ion-row.header div{
+    position: absolute;
+    left: 30px;
+    top: 10px;
+}
+
+ion-row.header div ion-img{
+    width: 2.3em;
+    height: 2.3em;
+}
+

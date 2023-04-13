@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, NavController,AlertController } from '@ionic/angular';
+import { OrderData } from 'src/app/interfaces/client/orderData';
+import { ClienteWAService } from '../login-registro/login-registro.service';
 import { TrackServicioComponent } from '../track-servicio/track-servicio.component';
 import * as moment from 'moment';
 
@@ -37,14 +39,14 @@ export class SolicitudServicioPage implements OnInit {
   };
 
   constructor(private route: ActivatedRoute, private router: Router, public navCtrl: NavController,
-    private modalController: ModalController,public alertController: AlertController) {
+    private modalController: ModalController,public alertController: AlertController, private clienteWAService: ClienteWAService) {
 
   }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      console.log(params); // { order: "popular" }
-      this.datosRecibidos = params
+      this.datosRecibidos = {...params}
+      console.log(this.datosRecibidos);
       this.duration = Math.ceil(params.duration);
       if(params.total===0){
         this.total = "pendiente"
@@ -55,23 +57,83 @@ export class SolicitudServicioPage implements OnInit {
       let minutes = Math.floor((params.duration - hours) * 60);
       let seconds = Math.round(((params.duration - hours) * 60 - minutes) * 60);
       this.formattedDuration = `${hours} horas con ${minutes} minutos y ${seconds} segundos`;
+      
+      if(params.requiresDestination){
+        this.datosRecibidos.endDate = null
+        this.datosRecibidos.endTime = null
+        this.datosRecibidos.duration = null
+      } else{
+        this.datosRecibidos.destinationLat = null
+        this.datosRecibidos.destinationLng = null 
+      }
 
-      console.log(this.formattedDuration);
-      console.log(this.duration);
-      /*this.datosrecibidos = params;
-      console.log(this.datosrecibidos); // popular
-      this.fechaInicio = moment(this.datosrecibidos.datos.fechaInicio).format("DD/MM/YYYY");
-      this.fechaFinalizacion = moment(this.datosrecibidos.datos.fechaFinalizacion).format("DD/MM/YYYY");
-      this.horaInicio = moment(this.datosrecibidos.datos.horaInicio).format("hh:mma");
-      this.horaFinalizacion = moment(this.datosrecibidos.datos.horaFinalizacion).format("hh:mma");
-      this.origen = this.datosrecibidos.origen;
-      this.destino = this.datosrecibidos.destino;
-      this.findPlaces(this.origen,this.destino);*/
+      console.log(this.datosRecibidos);
     }
     );
   }
   cancelar() {
     this.navCtrl.navigateForward(`/servicio-detalle/${this.datosRecibidos.serviceID}`);
+  }
+
+  sendOrder(){
+    if(this.value !== undefined) {
+      this.navCtrl.navigateForward("/estado-solicitud");
+      let orderData: OrderData = {
+        service: this.datosRecibidos.serviceID,
+        phone_account: null,
+        date_request: this.datosRecibidos.dateRequest,
+        start_date: this.datosRecibidos.startDate,
+        start_time: this.datosRecibidos.startTime,
+        end_date: this.datosRecibidos.endDate,
+        end_time: this.datosRecibidos.endTime,
+        duration: this.duration,
+        origin_lat: this.datosRecibidos.originLat,
+        origin_lng: this.datosRecibidos.originLng,
+        destination_lat: this.datosRecibidos.destinationLat,
+        destination_lng: this.datosRecibidos.destinationLng,
+        total: this.datosRecibidos.total,
+        payment_method: this.value,
+        status: "aprobado",
+        staff: this.datosRecibidos.staff,
+        staff_is_optional: this.datosRecibidos.staffIsOptional,
+        staff_selected: this.datosRecibidos.staffSelected,
+        staff_number_optional: this.datosRecibidos.staffNumberOptional,
+        staff_number: this.datosRecibidos.staffNumberRequired,
+        equipment: this.datosRecibidos.equipment,
+        equipment_is_optional: this.datosRecibidos.equipmentIsOptional,
+        equipment_selected: this.datosRecibidos.equipmentSelected,
+        equipment_number_optional: this.datosRecibidos.equipmentNumberOptional,
+        equipment_number: this.datosRecibidos.equipmentNumberRequired
+      };
+      console.log(orderData)
+      const token = localStorage.getItem('token');
+        this.clienteWAService.createOrder(orderData, token).subscribe({
+          next: (response) => {
+            console.log(response.message)
+            /*this.alertController.create({
+              header: 'Envio email',
+              message: response.message,
+              buttons: ['Aceptar']
+            }).then(alert=> alert.present())*/
+          },
+          error: (error) => {
+            let keyError: string = Object.keys(error.error)[0]
+            console.log(error)
+            console.log(error.error[keyError])
+            /*this.alertController.create({
+              header: 'Error email',
+              message: error.error[keyError],
+              buttons: ['Aceptar']
+            }).then(alert=> alert.present())*/
+          }
+        });
+    }else{
+      this.alertController.create({
+        header: 'Método de pago',
+        message: 'Seleccione el método de pago',
+        buttons: ['Aceptar']
+      }).then(alert=> alert.present())
+    }
   }
   /*regresar() {
     if (this.datosrecibidos.servicio == 'Chofer') {

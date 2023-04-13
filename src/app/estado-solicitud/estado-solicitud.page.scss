@@ -1,0 +1,72 @@
+/* Estilos generales para ion-grid e ion-row */
+ion-grid.main {
+    height: 90%;
+    margin: 1.2rem 0;
+}
+
+ion-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Estilos específicos para cada clase de ion-row */
+ion-row.header {
+    justify-content: center;
+    height: 10%;
+}
+
+ion-row.header span {
+    width: 100%;
+    position: fixed;
+    background-color: #FFDDDD;
+    height: 26px;
+    top: 56px;
+    z-index: -1;
+}
+
+ion-grid.content {
+    height: 90%;
+    margin-top: 1.2rem;
+}
+
+ion-row.img-status {
+    height: 35%;
+}
+
+ion-row.img-status ion-img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+ion-row.title {
+    height: 20%;
+}
+
+ion-row.detail {
+    height: 35%;
+    margin-right: 2rem;
+    margin-left: 2rem;
+}
+
+ion-row.cart-button {
+    height: 10%;
+}
+
+/* Estilos de texto */
+ion-row.title ion-label {
+    color:#bf1a24;
+    font-size: 1.5rem;
+    font-family:BebasBold;
+}
+
+ion-row.detail ion-label {
+    color:#262626;
+    font-size: 1rem;
+    font-family:hp265;
+}
+
+ion-row.cart-button button {
+    font-family: hp556;
+}
