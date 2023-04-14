@@ -27,8 +27,9 @@ export class FulltrackComponent implements OnInit {
   marker: any;
   infowindow: any;
   positionSet: any;
-  directionsService = new google.maps.DirectionsService();
-  directionsDisplay = new google.maps.DirectionsRenderer();
+  directionsService: any;
+  directionsDisplay: any;
+  
 
 
   @ViewChild('map') divMap: ElementRef;
@@ -41,6 +42,8 @@ export class FulltrackComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.directionsService = new google.maps.DirectionsService();
+    this.directionsDisplay = new google.maps.DirectionsRenderer();
     this.init();
   }
 

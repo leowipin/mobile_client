@@ -146,6 +146,10 @@ const routes: Routes = [
     path: 'pedido-carrito',
     loadChildren: () => import('./pedido-carrito/pedido-carrito.module').then( m => m.PedidoCarritoPageModule)
   },
+  {
+    path: 'route-locations',
+    loadChildren: () => import('./route-locations/route-locations.module').then( m => m.RouteLocationsPageModule)
+  },
 
 
 

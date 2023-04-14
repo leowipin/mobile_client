@@ -9,9 +9,11 @@
     margin-top: 5rem;
     margin-right: 1rem;
     position: fixed;
-    top: 50px;
+    top: 5px;
     right: 5px;
-    background: #80d894;
+    background: #049b2c;
+    color: white;
+    font-family: hp556;
 }
 
 
@@ -31,7 +33,7 @@ ion-content{
     justify-content: space-between;
 }
 
-.tope span {
+/*.tope span {
     width: 100%;
     position: absolute;
     background-color: #aaafb4;
@@ -50,7 +52,7 @@ ion-content{
 div.logosepro {
     display: flex;
     justify-content: center;
-}
+}*/
 
 div h4 {
     font-weight: bold;

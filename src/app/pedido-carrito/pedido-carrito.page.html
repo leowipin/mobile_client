@@ -105,6 +105,11 @@
             <ion-label> {{total}} dólares </ion-label>
           </ng-container>
         </div>
+
+        <ng-container *ngIf="requires_origin_and_destination">
+          <br/>
+          <button class="btn btn-primary rounded-pill border-0 ver-ruta" (click)="dibujarRuta()">Ver ruta</button> 
+        </ng-container>
       </ion-row>
       <ion-row class="row-buttons">
         <div class="buttons">

@@ -46,7 +46,10 @@ export class SolicitudServicioPage implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.datosRecibidos = {...params}
-      console.log(this.datosRecibidos);
+      this.origen.lat = this.datosRecibidos.originLat
+      this.origen.lng = this.datosRecibidos.originLng
+      this.destino.lat = this.datosRecibidos.destinationLat
+      this.destino.lng = this.datosRecibidos.destinationLng
       this.duration = Math.ceil(params.duration);
       if(params.total===0){
         this.total = "pendiente"
@@ -109,21 +112,11 @@ export class SolicitudServicioPage implements OnInit {
         this.clienteWAService.createOrder(orderData, token).subscribe({
           next: (response) => {
             console.log(response.message)
-            /*this.alertController.create({
-              header: 'Envio email',
-              message: response.message,
-              buttons: ['Aceptar']
-            }).then(alert=> alert.present())*/
           },
           error: (error) => {
             let keyError: string = Object.keys(error.error)[0]
             console.log(error)
             console.log(error.error[keyError])
-            /*this.alertController.create({
-              header: 'Error email',
-              message: error.error[keyError],
-              buttons: ['Aceptar']
-            }).then(alert=> alert.present())*/
           }
         });
     }else{
@@ -134,81 +127,7 @@ export class SolicitudServicioPage implements OnInit {
       }).then(alert=> alert.present())
     }
   }
-  /*regresar() {
-    if (this.datosrecibidos.servicio == 'Chofer') {
-      this.navCtrl.navigateForward("/servicios/n/chofer");
-    }
-    if (this.datosrecibidos.servicio == 'Guardia') {
-      this.navCtrl.navigateForward("/servicios/n/guardia");
-    }
-    if (this.datosrecibidos.servicio == 'Transporte') {
-      this.navCtrl.navigateForward("/servicios/n/transporte");
-    }
-    if (this.datosrecibidos.servicio == 'Custodia') {
-      this.navCtrl.navigateForward("/servicios/n/custodia");
-    }
-  }
-  async presentAlertConfirmacion() {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Confirmación del servicio',
-      message: 'La solicitud ha sido enviada.',
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'secondary',
-          id: 'cancel-button',
-          handler: (blah) => {
-            console.log('Confirm Cancel: blah');
-          }
-        }, {
-          text: 'Ok',
-          id: 'confirm-button',
-          handler: () => {
-            console.log('Confirm Okay');
-            this.navCtrl.navigateForward("/historialservicios", {
-              queryParams: {
-                descripcion: this.datosrecibidos, origen:this.direccionOrigen, destino:this.direccionDestino, service:this.datosrecibidos.servicio, pago:this.seleccion,cance:""
-              }
-            });
-
-          }
-        }
-      ]
-    });
-
-    await alert.present();
-    
-  }
-  async presentAlertPago() {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Sin ubicación.',
-      //subHeader: 'Subtitle',
-      message: "No ha seleccionado un método de pago.",
-      buttons: ['OK']
-    });
-
-    await alert.present();
-    
-  }
-  cancelar() {
-    this.navCtrl.navigateForward("/servicios");
-  }
-  confirmar() {
-    if(this.haymetodopago){
-      this.presentAlertConfirmacion();
-    }else{
-      this.presentAlertPago()
-    }
-  }
-  obtenermetodo(sel: any) {
-    this.seleccion= sel;
-    this.haymetodopago=true;
-    console.log(this.seleccion);
-  }
-
+  
   async dibujarRuta() {
 
     const modalAdd = await this.modalController.create({
@@ -247,5 +166,5 @@ export class SolicitudServicioPage implements OnInit {
         }
       })
       .catch((e) => window.alert("Geocoder failed due to: " + e));
-  }*/
+  }
 }

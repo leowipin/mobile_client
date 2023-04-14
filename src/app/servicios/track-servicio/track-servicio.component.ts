@@ -46,6 +46,7 @@ export class TrackServicioComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log("ssss")
     this.init();
   }
 

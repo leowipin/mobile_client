@@ -100,6 +100,11 @@
           <ng-container *ngIf="total !== 'pendiente'">
             <ion-label> {{total}} dólares </ion-label>
           </ng-container>
+
+          <ng-container *ngIf="datosRecibidos.requiresDestination">
+            <br/>
+            <button class="btn btn-primary rounded-pill border-0 ver-ruta" (click)="dibujarRuta()">Ver ruta</button> 
+          </ng-container>
       
     </div>
   </div>
