@@ -49,10 +49,10 @@ export class LoginPage implements OnInit {
     }
   }
 
-  redirigir_home(){
+  /*redirigir_home(){
     this.navCtrl.navigateForward("/servicios");
     this.ionicForm.reset();
-  }
+  }*/
 
   redirigirRegistrar() {
     this.navCtrl.navigateForward('/registrar');

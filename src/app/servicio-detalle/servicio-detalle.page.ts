@@ -212,6 +212,11 @@ export class ServicioDetallePage implements OnInit {
           staff_selected[choferIndex] = false;
       }
     }
+    console.log(this.serviceData.staff)
+    console.log(this.serviceData.staff_is_optional)
+    console.log(this.serviceData.staff_number_is_optional)
+    console.log(staff_selected)
+    console.log(this.staff_number_required)
 
     //equipment lists
     this.equipment_number_required = new Array(this.serviceData.equipment.length);

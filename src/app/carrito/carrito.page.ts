@@ -13,8 +13,11 @@ export class CarritoPage implements OnInit {
 
   constructor(private clienteWAService: ClienteWAService, private alertController: AlertController,) { }
 
-  ngOnInit() {
+  ionViewWillEnter() {
     this.getCart();
+  }
+  ngOnInit(): void {
+    
   }
 
   getCart(){

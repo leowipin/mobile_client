@@ -6,6 +6,8 @@ import { OrderData } from '../interfaces/client/orderData';
 import { ModalController } from '@ionic/angular';
 import { TrackServicioComponent } from '../servicios/track-servicio/track-servicio.component';
 import { UbicacionService } from '../ubicacion/ubicacion.service';
+import { NavController } from '@ionic/angular';
+import { Router } from '@angular/router';
 import { Renderer2 } from '@angular/core';
 declare var google: any;
 
@@ -34,7 +36,7 @@ export class PedidoCarritoPage implements OnInit {
     lat: -2.1676746,
     lng: -79.8956897
   };
-  constructor(private route: ActivatedRoute, private clienteWAService: ClienteWAService, private alertController: AlertController, private modalController: ModalController, private ubicacionService: UbicacionService, private renderer: Renderer2) { 
+  constructor(private route: ActivatedRoute, private clienteWAService: ClienteWAService, private alertController: AlertController, private modalController: ModalController, private ubicacionService: UbicacionService, private renderer: Renderer2, private navCtrl: NavController, private router: Router) { 
 
   }
 
@@ -83,6 +85,46 @@ export class PedidoCarritoPage implements OnInit {
   stringToBoolean(str: string): boolean {
     return str.toLowerCase() === 'true';
 }
+
+  deleteOrder(){
+    this.alertController.create({
+      message: "Está seguro que desea eliminar este pedido",
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel'
+        },
+        {
+          text: 'Sí',
+          handler: () => {
+            const token = localStorage.getItem('token');
+            const id = this.route.snapshot.paramMap.get('id');
+            this.clienteWAService.deleteOrder(token, id).subscribe({
+              next: (response) => {
+                this.alertController.create({
+                  message: "Pedido eliminado correctamente",
+                  buttons: [
+                    {
+                      text: 'Aceptar',
+                      handler: () => {
+                        this.navCtrl.navigateRoot('/carrito');
+                      }
+                    }
+                  ]
+                }).then(alert => alert.present())
+              },error: (error) => {
+                console.log(error)
+                this.alertController.create({
+                  message: "Hubo un error al eliminar el pedido",
+                  buttons: ['Aceptar']
+                }).then(alert => alert.present())
+              }
+            });
+          }
+        }
+      ]
+    }).then(alert => alert.present())
+  }
 
 async dibujarRuta() {
 

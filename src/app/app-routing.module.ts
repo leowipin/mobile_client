@@ -134,7 +134,8 @@ const routes: Routes = [
   {
     path: 'servicio-detalle',
     loadChildren: () => import('./servicio-detalle/servicio-detalle.module').then( m => m.ServicioDetallePageModule)
-  },  {
+  },
+  {
     path: 'estado-solicitud',
     loadChildren: () => import('./estado-solicitud/estado-solicitud.module').then( m => m.EstadoSolicitudPageModule)
   },
@@ -143,7 +144,7 @@ const routes: Routes = [
     loadChildren: () => import('./carrito/carrito.module').then( m => m.CarritoPageModule)
   },
   {
-    path: 'pedido-carrito',
+    path: 'pedido-carrito/:id/:name/:booleandest',
     loadChildren: () => import('./pedido-carrito/pedido-carrito.module').then( m => m.PedidoCarritoPageModule)
   },
   {

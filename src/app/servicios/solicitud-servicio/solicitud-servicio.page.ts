@@ -95,7 +95,7 @@ export class SolicitudServicioPage implements OnInit {
         destination_lng: this.datosRecibidos.destinationLng,
         total: this.datosRecibidos.total,
         payment_method: this.value,
-        status: "aceptado",
+        status: "pendiente",
         staff: this.datosRecibidos.staff,
         staff_is_optional: this.datosRecibidos.staffIsOptional,
         staff_selected: this.datosRecibidos.staffSelected,

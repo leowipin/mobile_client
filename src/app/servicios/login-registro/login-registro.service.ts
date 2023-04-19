@@ -124,4 +124,11 @@ export class ClienteWAService {
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     return this.http.get<OrderData>(endpoint, { headers: headers })
   }
+
+  deleteOrder(token:string, id:string): Observable<MessageResponse>{
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+`services/orderClient/?id=${id}`
+    //const endpoint:string = this.DJANGO_TEST_DOMAIN_NAME+`services/orderClient/?id=${id}`;
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+    return this.http.delete<MessageResponse>(endpoint, { headers: headers })
+  }
 }

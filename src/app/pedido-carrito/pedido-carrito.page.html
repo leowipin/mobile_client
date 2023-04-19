@@ -113,8 +113,8 @@
       </ion-row>
       <ion-row class="row-buttons">
         <div class="buttons">
-          <button class="btn btn-danger rounded-pill border-0">Rechazar</button>
-          <button class="btn btn-success rounded-pill border-0">Realizar pago</button>
+          <button class="btn btn-danger rounded-pill border-0" (click)="deleteOrder()">Eliminar</button>
+          <button class="btn btn-success rounded-pill border-0" [disabled]="orderData.status !== 'aceptado'">Realizar pago</button>
         </div>
       </ion-row>
     </ion-grid>
