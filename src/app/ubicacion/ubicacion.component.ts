@@ -24,6 +24,8 @@ export class UbicacionComponent implements OnInit {
     lng: -79.8956897
   };
 
+  @Input() onlyView: boolean = false;
+
   label = {
     titulo: 'Ubicación',
     subtitulo: 'Seleccione la ubicación'

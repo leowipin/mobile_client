@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header *ngIf="!onlyView">
   <ion-toolbar color="primary" >
     <div class="buscador">
       <ion-searchbar [(ngModel)]="autocomplete.input" (ionInput)="UpdateSearchResults()"
@@ -20,7 +20,7 @@
 <ion-content>
   <div #map class="map"></div>
 
-  <ion-chip class="miubicacion" (click)="mylocation()">
+  <ion-chip class="miubicacion" (click)="mylocation()" *ngIf="!onlyView">
     <ion-label class="normal">Mi ubicación actual</ion-label>
     <ion-label name="locate"></ion-label>
   </ion-chip>

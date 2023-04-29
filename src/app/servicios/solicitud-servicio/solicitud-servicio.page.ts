@@ -4,6 +4,10 @@ import { ModalController, NavController,AlertController } from '@ionic/angular';
 import { OrderData } from 'src/app/interfaces/client/orderData';
 import { ClienteWAService } from '../login-registro/login-registro.service';
 import { TrackServicioComponent } from '../track-servicio/track-servicio.component';
+import { environment } from 'src/environments/environment';
+import { UbicacionComponent } from 'src/app/ubicacion/ubicacion.component';
+import { UbicacionService } from '../../ubicacion/ubicacion.service';
+
 import * as moment from 'moment';
 
 declare var google: any;
@@ -27,7 +31,8 @@ export class SolicitudServicioPage implements OnInit {
   duration:number;
   formattedDuration:string;
   total:any;
-  
+  apiKey = environment.googleMapsApiKey;
+
 
   origen = {
     lat: -2.1676746,
@@ -39,7 +44,7 @@ export class SolicitudServicioPage implements OnInit {
   };
 
   constructor(private route: ActivatedRoute, private router: Router, public navCtrl: NavController,
-    private modalController: ModalController,public alertController: AlertController, private clienteWAService: ClienteWAService) {
+    private modalController: ModalController,public alertController: AlertController, private clienteWAService: ClienteWAService, private ubicacionService: UbicacionService) {
 
   }
 
@@ -140,6 +145,23 @@ export class SolicitudServicioPage implements OnInit {
 
     await modalAdd.present();
   }
+
+  async verUbicacion() {
+      const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.origen.lat},${this.origen.lng}&key=${this.apiKey}`);
+      const data = await response.json();
+      console.log(data.results)
+      if (data.results && data.results.length > 0) {
+        const modalAdd = await this.modalController.create({
+          component: UbicacionComponent,
+          mode: 'ios',
+          swipeToClose: true,
+          componentProps: { position: this.origen, onlyView: true }
+        });
+  
+        await modalAdd.present();
+    }
+  }
+  
 
   findPlaces(salida: any, llegada: any) {
 

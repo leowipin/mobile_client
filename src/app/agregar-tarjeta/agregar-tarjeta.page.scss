@@ -1,0 +1,135 @@
+/* Estilos generales para ion-grid e ion-row */
+
+ion-grid.main {
+    height: 90%;
+    margin: 1.2rem 0;
+}
+
+ion-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Estilos específicos para cada clase de ion-row */
+ion-row.header {
+    justify-content: center;
+    height: 10%;
+}
+
+ion-row.header div ion-img{
+    height:2.3em;
+    width:2.3em;
+}
+
+ion-row.header div{
+    left: 30px;
+    position:absolute;
+    top:10px;
+}
+
+ion-row.header span {
+    width: 100%;
+    position: fixed;
+    background-color: #FFDDDD;
+    height: 26px;
+    top: 56px;
+    z-index: -1;
+}
+
+ion-row.title ion-label {
+    color:#bf1a24;
+    font-size: 2rem;
+    font-family:BebasBold;
+}
+
+ion-grid.content {
+    margin-top: 1.2rem;
+}
+
+.add-card-row{
+    margin-top: 0.7rem;
+    font-family:hp556;
+}
+
+.add-card{
+    font-family:hp556;
+    width: 50%;
+}
+
+.add-btn-div {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+ion-item ion-label {
+    font-family: hp556;
+}
+
+ion-input {
+    font-family: hp265;
+}
+
+.error-message {
+    font-family: hp265;
+    font-size: 0.8rem;
+}
+
+//paymentez style form
+#payment_example_div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 600px;
+    min-width: 400px;
+    margin: 10 auto;
+  }
+  
+  #payment_example_div > * {
+    margin: 10 auto;
+  }
+  
+  .tok_btn:hover {
+    cursor: pointer;
+  }
+  
+  .tok_btn:disabled,
+  #tok_btn[disabled] {
+    opacity: .65;
+    cursor: not-allowed;
+  }
+  
+  .tok_btn {
+    color: #fff;
+    width: 80%;
+    font-size: 17px;
+    font-family:hp556;
+  //-webkit-font-smoothing: antialiased;
+  font-weight:bold;
+  display:block;
+  }
+  
+  #retry_btn {
+  display:none;
+  }
+
+  #tokenize_example{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #response{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family:hp265;
+    color: #b01902;
+    position: relative;
+    top: -25px;
+    width: 80%;
+  }
+  

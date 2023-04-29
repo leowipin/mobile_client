@@ -150,7 +150,11 @@ const routes: Routes = [
   {
     path: 'route-locations',
     loadChildren: () => import('./route-locations/route-locations.module').then( m => m.RouteLocationsPageModule)
+  },  {
+    path: 'agregar-tarjeta',
+    loadChildren: () => import('./agregar-tarjeta/agregar-tarjeta.module').then( m => m.AgregarTarjetaPageModule)
   },
+
 
 
 

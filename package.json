@@ -37,6 +37,7 @@
     "@ionic/angular": "^6.1.9",
     "bootstrap": "^5.2.3",
     "cordova-plugin-nativegeocoder": "^3.5.0",
+    "crypto-js": "^4.1.1",
     "firebase": "^9.17.1",
     "ion-datepicker": "^2.8.2",
     "ion-datetime-picker": "^0.5.2",

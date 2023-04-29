@@ -9,6 +9,8 @@ import { UbicacionService } from '../ubicacion/ubicacion.service';
 import { NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Renderer2 } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { UbicacionComponent } from 'src/app/ubicacion/ubicacion.component';
 declare var google: any;
 
 
@@ -27,6 +29,8 @@ export class PedidoCarritoPage implements OnInit {
   direccionOrigen: any;
   direccionDestino: any;
   googleLoaded = false;
+
+  apiKey = environment.googleMapsApiKey;
 
   origen = {
     lat: -2.1676746,
@@ -50,7 +54,7 @@ export class PedidoCarritoPage implements OnInit {
     let hours = Math.floor(this.orderData.duration);
     let minutes = Math.floor((this.orderData.duration - hours) * 60);
     let seconds = Math.round(((this.orderData.duration - hours) * 60 - minutes) * 60);
-    this.formattedDuration = `${hours} horas con ${minutes} minutos y ${seconds} segundos`;
+    this.formattedDuration = `${hours} horas ${minutes} min ${seconds} seg`;
   }
 
   getOrder(){
@@ -88,7 +92,7 @@ export class PedidoCarritoPage implements OnInit {
 
   deleteOrder(){
     this.alertController.create({
-      message: "Está seguro que desea eliminar este pedido",
+      message: "¿Está seguro que desea eliminar este servicio?",
       buttons: [
         {
           text: 'No',
@@ -102,7 +106,7 @@ export class PedidoCarritoPage implements OnInit {
             this.clienteWAService.deleteOrder(token, id).subscribe({
               next: (response) => {
                 this.alertController.create({
-                  message: "Pedido eliminado correctamente",
+                  message: "Servicio eliminado correctamente",
                   buttons: [
                     {
                       text: 'Aceptar',
@@ -115,7 +119,7 @@ export class PedidoCarritoPage implements OnInit {
               },error: (error) => {
                 console.log(error)
                 this.alertController.create({
-                  message: "Hubo un error al eliminar el pedido",
+                  message: "Hubo un error al eliminar el servicio",
                   buttons: ['Aceptar']
                 }).then(alert => alert.present())
               }
@@ -137,6 +141,22 @@ async dibujarRuta() {
   modalAdd.setAttribute('style', '--background: transparent; --backdrop-opacity: 0.0');
 
   await modalAdd.present();
+}
+
+async verUbicacion() {
+  const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.origen.lat},${this.origen.lng}&key=${this.apiKey}`);
+  const data = await response.json();
+  console.log(data.results)
+  if (data.results && data.results.length > 0) {
+    const modalAdd = await this.modalController.create({
+      component: UbicacionComponent,
+      mode: 'ios',
+      swipeToClose: true,
+      componentProps: { position: this.origen, onlyView: true }
+    });
+
+    await modalAdd.present();
+}
 }
 
 findPlaces(salida: any, llegada: any) {

@@ -105,6 +105,10 @@
             <br/>
             <button class="btn btn-primary rounded-pill border-0 ver-ruta" (click)="dibujarRuta()">Ver ruta</button> 
           </ng-container>
+          <ng-container *ngIf="!datosRecibidos.requiresDestination">
+            <br/>
+            <button class="btn btn-primary rounded-pill border-0 ver-ruta" (click)="verUbicacion()">Ver ubicación</button> 
+          </ng-container>
       
     </div>
   </div>

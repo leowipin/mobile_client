@@ -322,7 +322,7 @@ export class ServicioDetallePage implements OnInit {
     }
 
   }
-  solicitando(){ // ENDPOINT HERE this queriparams are necessary
+  solicitando(){
     this.navCtrl.navigateForward(`/servicio-solicitud/solicitud`, {
       queryParams: {
         servicio: "Guardia", datos: this.ionicForm.value, cantGuardia: this.currentNumber,

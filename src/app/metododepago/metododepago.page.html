@@ -1,48 +1,49 @@
-
-<ion-content fullscreen>
-  <div>
-    <ion-buttons slot="start">
+<ion-content>
+  <ion-grid class="main">
+    <ion-row class="header">
       <ion-menu-button>
         <ion-img src="assets/img/menuHamburguesa.png"></ion-img>
       </ion-menu-button>
-    </ion-buttons>
-    <div class="tope">
-      <span>
-      </span>
-      <div class="logosepro">
-        <ion-img style="width: 160px; height: 150spx;" src="assets/img/logosepro.png"></ion-img>
-      </div>
-    </div>
-  </div>
+      
+      <span></span>
+      <ion-img style="width: 160px;" src="assets/img/logosepro.png"></ion-img>
+    </ion-row>
+    <ion-grid class="content">
+      <ion-row class="title">
+        <ion-label>TARJETAS</ion-label>
+      </ion-row>
 
+      <ng-container *ngIf="cardsList && currentCardIndex">
+          <ng-container *ngFor="let card of cardsList.cards; let i = index;">
+            <ion-row class="card-row" *ngIf="card.status=='valid'">
+              <div class="card">
+                <div class="card-header">
+                  <ion-label class="card-type">{{ getCardName(card.type) }}</ion-label>
+                  <div class="logo">
+                  <ion-img [src]="'assets/img/' + card.type + (card.type === 'cs' || card.type === 'up' ? '.png' : '.svg')" alt="Card logo"></ion-img>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="card-content">
+                    <ion-label> <b>Titular:</b>&nbsp; {{ card.holder_name }}</ion-label>
+                    <ion-label> <b>Número de tarjeta:</b>&nbsp; {{ card.bin }}*** </ion-label>
+                  </div>
+                  <div class="radio-btn">
+                    <input class="form-check-input" type="radio" id="{{i}}" name="cardSelection" value="{{i}}" [checked]="currentCardIndex === i" (change)="onSelectionChange($event)">
+                    <ion-label><b>usar</b></ion-label>
+                  </div>
+                </div>
+              </div>
+            </ion-row>
+        </ng-container>
+      </ng-container>
 
-  <h4>Elija su método de pago</h4>
-
-  <div name="metodospago">
-    <ion-list>
-      <ion-item>
-        <ion-thumbnail slot="start">
-          <img  src="assets/img/tarjetas2.png">
-        </ion-thumbnail>
-        <ion-label>Tarjeta de crédito/débito</ion-label>
-      </ion-item>
-    </ion-list>
-
-    <ion-list>
-      <ion-item>
-        <ion-thumbnail slot="start">
-          <img src="assets/img/dinero.png">
-        </ion-thumbnail>
-        <ion-label>Efectivo</ion-label>
-      </ion-item>
-    </ion-list>
-
-
-  </div>
-  
-  
-
-  
-   
- 
-</ion-content>
+      <ion-row class="add-card-row">
+        <div class="buttons">
+          <button class="btn btn-success rounded-pill border-0" (click)="saveDefaultCard()" [disabled]="noSelectedCard">Guardar</button>
+          <button class="btn btn-primary rounded-pill border-0 add-card" [routerLink]="'/agregar-tarjeta'">Agregar tarjeta</button>
+        </div>
+      </ion-row>
+    </ion-grid>
+  </ion-grid>
+  </ion-content>

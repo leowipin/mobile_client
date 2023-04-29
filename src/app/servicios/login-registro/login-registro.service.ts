@@ -16,20 +16,29 @@ import { ServicesName, ServicesNameList } from "src/app/interfaces/client/servic
 import { ServiceData } from "src/app/interfaces/client/serviceData";
 import { OrderData } from "src/app/interfaces/client/orderData";
 import { Cart } from "src/app/interfaces/client/cart";
+import { environment } from "src/environments/environment";
+import * as CryptoJS from 'crypto-js';
+import { HttpParams } from '@angular/common/http';
+import { CardData } from "src/app/interfaces/client/cardData";
+import { CardNumber } from "src/app/interfaces/client/cardNumber";
+
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClienteWAService {
   /*Url del servidor */
-  DJANGO_DOMAIN_NAME:string = 'https://seproamerica2022.pythonanywhere.com/';
-  DJANGO_TEST_DOMAIN_NAME:string = 'http://127.0.0.1:8000/'
+  DJANGO_DOMAIN_NAME:string = 'http://127.0.0.1:8000/'; //https://seproamerica2022.pythonanywhere.com/
+  //DJANGO_TEST_DOMAIN_NAME:string = 'http://127.0.0.1:8000/'
+  PAYMENTEZ_PROD_URL:string = "https://ccapi.paymentez.com/v2/"
+  PAYMENTEZ_DEV_URL:string =  "https://ccapi-stg.paymentez.com/v2/";
+  paymentez = environment.paymentez
 
   constructor(private http: HttpClient) { }
 
   signin(data: SignIn): Observable<SignInResponse>{
     const endpoint:string = this.DJANGO_DOMAIN_NAME+'users/clientSignin/';
-    //const endpoint:string = this.DJANGO_TEST_DOMAIN_NAME+'users/clientSignin/';
     return this.http.post<SignInResponse>(endpoint, data).pipe(
       tap(response => {
         localStorage.setItem('token', response.token);
@@ -55,7 +64,6 @@ export class ClienteWAService {
 
   getNames(token:string): Observable<Names>{
     const endpoint:string = this.DJANGO_DOMAIN_NAME+'users/clientNames/';
-    //const endpoint:string = this.DJANGO_TEST_DOMAIN_NAME+'users/clientNames/';
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     return this.http.get<Names>(endpoint, { headers: headers })
   }
@@ -92,43 +100,118 @@ export class ClienteWAService {
 
   getServicesName(token:string): Observable<ServicesNameList>{
     const endpoint:string = this.DJANGO_DOMAIN_NAME+'services/serviceNames/';
-    //const endpoint:string = this.DJANGO_TEST_DOMAIN_NAME+'services/serviceNames/';
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     return this.http.get<ServicesNameList>(endpoint, { headers: headers })
   }
 
   getServiceData(token:string, id:string):Observable<ServiceData>{
     const endpoint:string = this.DJANGO_DOMAIN_NAME+`services/serviceByID/?id=${id}`;
-    //const endpoint:string = this.DJANGO_TEST_DOMAIN_NAME+`services/serviceByID/?id=${id}`;
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     return this.http.get<ServiceData>(endpoint, { headers: headers })
   }
 
   createOrder(data:OrderData, token:string): Observable<MessageResponse>{
     const endpoint:string = this.DJANGO_DOMAIN_NAME+'services/orderClient/';
-    //const endpoint:string = this.DJANGO_TEST_DOMAIN_NAME+'services/orderClient/';
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     return this.http.post<MessageResponse>(endpoint, data, { headers: headers })
   }
 
   getCart(token:string): Observable<Cart>{
     const endpoint:string = this.DJANGO_DOMAIN_NAME+'services/orderClientNames/';
-    //const endpoint:string = this.DJANGO_TEST_DOMAIN_NAME+'services/orderClientNames/';
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     return this.http.get<Cart>(endpoint, { headers: headers })
   }
 
   getOrder(token:string, id:string): Observable<OrderData>{
     const endpoint:string = this.DJANGO_DOMAIN_NAME+`services/orderClient/?id=${id}`;
-    //const endpoint:string = this.DJANGO_TEST_DOMAIN_NAME+`services/orderClient/?id=${id}`;
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     return this.http.get<OrderData>(endpoint, { headers: headers })
   }
 
   deleteOrder(token:string, id:string): Observable<MessageResponse>{
     const endpoint:string = this.DJANGO_DOMAIN_NAME+`services/orderClient/?id=${id}`
-    //const endpoint:string = this.DJANGO_TEST_DOMAIN_NAME+`services/orderClient/?id=${id}`;
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     return this.http.delete<MessageResponse>(endpoint, { headers: headers })
   }
+
+  addCard(data:CardData, token:string): Observable<MessageResponse>{
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+'cardauth/card/';
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+    return this.http.post<MessageResponse>(endpoint, data, { headers: headers })
+  }
+
+  getCurrentCard(token:string): Observable<CardNumber>{
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+'cardauth/currentCard/';
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+    return this.http.get<CardNumber>(endpoint, { headers: headers })
+  }
+
+  changeCurrentCard(token:string, data:CardNumber): Observable<MessageResponse>{
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+'cardauth/currentCard/';
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+    return this.http.put<MessageResponse>(endpoint, data, { headers: headers })
+  }
+  
+
+  //PAYMENTEZ
+
+  private getAuthToken(appCode: string, appKey: string): string {
+    console.log(appCode)
+    console.log(appKey)
+    const unix_timestamp=Math.round(new Date().getTime() / 1000);
+    console.log(unix_timestamp)
+    const uniq_token_string= appKey + unix_timestamp;
+    console.log(uniq_token_string)
+    const uniq_token_hash = CryptoJS.SHA256(uniq_token_string).toString(CryptoJS.enc.Hex);
+    console.log(uniq_token_hash)
+    console.log(appCode+";"+unix_timestamp+";"+uniq_token_hash)
+    const auth_token = btoa(appCode+";"+unix_timestamp+";"+uniq_token_hash);
+    console.log(auth_token)
+    return auth_token;
+  }
+
+  nuevaTarjeta(tarjeta: any):Observable<any>{
+    const headers = {
+    'Content-Type': 'application/json',
+    'Auth-Token': this.getAuthToken(this.paymentez.app_code_client,this.paymentez.app_key_client)
+    }
+    const body = JSON.stringify(tarjeta);
+    return this.http.post(this.PAYMENTEZ_DEV_URL + 'card/add/', body, { 'headers':headers });
+  }
+
+eliminarTarjeta(tarjeta): Observable<any>{
+    const headers = {
+        'Content-Type': 'application/json',
+        'Auth-Token': this.getAuthToken(this.paymentez.app_code_server, this.paymentez.app_key_server)
+    };
+    const body = JSON.stringify(tarjeta);
+    return this.http.post(this.PAYMENTEZ_DEV_URL + 'card/delete/', body, { headers });
+}
+
+pagar(tarjeta): Observable<any>{
+    const headers = {
+        'Content-Type': 'application/json',
+        'Auth-Token': this.getAuthToken(this.paymentez.app_code_server, this.paymentez.app_key_server)
+    };
+    const body = JSON.stringify(tarjeta);
+    return this.http.post(this.PAYMENTEZ_DEV_URL + 'transaction/debit/', body, { headers });
+}
+
+devolver(tarjeta): Observable<any>{
+    const headers = {
+        'Content-Type': 'application/json',
+        'Auth-Token': this.getAuthToken(this.paymentez.app_code_server, this.paymentez.app_key_server)
+    };
+    const body = JSON.stringify(tarjeta);
+    return this.http.post(this.PAYMENTEZ_DEV_URL + 'transaction/refund/', body, { headers });
+}
+
+getTarjetas(id: string): Observable<any>{
+    const headers = {
+        'Content-Type': 'application/json',
+        'Auth-Token': this.getAuthToken(this.paymentez.app_code_server, this.paymentez.app_key_server)
+    };
+    let parametro= new HttpParams().set('uid', id);
+    return this.http.get(this.PAYMENTEZ_DEV_URL + 'card/list', { params: parametro, headers: headers });
+}
 }
