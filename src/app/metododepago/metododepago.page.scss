@@ -72,6 +72,7 @@ ion-grid.content {
 .card-header{
     display: flex;
     justify-content: space-around;
+    position: relative;
     align-items: center;
     height: 36%;
     background-color: #fef0f0;
@@ -128,3 +129,8 @@ ion-grid.content {
     height: 100%;
     object-fit: cover;
   }
+
+.delete-card {
+    position: absolute;
+    right: 10px;
+}

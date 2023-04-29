@@ -77,7 +77,6 @@ export class PedidoCarritoPage implements OnInit {
 
       },
       error: (error) => {
-        console.log(error)
         this.alertController.create({
           message: "Error al cargar la solicitud",
           buttons: ['Aceptar']
@@ -117,7 +116,6 @@ export class PedidoCarritoPage implements OnInit {
                   ]
                 }).then(alert => alert.present())
               },error: (error) => {
-                console.log(error)
                 this.alertController.create({
                   message: "Hubo un error al eliminar el servicio",
                   buttons: ['Aceptar']
@@ -146,7 +144,6 @@ async dibujarRuta() {
 async verUbicacion() {
   const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.origen.lat},${this.origen.lng}&key=${this.apiKey}`);
   const data = await response.json();
-  console.log(data.results)
   if (data.results && data.results.length > 0) {
     const modalAdd = await this.modalController.create({
       component: UbicacionComponent,

@@ -156,17 +156,10 @@ export class ClienteWAService {
   //PAYMENTEZ
 
   private getAuthToken(appCode: string, appKey: string): string {
-    console.log(appCode)
-    console.log(appKey)
     const unix_timestamp=Math.round(new Date().getTime() / 1000);
-    console.log(unix_timestamp)
     const uniq_token_string= appKey + unix_timestamp;
-    console.log(uniq_token_string)
     const uniq_token_hash = CryptoJS.SHA256(uniq_token_string).toString(CryptoJS.enc.Hex);
-    console.log(uniq_token_hash)
-    console.log(appCode+";"+unix_timestamp+";"+uniq_token_hash)
     const auth_token = btoa(appCode+";"+unix_timestamp+";"+uniq_token_hash);
-    console.log(auth_token)
     return auth_token;
   }
 
