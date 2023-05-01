@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ClienteWAService } from '../servicios/login-registro/login-registro.service';
 import { environment } from 'src/environments/environment';
+import { CardData } from '../interfaces/client/cardData';
 declare var PaymentGateway: any;
 
 
@@ -68,10 +69,54 @@ export class AgregarTarjetaPage implements OnInit {
       let responseElement = document.getElementById('response');
       responseElement.style.display = 'flex'
       if (response.card.status === 'valid') {
-        responseElement.innerHTML = 'Tarjeta agregada correctamente';
-        responseElement.style.color = '#0e7a00';
+        //cardauth endpoint
+        const token = localStorage.getItem('token');
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace('-', '+').replace('_', '/');
+        const payload = JSON.parse(atob(base64));
+        const uid = payload.user_id.toString()
+        let tokenCard = response.card.token
+        let card_number = response.card.bin 
+        let card:CardData = {
+          token:tokenCard,
+          card_number: card_number
+        }
+        let datos = {
+          "card": {
+          "token": tokenCard
+          },
+          "user": {
+          "id": uid
+          }
+        }
+        console.log(card)
+        this.clienteWAService.addCard(card, token).subscribe({
+          next: (response) => {
+            console.log(response)
+            responseElement.innerHTML = 'Tarjeta agregada correctamente';
+            responseElement.style.color = '#0e7a00';
+            },
+          error: (error) => {
+            console.log(error)
+            this.clienteWAService.eliminarTarjeta(datos).subscribe({
+              next: (response) => {
+                console.log(response)
+                responseElement.innerHTML = 'Hubo un error, tarjeta no agregada';
+                responseElement.style.color = '#b01902';
+              },
+              error: (error) => {
+                console.log(error)
+                responseElement.innerHTML = 'Hubo un error, por favor eliminar la tarjeta creada';
+                responseElement.style.color = '#b01902';
+              }
+            });
+          }
+        });      
       } else if (response.card.status === 'rejected') {
         responseElement.innerHTML = 'Hubo un error, tarjeta no agregada';
+        responseElement.style.color = '#b01902';
+      } else if (response.card.status === 'review') {
+        responseElement.innerHTML = 'En revisión, tarjeta no agregada';
         responseElement.style.color = '#b01902';
       }
       responseElement.style.marginTop = '25px';
@@ -105,7 +150,6 @@ export class AgregarTarjetaPage implements OnInit {
 
     retryButton.addEventListener('click', (event) => {
       document.getElementById('response').style.display = 'none';
-      // re call function
       submitButton.innerText = submitInitialText;
       submitButton.removeAttribute('disabled');
       retryButton.style.display = 'none';

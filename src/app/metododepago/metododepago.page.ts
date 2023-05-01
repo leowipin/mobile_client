@@ -49,6 +49,7 @@ export class MetododepagoPage implements OnInit {
     this.noSelectedCard = false
     this.currentCardIndex = event.target.value
     console.log('Selected index:', this.currentCardIndex);
+    console.log('used card:', this.usedCard);
   }
   getCardName(type: string): string {
     switch (type) {
@@ -85,7 +86,7 @@ export class MetododepagoPage implements OnInit {
     }
     this.alertController.create({
       header: "Guardar tarjeta",
-      message: `¿Desea usar la tarjeta ${cardType} con número ${number}*** como pretedeterminada?`,
+      message: `¿Desea usar la tarjeta ${cardType} con número ${number}*** como predeterminada?`,
       buttons: [
         {
           text: 'No',
@@ -96,6 +97,8 @@ export class MetododepagoPage implements OnInit {
           handler: () => {
             this.clienteWAService.changeCurrentCard(token, newCurrentNumber).subscribe({
               next: (response) => {
+                this.usedCard = this.currentCardIndex
+                this.noSelectedCard = true
                 this.alertController.create({
                   header: "Tarjeta actualizada",
                   message: "Tarjeta actualizada correctamente",
@@ -120,8 +123,12 @@ export class MetododepagoPage implements OnInit {
     const token = localStorage.getItem('token');
     this.clienteWAService.getCurrentCard(token).subscribe({
       next: (response) => {
-        this.currentCardIndex = this.cardsList.cards.findIndex(card => card.bin === response.current_card);
-        this.usedCard = this.currentCardIndex
+        console.log(response)
+        if(response.current_card != null){
+          this.currentCardIndex = this.cardsList.cards.findIndex(card => card.bin === response.current_card);
+          this.usedCard = this.currentCardIndex
+        }
+        
       },
       error: (error) => {
         console.log(error)
@@ -134,6 +141,7 @@ export class MetododepagoPage implements OnInit {
     console.log(value)
     console.log(this.currentCardIndex)
     console.log(this.usedCard)
+    console.log(this.cardsList.cards.filter(card => card.status === 'valid').length)
   }
 
   async presentAlertConfirm(value) {
@@ -171,10 +179,18 @@ export class MetododepagoPage implements OnInit {
               "id": uid
               }
             }
-            if(this.usedCard.toString() === value){
-              let index = value; // El índice de la tarjeta que quieres excluir
+            this.clienteWAService.deleteCard(token, tokenCard).subscribe({
+              next: (response) => {
+                console.log(response)
+                },
+              error: (error) => {
+                console.log(error)
+              }
+            }); 
+            if(this.usedCard!= null && this.usedCard.toString() === value && this.cardsList.cards.filter(card => card.status === 'valid').length > 1){
+              let index = value;
               let bins = this.cardsList.cards
-              .filter((card, i) => i !== parseInt(index))
+              .filter((card, i) => i !== parseInt(index) && card.status == 'valid')
               .map(card => card.bin);
               let newBin = bins[Math.floor(Math.random() * bins.length)];
               console.log(newBin);
@@ -188,10 +204,25 @@ export class MetododepagoPage implements OnInit {
                 error: (error) => {
                 }
               });
+            } 
+            if(this.cardsList.cards.filter(card => card.status === 'valid').length == 1 && this.usedCard != null){
+              let newCurrentNumber:CardNumber = {
+                current_card:null
+              }
+              this.clienteWAService.changeCurrentCard(token, newCurrentNumber).subscribe({
+                next: (response) => {
+                  console.log(response)
+                },
+                error: (error) => {
+                  console.log(error)
+                }
+              });
             }
             this.clienteWAService.eliminarTarjeta(datos).subscribe({
               next: (response) => {
                 console.log(response)
+                this.usedCard = undefined
+                this.currentCardIndex = undefined
                 this.presentAlertDeleted();
               },
               error: (error) => {
