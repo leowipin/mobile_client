@@ -52,9 +52,9 @@ ion-grid.content {
 
 .card {
     width: 75%;
-    border: 2px solid #F2A9B0;
-    height: 7rem;
-    box-shadow: 3px 3px 5px rgba(0,0,0,0.1);
+    //border: 2px solid #F2A9B0;
+    height: 6rem;
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
 }
 
 .card-row{
@@ -69,21 +69,16 @@ ion-grid.content {
     width:100%;
  }
 
-.card-header{
-    display: flex;
-    justify-content: space-around;
-    position: relative;
-    align-items: center;
-    height: 36%;
-    background-color: #fef0f0;
-    border-bottom: 1px solid #F2A9B0;
-}
 
 .card-body{
     height: 64%;
     padding-left: 3%;
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+}
+
+.card-body div:first-child {
+    margin-right: 8%;
 }
 
 .card-content{
@@ -91,10 +86,7 @@ ion-grid.content {
     flex-direction: column;
     justify-content: space-around;
     height: 100%;
-}
-
-.card-content ion-label:first-child {
-    padding-bottom: 12px;
+    font-size: 0.9rem;
 }
 
 .radio-btn{
@@ -124,13 +116,37 @@ ion-grid.content {
     align-items: center;
 }
 
-.log-img {
+.logo ion-img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-  }
+}
 
 .delete-card {
     position: absolute;
-    right: 10px;
+    right: 20px;
+    background: none;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.expiry{
+    color: #a7a7a7;
+}
+
+.thrash-icon{
+    width: 24px;
+    height: 24px;
+}
+
+ion-row.header div{
+    left: 30px;
+    position:absolute;
+    top:10px;
+}
+
+ion-row.header div ion-img{
+    height:2.3em;
+    width:2.3em;
 }

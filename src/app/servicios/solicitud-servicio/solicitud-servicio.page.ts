@@ -31,6 +31,8 @@ export class SolicitudServicioPage implements OnInit {
   duration:number;
   formattedDuration:string;
   total:any;
+  subtotal:any;
+  iva:any;
   apiKey = environment.googleMapsApiKey;
 
 
@@ -60,6 +62,11 @@ export class SolicitudServicioPage implements OnInit {
         this.total = "pendiente"
       } else{
         this.total = params.total
+        let iva:any = this.total / 1.12 * 0.12;
+        let subtotal:any = (this.total - iva).toFixed(2);
+        iva = (this.total - subtotal).toFixed(2);
+        this.iva = iva
+        this.subtotal = subtotal
       }
       let hours = Math.floor(params.duration);
       let minutes = Math.floor((params.duration - hours) * 60);

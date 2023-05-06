@@ -104,16 +104,19 @@ ion-input {
   
   .tok_btn {
     color: #fff;
-    width: 80%;
+    width: 40%;
+    margin-top: 1rem;
     font-size: 17px;
     font-family:hp556;
   //-webkit-font-smoothing: antialiased;
-  font-weight:bold;
-  display:block;
+    font-weight:bold;
+    display:block;
   }
   
   #retry_btn {
   display:none;
+  width: 60%;
+  margin-top: 0px;
   }
 
   #tokenize_example{

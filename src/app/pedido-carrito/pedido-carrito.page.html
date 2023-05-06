@@ -96,15 +96,26 @@
           </ng-container>
         </ng-container>
 
-        <div class="data">
-          <ion-label class="negrita "> <b>Monto:&nbsp;</b> </ion-label>
           <ng-container *ngIf="total === 'pendiente'">
-            <ion-label> {{total}} </ion-label>
+            <div class="data">
+              <ion-label class="negrita "> <b>Total:&nbsp;</b> </ion-label>
+              <ion-label> {{total}} </ion-label>
+            </div>
           </ng-container>
           <ng-container *ngIf="total !== 'pendiente'">
-            <ion-label> {{total}} dólares </ion-label>
+            <div class="data">
+              <ion-label class="negrita "> <b>Subtotal:&nbsp;</b> </ion-label>
+              <ion-label> {{subtotal}} dólares </ion-label>
+            </div>
+            <div class="data">
+              <ion-label class="negrita "> <b>IVA:&nbsp;</b> </ion-label>
+              <ion-label> {{iva}} dólares </ion-label>
+            </div>
+            <div class="data">
+              <ion-label class="negrita "> <b>Total:&nbsp;</b> </ion-label>
+              <ion-label> {{total}} dólares </ion-label>
+            </div>            
           </ng-container>
-        </div>
         <div class="data" *ngIf="requires_origin_and_destination">
           <br/>
           <button class="btn btn-primary rounded-pill border-0 ver-ruta" (click)="dibujarRuta()">Ver ruta</button> 
@@ -114,12 +125,11 @@
           <button class="btn btn-primary rounded-pill border-0 ver-ruta" (click)="verUbicacion()">Ver ubicación</button> 
         </div>
         
-        
       </ion-row>
       <ion-row class="row-buttons">
         <div class="buttons">
           <button class="btn btn-danger rounded-pill border-0" (click)="deleteOrder()">Eliminar</button>
-          <button class="btn btn-success rounded-pill border-0" [disabled]="orderData.status !== 'aceptado'">Realizar pago</button>
+          <button class="btn btn-success rounded-pill border-0" [disabled]="orderData.status !== 'aceptado'" (click)="goToBillingData()">Realizar pago</button>
         </div>
       </ion-row>
     </ion-grid>

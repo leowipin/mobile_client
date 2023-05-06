@@ -144,13 +144,14 @@ const routes: Routes = [
     loadChildren: () => import('./carrito/carrito.module').then( m => m.CarritoPageModule)
   },
   {
-    path: 'pedido-carrito/:id/:name/:booleandest',
+    path: 'pedido-carrito',
     loadChildren: () => import('./pedido-carrito/pedido-carrito.module').then( m => m.PedidoCarritoPageModule)
   },
   {
     path: 'route-locations',
     loadChildren: () => import('./route-locations/route-locations.module').then( m => m.RouteLocationsPageModule)
-  },  {
+  },
+  {
     path: 'agregar-tarjeta',
     loadChildren: () => import('./agregar-tarjeta/agregar-tarjeta.module').then( m => m.AgregarTarjetaPageModule)
   },

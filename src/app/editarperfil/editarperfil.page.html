@@ -1,8 +1,9 @@
 
 <ion-content [fullscreen]="true">
-  <div>
+  <div class="header">
     <ion-buttons slot="start">
-        <ion-img src="assets/img/retroceder.png" (click)="presentAlertEditar()"></ion-img>
+        <ion-img src="assets/img/retroceder.png" (click)="presentAlertEditar()" *ngIf="isProfileInformation"></ion-img>
+        <ion-img src="assets/img/retroceder.png" (click)="backToOrder()" *ngIf="!isProfileInformation"></ion-img>
     </ion-buttons>
     <div class="tope">
       <span>
@@ -14,10 +15,11 @@
   </div>
 
   <div class="titulo">
-    <h4>PERFIL</h4>
+    <h4 *ngIf="isProfileInformation">PERFIL</h4>
+    <h4 *ngIf="!isProfileInformation">DATOS DE FACTURACIÓN</h4>
   </div>
 
-  <div class="container">
+  <div class="container" *ngIf="isProfileInformation">
     <div class="outer"
       [ngStyle]="{'background-image': 'url(' + photo + ')'}">
         <div class="inner" (click)="openOptionSelection()">
@@ -28,22 +30,22 @@
 
 	
   <div class="datosinput">
-    <form [formGroup]="ionicForm" (ngSubmit)="submitForm()" validate>
+    <form [formGroup]="ionicForm" validate>
       <ion-list class="datos">
         <div class="itemdatos">
           <ion-label >Nombres</ion-label>
-        <ion-item lines="full">    
-          <ion-input formControlName="name" type="text" required></ion-input>
-        </ion-item>
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.required">
-          Es necesario al menos un nombre.
-        </span>
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.minlength">
-          Su nombre debe tener al menos 2 caracteres.
-        </span>
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.pattern">
-          Ingrese un nombre válido.
-        </span>
+          <ion-item lines="full">    
+            <ion-input formControlName="name" type="text" required></ion-input>
+          </ion-item>
+          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.required">
+            Es necesario al menos un nombre.
+          </span>
+          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.minlength">
+            Su nombre debe tener al menos 2 caracteres.
+          </span>
+          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.pattern">
+            Ingrese un nombre válido.
+          </span>
         </div>
 
         <div class="itemdatos">
@@ -91,7 +93,7 @@
           </span>
         </div>
         
-        <div class="itemdatos">
+        <div class="itemdatos" *ngIf="isProfileInformation">
           <ion-label>Fecha de nacimiento</ion-label>
           <ion-item lines="full">
             <ion-input formControlName="bday" type="text" placeholder="AAAA-MM-DD" required></ion-input>
@@ -118,8 +120,8 @@
           </span> 
         </div>
 
-        <div class="itemdatos">
-          <ion-label >Gender</ion-label>
+        <div class="itemdatos" *ngIf="isProfileInformation">
+          <ion-label >Género</ion-label>
         <ion-item lines="full">
           <ion-select formControlName="gender">
             <ion-select-option value="masculino">masculino</ion-select-option>
@@ -132,16 +134,38 @@
         </span>
         </div>
         
-        <div class="itemdatos">
-          <ion-label >Correo</ion-label>
-        <div class="email-input" >
-          <ion-item lines="full">
-            <div>{{email}}</div>
-          </ion-item>
+        <!--<div class="itemdatos" >
+          <ion-label >Correo electrónico</ion-label>
+          <div class="email-input" >
+            <ion-item lines="full">
+              <div>{{email}}</div>
+            </ion-item>
+          </div>
+        </div>-->
+
+        <div *ngIf="isProfileInformation" class="itemdatos">
+          <ion-label>Correo electrónico</ion-label>
+          <div class="email-input">
+            <ion-item lines="full">
+              <div>{{email}}</div>
+            </ion-item>
+          </div>
         </div>
+        
+        <div *ngIf="!isProfileInformation" class="itemdatos">
+          <ion-label>Correo electrónico</ion-label>
+          <ion-item lines="full">
+            <ion-input formControlName="email" type="email" required></ion-input>
+          </ion-item>
+          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.required">
+            Es necesario ingresar un correo válido.
+          </span>
+          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.pattern">
+            Ingrese un correo válido.
+          </span>
         </div>
 
-        <div class="itemdatos">
+        <div class="itemdatos" *ngIf="isProfileInformation">
             <ion-label>
               <button type="button" class="btn btn-primary btn-light rounded-pill border-0" style="font-size: 14px;" (click)="changeEmailModal()">
                 Cambiar correo electrónico
@@ -149,7 +173,7 @@
             </ion-label>
         </div>
 
-        <div class="itemdatos">
+        <div class="itemdatos" *ngIf="isProfileInformation">
           <ion-label>
             <button type="button" class="btn btn-primary btn-light rounded-pill border-0" style="font-size: 14px;" (click)="changePasswordModal()">
               Cambiar contraseña
@@ -157,7 +181,7 @@
           </ion-label>
         </div>
 
-        <div class="itemdatos">
+        <div class="itemdatos" *ngIf="isProfileInformation">
           <ion-label> 
             <button type="button" class="btn btn-danger rounded-pill border-0" style="font-size: 14px;" (click)="deleteAccountModal()">
               Eliminar cuenta
@@ -165,17 +189,27 @@
           </ion-label>
         </div>
         
-        <ion-row>
+        <ion-row *ngIf="isProfileInformation">
           <div class="botones">
-          <ion-col>
+          <ion-col> 
             <ion-label>
-              <button type="submit" class="btn btn-success rounded-pill border-0 guardar">
+              <button class="btn btn-success rounded-pill border-0 guardar" (click)="submitForm('guardar')">
                 Guardar
               </button>
             </ion-label>
           </ion-col>
+          </div>
+        </ion-row>
 
-
+        <ion-row *ngIf="!isProfileInformation">
+          <div class="botones">
+          <ion-col> 
+            <ion-label>
+              <button type="submit" class="btn btn-succes rounded-pill border-0 continue" (click)="submitForm('continuar')">
+                Continuar
+              </button>
+            </ion-label>
+          </ion-col>
           </div>
         </ion-row>
 

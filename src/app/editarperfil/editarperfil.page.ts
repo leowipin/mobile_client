@@ -13,6 +13,7 @@ import * as moment from 'moment';
 import { ClientData } from '../interfaces/client/clientData';
 import { ClientEmail } from '../interfaces/client/clientEmail';
 import { ClientNewPassword } from '../interfaces/client/clientNewPassword';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-editarperfil',
@@ -38,13 +39,25 @@ export class EditarperfilPage implements OnInit {
   celularu: null;
   cedulau: null;
   direccionu: null;
-
   email: string;
 
+  isProfileInformation: boolean = true;
+  orderName:string;
+  orderId:any;
+  requires_origin_and_destination:string;
 
-  constructor(private modalController: ModalController, private navCtrl: NavController, public formBuilder: FormBuilder, public alertController: AlertController, private clienteWAService: ClienteWAService,) { }
+  constructor(private modalController: ModalController, private navCtrl: NavController, public formBuilder: FormBuilder, public alertController: AlertController, private clienteWAService: ClienteWAService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      if(params['isProfileInformation'] != undefined){
+        this.isProfileInformation = params['isProfileInformation'] === 'true';
+        this.orderName = params['name']
+        this.orderId = params['id']
+        this.requires_origin_and_destination = params['booleandest']
+      }
+    });
+    console.log(this.isProfileInformation);
     this.initForm();
     this.getClientData();
   }
@@ -62,6 +75,7 @@ export class EditarperfilPage implements OnInit {
           bday: response.birthdate,
           direccion: response.address,
           gender: response.gender,
+          email: response.email,
         });
         this.email = response.email;
         },
@@ -112,16 +126,13 @@ export class EditarperfilPage implements OnInit {
     this.ionicForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(2), Validators.pattern('[a-zA-Z ]*')]],
       lastname: ['', [Validators.required, Validators.minLength(2), Validators.pattern('[a-zA-Z ]*')]],
-      //email: ['', [Validators.required, Validators.pattern('[a-z/.0-9_-]+@[a-z0-9]+[.{1}][a-z]{2,}([.{1}][a-z]{2,})?')]],
-      bday: ['', [Validators.required, Validators.pattern('(?:19[0-9]{2}|20[01][0-9]|2020)[-](?:0[1-9]|1[012])[-](?:0[1-9]|[12][0-9]|3[01])')]],
+      email: ['', !this.isProfileInformation ? [Validators.required, Validators.pattern('[a-z/.0-9_-]+@[a-z0-9]+[.{1}][a-z]{2,}([.{1}][a-z]{2,})?')] : []],
+      bday: ['', this.isProfileInformation ? [Validators.required, Validators.pattern('(?:19[0-9]{2}|20[01][0-9]|2020)[-](?:0[1-9]|1[012])[-](?:0[1-9]|[12][0-9]|3[01])')] : []],
       mobile: ['', [Validators.required, Validators.pattern('^09[0-9]{8}$')]],
       cedula: ['', [Validators.required, Validators.pattern('[0-9]{10}')]],
-      gender: ['', [Validators.required]],
+      gender: ['', this.isProfileInformation ? [Validators.required] : []],
       direccion: ['', [Validators.required, Validators.minLength(2), Validators.pattern('[a-zA-Z0-9- .#]*')]],
-    },
-      /*{
-        validators: validarCedulaAlg
-      }*/);
+    });
   }
 
   ingresoCedula() {
@@ -142,45 +153,39 @@ export class EditarperfilPage implements OnInit {
   }
 
 
-  submitForm() {
+  submitForm(boton:string) {
     //!this.ionicForm.valid
-    var today = moment(new Date());
-    var test = moment(new Date(this.ionicForm.value.bday)).format("YYYY-MM-DD");
-    var difference = today.diff(test, "y") < 18;
-    this.isSubmitted = true;
-    if (difference) { 
-      this.presentUnderAge();
-      return false;
-    } else if(!this.ionicForm.valid){      
-      this.presentAlertIncompleto();
-      return false;
-    } else {
-      this.modifyData()
+    console.log(boton)
+    if(boton === 'guardar'){
+      var today = moment(new Date());
+      var test = moment(new Date(this.ionicForm.value.bday)).format("YYYY-MM-DD");
+      var difference = today.diff(test, "y") < 18;
+      this.isSubmitted = true;
+      if (difference) { 
+        this.presentUnderAge();
+        return false;
+      } else if(!this.ionicForm.valid){      
+        this.presentAlertIncompleto();
+        return false;
+      } else {
+        this.modifyData()
+      }
+    } else{
+      this.isSubmitted = true;
+      if(!this.ionicForm.valid){      
+        this.presentAlertIncompleto();
+        return false;
+      } else {
+        let queryParams = {
+          isPaidProcess: true,
+          name:this.orderName,
+          id:this.orderId,
+          booleandest:this.requires_origin_and_destination
+        };
+        this.navCtrl.navigateForward(['/metododepago'], { queryParams: queryParams });
+      }
     }
-    /*if (this.ionicForm.value.name == '' || this.ionicForm.value.lastname == '' || this.ionicForm.value.email == '' || this.ionicForm.value.bday == '') {
-      console.log('Campos incompletos!')
-      console.log(this.ionicForm.value)
-
-      this.presentAlertIncompleto();
-
-
-      return false;
-    } else if (difference) {
-      this.presentUnderAge();
-    }
-    else {
-      console.log(this.ionicForm.value)
-      //console.log(this.ionicForm.value.name)
-      //Si llena todos los datos, y pone cancelar tambien aparece esto
-      this.presentAlertGuardar()
-      //this.finEdicion()
-      //this.cambiarNombreUser()
-      //this.cambiarNombreUserMenu()
-
-
-      return true
-
-    }*/
+    
   }
 
   async presentUnderAge() {
@@ -276,7 +281,17 @@ export class EditarperfilPage implements OnInit {
     });
 
     this.ionicForm.reset()
+  }
 
+  backToOrder() {
+    let queryParams = {
+      id: this.orderId,
+      name: this.orderName,
+      booleandest: this.requires_origin_and_destination
+    };
+    console.log(queryParams)
+    this.navCtrl.navigateForward("/pedido-carrito", { queryParams: queryParams })
+    //this.ionicForm.reset()
   }
 
   /*

@@ -93,11 +93,17 @@
             </ng-container>
           </ng-container>
 
-          <ion-label class="negrita "> <br/>Monto: </ion-label>
+          
           <ng-container *ngIf="total === 'pendiente'">
+            <ion-label class="negrita "> <br/>Total: </ion-label>
             <ion-label> {{total}} </ion-label>
           </ng-container>
           <ng-container *ngIf="total !== 'pendiente'">
+            <ion-label class="negrita "> <br/>Subtotal: </ion-label>
+            <ion-label> {{subtotal}} dólares </ion-label>
+            <ion-label class="negrita "> <br/>IVA: </ion-label>
+            <ion-label> {{iva}} dólares </ion-label>
+            <ion-label class="negrita "> <br/>Total: </ion-label>
             <ion-label> {{total}} dólares </ion-label>
           </ng-container>
 

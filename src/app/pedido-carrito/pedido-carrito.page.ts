@@ -23,12 +23,16 @@ export class PedidoCarritoPage implements OnInit {
 
   orderData:OrderData;
   orderName:string;
+  orderId:any;
   requires_origin_and_destination:boolean;
   formattedDuration:string;
   total:any;
+  iva:any;
+  subtotal:any;
   direccionOrigen: any;
   direccionDestino: any;
   googleLoaded = false;
+  isPaidProcess = false;
 
   apiKey = environment.googleMapsApiKey;
 
@@ -59,16 +63,27 @@ export class PedidoCarritoPage implements OnInit {
 
   getOrder(){
     const token = localStorage.getItem('token');
-    const id = this.route.snapshot.paramMap.get('id');
-    this.orderName = this.route.snapshot.paramMap.get('name');
-    this.requires_origin_and_destination = this.stringToBoolean(this.route.snapshot.paramMap.get('booleandest'))
-    this.clienteWAService.getOrder(token, id).subscribe({
+    this.route.queryParams.subscribe(params => {
+      this.orderName = params['name']
+      this.orderId = params['id']
+      this.requires_origin_and_destination = params['booleandest']==='true'
+      
+    });
+    this.clienteWAService.getOrder(token, this.orderId).subscribe({
       next: (response) => {
         this.orderData = response
         this.formattingDuration();
-        this.total = this.orderData.total
-        if(parseFloat(this.total)===0){
+        console.log(typeof(this.orderData.total))
+        if(response.total==0.00){
           this.total = "pendiente"
+        } else{
+          this.total = response.total
+          let iva:any = this.total / 1.12 * 0.12;
+          let subtotal:any = (this.total - iva).toFixed(2);
+          iva = (this.total - subtotal).toFixed(2);
+          this.iva = iva
+          this.subtotal = subtotal
+
         }
         this.origen.lat = this.orderData.origin_lat
         this.origen.lng = this.orderData.origin_lng
@@ -127,6 +142,16 @@ export class PedidoCarritoPage implements OnInit {
       ]
     }).then(alert => alert.present())
   }
+
+goToBillingData(){
+  let queryParams = {
+    isProfileInformation: false,
+    name:this.orderName,
+    id:this.orderId,
+    booleandest:this.requires_origin_and_destination,     
+  };
+  this.navCtrl.navigateForward(['/editarperfil'], { queryParams: queryParams });
+}
 
 async dibujarRuta() {
 

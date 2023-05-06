@@ -1,6 +1,8 @@
 import { Component, OnInit} from '@angular/core';
 import { ClienteWAService } from '../servicios/login-registro/login-registro.service';
 import { AlertController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
 import { CardNumber } from '../interfaces/client/cardNumber';
 
 @Component({
@@ -11,21 +13,33 @@ import { CardNumber } from '../interfaces/client/cardNumber';
 export class MetododepagoPage implements OnInit {
 
   cardsList:any;
-  currentCardIndex: number;
-  noSelectedCard: boolean = true;
-  usedCard: number;
+  isPaidProcess:boolean =false;
+  orderName:string;
+  orderId: any;
+  requires_origin_and_destination:boolean;
+  //currentCardIndex: number;
+  //noSelectedCard: boolean = true;
+  //usedCard: number;
 
 
-  constructor(private clienteWAService: ClienteWAService, private alertController: AlertController) { }
+  constructor(private clienteWAService: ClienteWAService, private alertController: AlertController, private navCtrl: NavController, private route: ActivatedRoute) { }
 
   ionViewWillEnter() {
-    this.noSelectedCard = true
+    //this.noSelectedCard = true
     this.getCards();
     
   }
 
-
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      if(params['isPaidProcess'] != undefined){
+        this.isPaidProcess = params['isPaidProcess'] === 'true';
+        this.orderName = params['name']
+        this.orderId = params['id']
+        this.requires_origin_and_destination = params['booleandest']
+      }
+    });
+    console.log();
   }
 
   getCards(){
@@ -37,7 +51,6 @@ export class MetododepagoPage implements OnInit {
     this.clienteWAService.getTarjetas(uid).subscribe({
       next: (response) => {
         this.cardsList = response
-        this.getCurrentCard();
         console.log(response)
       },
       error: (error) => {
@@ -45,12 +58,11 @@ export class MetododepagoPage implements OnInit {
       }
     });
   }
-  onSelectionChange(event: any) {
+  /*onSelectionChange(event: any) {
     this.noSelectedCard = false
     this.currentCardIndex = event.target.value
     console.log('Selected index:', this.currentCardIndex);
-    console.log('used card:', this.usedCard);
-  }
+  }*/
   getCardName(type: string): string {
     switch (type) {
       case 'vi':
@@ -76,7 +88,20 @@ export class MetododepagoPage implements OnInit {
     }
   }
 
-  saveDefaultCard(){
+  backToProfile(value:boolean){
+    let queryParams = {
+      isProfileInformation: value
+    };
+    this.navCtrl.navigateForward(['/editarperfil'],);
+  }
+
+  goToDetail(value){
+    if(this.isPaidProcess){
+      console.log(value)
+    }
+  }
+
+  /*saveDefaultCard(){
     const token = localStorage.getItem('token');
     let selectedCard = this.cardsList.cards[this.currentCardIndex];
     let cardType = this.getCardName(selectedCard.type)
@@ -117,9 +142,9 @@ export class MetododepagoPage implements OnInit {
         }
       ]
     }).then(alert => alert.present())
-  }
+  }*/
 
-  getCurrentCard(){
+  /*getCurrentCard(){
     const token = localStorage.getItem('token');
     this.clienteWAService.getCurrentCard(token).subscribe({
       next: (response) => {
@@ -134,14 +159,12 @@ export class MetododepagoPage implements OnInit {
         console.log(error)
       }
     });
-  }
+  }*/
 
   deleteCard(value) {
     this.presentAlertConfirm(value);
     console.log(value)
-    console.log(this.currentCardIndex)
-    console.log(this.usedCard)
-    console.log(this.cardsList.cards.filter(card => card.status === 'valid').length)
+    //console.log(this.currentCardIndex)
   }
 
   async presentAlertConfirm(value) {
@@ -187,7 +210,7 @@ export class MetododepagoPage implements OnInit {
                 console.log(error)
               }
             }); 
-            if(this.usedCard!= null && this.usedCard.toString() === value && this.cardsList.cards.filter(card => card.status === 'valid').length > 1){
+            /*if(this.usedCard!= null && this.usedCard.toString() === value && this.cardsList.cards.filter(card => card.status === 'valid').length > 1){
               let index = value;
               let bins = this.cardsList.cards
               .filter((card, i) => i !== parseInt(index) && card.status == 'valid')
@@ -217,12 +240,12 @@ export class MetododepagoPage implements OnInit {
                   console.log(error)
                 }
               });
-            }
+            }*/
             this.clienteWAService.eliminarTarjeta(datos).subscribe({
               next: (response) => {
                 console.log(response)
-                this.usedCard = undefined
-                this.currentCardIndex = undefined
+                //this.usedCard = undefined
+                //this.currentCardIndex = undefined
                 this.presentAlertDeleted();
               },
               error: (error) => {

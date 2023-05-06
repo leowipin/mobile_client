@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ClienteWAService } from '../servicios/login-registro/login-registro.service';
 import { AlertController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-carrito',
@@ -11,7 +12,7 @@ export class CarritoPage implements OnInit {
 
   cart:any;
 
-  constructor(private clienteWAService: ClienteWAService, private alertController: AlertController,) { }
+  constructor(private clienteWAService: ClienteWAService, private alertController: AlertController, private navCtrl: NavController) { }
 
   ionViewWillEnter() {
     this.getCart();
@@ -34,6 +35,16 @@ export class CarritoPage implements OnInit {
         }).then(alert=> alert.present())
       }
     });
+  }
+
+  goToPedido(id, name, requires_origin_and_destination){
+    let queryParams = {
+      id: id,
+      name: name,
+      booleandest: requires_origin_and_destination,
+    };
+    console.log(queryParams)
+    this.navCtrl.navigateForward(['/pedido-carrito'], { queryParams: queryParams });
   }
 
 }

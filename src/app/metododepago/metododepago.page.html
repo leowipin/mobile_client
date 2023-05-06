@@ -1,38 +1,41 @@
 <ion-content>
   <ion-grid class="main">
     <ion-row class="header">
-      <ion-menu-button>
+      <ion-menu-button *ngIf="!isPaidProcess">
         <ion-img src="assets/img/menuHamburguesa.png"></ion-img>
       </ion-menu-button>
-      
+      <div *ngIf="isPaidProcess" (click)="backToProfile(false)">
+        <ion-img src="assets/img/retroceder.png"></ion-img>
+      </div>
       <span></span>
       <ion-img style="width: 160px;" src="assets/img/logosepro.png"></ion-img>
     </ion-row>
     <ion-grid class="content">
       <ion-row class="title">
-        <ion-label>TARJETAS</ion-label>
+        <ion-label *ngIf="!isPaidProcess">TARJETAS</ion-label>
+        <ion-label *ngIf="isPaidProcess">SELECCIONAR TARJETA</ion-label>
       </ion-row>
 
       <ng-container *ngIf="cardsList">
           <ng-container *ngFor="let card of cardsList.cards; let i = index;">
             <ion-row class="card-row" *ngIf="card.status=='valid'">
-              <div class="card">
-                <div class="card-header">
-                  <ion-label class="card-type">{{ getCardName(card.type) }}</ion-label>
-                  <div class="logo">
-                  <ion-img [src]="'assets/img/' + card.type + (card.type === 'cs' || card.type === 'up' ? '.png' : '.svg')" alt="Card logo"></ion-img>
-                  </div>
-                  <button #closebtn type="button" class="btn-close delete-card" aria-label="Close" (click)="deleteCard(closebtn.value)" value="{{i}}"></button>
-                </div>
+              <div #carddiv class="card" id="{{card.token}}" (click)="goToDetail(carddiv.id)">
                 <div class="card-body">
-                  <div class="card-content">
-                    <ion-label> <b>Titular:</b>&nbsp; {{ card.holder_name }}</ion-label>
-                    <ion-label> <b>Número de tarjeta:</b>&nbsp; {{ card.bin }}*** </ion-label>
+                  <div class="logo">
+                    <ion-img [src]="'assets/img/' + card.type + (card.type === 'cs' || card.type === 'up' ? '.png' : '.svg')" alt="Card logo"></ion-img>
                   </div>
-                  <div class="radio-btn">
+                  <div class="card-content">
+                    <ion-label><b>{{ card.holder_name }}</b></ion-label>
+                    <ion-label><b>{{ card.bin }}***</b></ion-label>
+                    <ion-label class="expiry">Expira {{card.expiry_month}}/{{card.expiry_year}}</ion-label>
+                  </div>
+                  <button #closebtn class="delete-card" (click)="deleteCard(closebtn.value)" value="{{i}}" *ngIf="!isPaidProcess">
+                    <ion-icon class="thrash-icon" name="trash-outline" style="color: black;"></ion-icon>
+                  </button>
+                  <!--<div class="radio-btn">
                     <input class="form-check-input" type="radio" id="{{i}}" name="cardSelection" value="{{i}}" [checked]="currentCardIndex === i" (change)="onSelectionChange($event)">
                     <ion-label><b>usar</b></ion-label>
-                  </div>
+                  </div>!-->
                 </div>
               </div>
             </ion-row>
@@ -41,7 +44,7 @@
 
       <ion-row class="add-card-row">
         <div class="buttons">
-          <button class="btn btn-success rounded-pill border-0" (click)="saveDefaultCard()" [disabled]="noSelectedCard">Guardar</button>
+          <!--<button class="btn btn-success rounded-pill border-0" (click)="saveDefaultCard()" [disabled]="noSelectedCard">Guardar</button>-->
           <button class="btn btn-primary rounded-pill border-0 add-card" [routerLink]="'/agregar-tarjeta'">Agregar tarjeta</button>
         </div>
       </ion-row>

@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ClienteWAService } from '../servicios/login-registro/login-registro.service';
 import { environment } from 'src/environments/environment';
 import { CardData } from '../interfaces/client/cardData';
+import { NavController } from '@ionic/angular';
+
 declare var PaymentGateway: any;
 
 
@@ -17,14 +19,14 @@ export class AgregarTarjetaPage implements OnInit {
   application_code = environment.paymentez.app_code_client; // Provided by Payment Gateway
   application_key = environment.paymentez.app_key_client; // Provided by Payment Gateway
 
-  constructor(private clienteWAService: ClienteWAService, private formBuilder: FormBuilder){
+  constructor(private clienteWAService: ClienteWAService, private formBuilder: FormBuilder, private navCtrl: NavController){
     this.creditCardForm = this.formBuilder.group({
       otpNumber: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
     });
   }
   
-  ionViewDidEnter() {
-    this.initPaymentez();
+  ionViewWillEnter() {
+    
   }
 
   initPaymentez() {
@@ -98,18 +100,6 @@ export class AgregarTarjetaPage implements OnInit {
             },
           error: (error) => {
             console.log(error)
-            this.clienteWAService.eliminarTarjeta(datos).subscribe({
-              next: (response) => {
-                console.log(response)
-                responseElement.innerHTML = 'Hubo un error, tarjeta no agregada';
-                responseElement.style.color = '#b01902';
-              },
-              error: (error) => {
-                console.log(error)
-                responseElement.innerHTML = 'Hubo un error, por favor eliminar la tarjeta creada';
-                responseElement.style.color = '#b01902';
-              }
-            });
           }
         });      
       } else if (response.card.status === 'rejected') {
@@ -123,6 +113,7 @@ export class AgregarTarjetaPage implements OnInit {
 
       retryButton.style.display = 'block';
       submitButton.style.display = 'none';
+      
     };
     
 
@@ -149,18 +140,9 @@ export class AgregarTarjetaPage implements OnInit {
     });
 
     retryButton.addEventListener('click', (event) => {
-      document.getElementById('response').style.display = 'none';
-      submitButton.innerText = submitInitialText;
-      submitButton.removeAttribute('disabled');
-      retryButton.style.display = 'none';
-      submitButton.style.display = 'block';
-      pg_sdk.generate_tokenize(
-        get_tokenize_data(),
-        '#tokenize_example',
-        responseCallback,
-        notCompletedFormCallback
-      );
+      this.navCtrl.navigateForward(['/metododepago']);
     });
+
   }
 
   onSubmit(){
@@ -169,6 +151,7 @@ export class AgregarTarjetaPage implements OnInit {
   }
 
   ngOnInit() {
+    this.initPaymentez();
   }
   
   
