@@ -1,12 +1,17 @@
 /* Estilos generales para ion-grid e ion-row */
 
-ion-grid.main {
-    height: 90%;
-    margin: 1.2rem 0;
+/*ion-grid.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}*/
+
+ion-grid .second{
+    width: 70%;
 }
 
-ion-grid.content{
-    width: 70%;
+ion-grid .card-second{
+    width: 90%;
 }
 
 ion-row {
@@ -27,14 +32,19 @@ ion-row.header span {
     background-color: #FFDDDD;
     height: 26px;
     position: absolute;
-    top: 10%;
+    top: 52px;
     width: 100%;
     z-index: -1;
 }
 
-ion-grid.content {
+ion-grid div.content, ion-grid div.card {
     height: 90%;
-    margin-top: 1.2rem;
+    margin-top: 0.6rem;
+}
+
+ion-grid div.card {
+    padding: 9px;
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
 }
 
 ion-row.header div{
@@ -48,9 +58,6 @@ ion-row.header div ion-img{
     width:2.3em;
 }
 
-.row-titulo{
-    height:10%;
-}
 
 .titulo ion-label {
     border:3px solid #bf1a24;
@@ -66,6 +73,10 @@ ion-row.header div ion-img{
    width:100%;
 }
 
+ion-grid div.card .row-titulo .titulo{
+    margin-bottom: 3%;
+}
+
 .data {
    display:flex; 
 }
@@ -76,7 +87,7 @@ ion-row.img-status ion-img {
 }
 
 ion-row.img-status {
-   height:19%;
+   height:70px;
    margin-bottom:3%;
    margin-top:3%;
 }
@@ -88,7 +99,7 @@ ion-row.datas{
 
 ion-row.row-buttons{
     margin-top: 1.2rem;
-    padding-bottom: 1rem;
+    //padding-bottom: 1rem;
 }
 
 .buttons{
@@ -99,6 +110,62 @@ ion-row.row-buttons{
    width:100%;
 }
 
+.buttons-card{
+    align-items:center;
+    display:flex;
+    font-family:hp556;
+    justify-content:space-around;
+    width:90%;
+    margin-bottom: 0.6rem;
+ }
+
+.card-row{
+    margin-top: 1.3rem;
+}
+
+.card-selected {
+    padding: 15px;
+}
+
+.card-body{
+    height: 20px;
+    padding-left: 3%;
+    display: flex;
+    align-items: center;
+}
+
+.card-body div:first-child {
+    margin-right: 8%;
+}
+
+.logo{
+    width: 50px;
+    height: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo ion-img {
+    width: 100%;
+    height: 100%;
+}
+
+.card-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+    font-size: 0.9rem;
+}
+
+.card-content ion-label{
+    font-family: hp265;
+}
+
+.expiry{
+    color: #a7a7a7;
+}
 /*.ver-ruta{
     font-family: hp265;
 }*/

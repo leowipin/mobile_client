@@ -17,6 +17,12 @@ export class MetododepagoPage implements OnInit {
   orderName:string;
   orderId: any;
   requires_origin_and_destination:boolean;
+  first_name:string;
+  last_name:string;
+  dni:string;
+  phone_number:string;
+  address:string;
+  email:string;
   //currentCardIndex: number;
   //noSelectedCard: boolean = true;
   //usedCard: number;
@@ -37,6 +43,12 @@ export class MetododepagoPage implements OnInit {
         this.orderName = params['name']
         this.orderId = params['id']
         this.requires_origin_and_destination = params['booleandest']
+        this.first_name = params['first_name'],
+        this.last_name = params['last_name'],
+        this.dni = params['dni'],
+        this.phone_number = params['phone_number'],
+        this.address = params['address'],
+        this.email = params['email']
       }
     });
     console.log();
@@ -96,8 +108,27 @@ export class MetododepagoPage implements OnInit {
   }
 
   goToDetail(value){
+    let arrayCard = value.split('-')
     if(this.isPaidProcess){
-      console.log(value)
+      let queryParams = {
+        isPaidProcess:this.isPaidProcess,
+        name:this.orderName,
+        id:this.orderId,
+        booleandest:this.requires_origin_and_destination,
+        first_name:this.first_name,
+        last_name:this.last_name,
+        dni:this.dni,
+        phone_number:this.phone_number,
+        address:this.address,
+        email:this.email,
+        token:arrayCard[0],
+        holder_name:arrayCard[1],
+        expiry_year:arrayCard[2],
+        bin:arrayCard[3],
+        type:arrayCard[4],
+        expiry_month:arrayCard[5]
+      };
+      this.navCtrl.navigateForward(['/pedido-carrito'], { queryParams: queryParams });
     }
   }
 

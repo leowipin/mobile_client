@@ -34,6 +34,19 @@ export class PedidoCarritoPage implements OnInit {
   googleLoaded = false;
   isPaidProcess = false;
 
+  first_name:string;
+  last_name:string;
+  dni:string;
+  phone_number:string;
+  address:string;
+  email:string;
+  token:string;
+  holder_name:string;
+  expiry_year:string;
+  bin:string;
+  type:string;
+  expiry_month:string;
+
   apiKey = environment.googleMapsApiKey;
 
   origen = {
@@ -49,6 +62,26 @@ export class PedidoCarritoPage implements OnInit {
   }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      if(params['isPaidProcess'] != undefined){
+        this.isPaidProcess = params['isPaidProcess'] === 'true';
+        this.orderName = params['name']
+        this.orderId = params['id']
+        this.requires_origin_and_destination = params['booleandest'] === 'true'
+        this.first_name = params['first_name'],
+        this.last_name = params['last_name'],
+        this.dni = params['dni'],
+        this.phone_number = params['phone_number'],
+        this.address = params['address'],
+        this.email = params['email'],
+        this.token = params['token'],
+        this.holder_name = params['holder_name'],
+        this.expiry_year = params['expiry_year'],
+        this.bin = params['bin'],
+        this.type = params['type'],
+        this.expiry_month = params['expiry_month']
+      }
+    });
     this.ubicacionService.init(this.renderer, document).then(() => {
     });
     this.getOrder();
@@ -151,6 +184,32 @@ goToBillingData(){
     booleandest:this.requires_origin_and_destination,     
   };
   this.navCtrl.navigateForward(['/editarperfil'], { queryParams: queryParams });
+}
+
+/*backToSelectCard(){
+  this.navCtrl.navigateForward(['/metododepago'],);
+}*/
+
+async goBackToOrder(){
+  const alert = await this.alertController.create({
+    header: 'Cancelar pago',
+    message: '¿Está seguro que desea cancelar el proceso de pago?',
+    buttons: [
+      {
+        text: 'No',
+        role: 'cancel',
+        handler: () => {
+        }
+      },
+      {
+        text: 'Sí',
+        handler: () => {
+          this.navCtrl.navigateForward(['/carrito']);
+        }
+      }
+    ]
+  });
+  await alert.present();
 }
 
 async dibujarRuta() {

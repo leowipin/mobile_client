@@ -173,14 +173,20 @@ export class EditarperfilPage implements OnInit {
     } else{
       this.isSubmitted = true;
       if(!this.ionicForm.valid){      
-        this.presentAlertIncompleto();
+        this.presentAlertPaidProcess();
         return false;
       } else {
         let queryParams = {
           isPaidProcess: true,
           name:this.orderName,
           id:this.orderId,
-          booleandest:this.requires_origin_and_destination
+          booleandest:this.requires_origin_and_destination,
+          first_name: this.ionicForm.value.name,
+          last_name: this.ionicForm.value.lastname,
+          dni: this.ionicForm.value.cedula,
+          phone_number: this.ionicForm.value.mobile,
+          address: this.ionicForm.value.direccion,
+          email: this.ionicForm.value.email
         };
         this.navCtrl.navigateForward(['/metododepago'], { queryParams: queryParams });
       }
@@ -263,6 +269,19 @@ export class EditarperfilPage implements OnInit {
       header: 'Guardar datos',
       //subHeader: 'Subtitle',
       message: 'Para que sus datos sean guardados debe completar los campos solicitados correctamente',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+
+  }
+
+  async presentAlertPaidProcess() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Datos facturación',
+      //subHeader: 'Subtitle',
+      message: 'Para proceder con el pago debe completar los campos solicitados correctamente',
       buttons: ['OK']
     });
 

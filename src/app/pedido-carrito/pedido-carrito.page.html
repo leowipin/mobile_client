@@ -1,19 +1,24 @@
 <ion-content>
   <ion-grid class="main">
     <ion-row class="header">
-      <div>
+      <div *ngIf="!isPaidProcess">
         <ion-img src="assets/img/retroceder.png" [routerLink]="'/carrito'"></ion-img>
       </div>
+      <!--<div *ngIf="isPaidProcess" (click)="backToSelectCard()">
+        <ion-img src="assets/img/retroceder.png"></ion-img>
+      </div>-->
       <span></span>
       <ion-img style="width: 160px;" src="assets/img/logosepro.png"></ion-img>
     </ion-row>
-    <ion-grid class="content" *ngIf="orderData">
+    <ion-grid [ngClass]="{'second': !isPaidProcess, 'card-second': isPaidProcess}" *ngIf="orderData">
+      <div [ngClass]="{'content': !isPaidProcess, 'card': isPaidProcess}">
       <ion-row class="row-titulo">
         <div class="titulo">
-          <ion-label>Solicitud de servicio</ion-label>
+          <ion-label *ngIf="!isPaidProcess">Solicitud de servicio</ion-label>
+          <ion-label *ngIf="isPaidProcess">Datos del servicio</ion-label>
         </div>
       </ion-row>
-      <ion-row class="img-status">
+      <ion-row class="img-status" *ngIf="!isPaidProcess">
         <ion-img src="assets/img/perfilcliente.png"></ion-img>
       </ion-row>
       <ion-row class="datas">
@@ -124,14 +129,139 @@
           <br/>
           <button class="btn btn-primary rounded-pill border-0 ver-ruta" (click)="verUbicacion()">Ver ubicación</button> 
         </div>
-        
       </ion-row>
-      <ion-row class="row-buttons">
+      <ion-row class="row-buttons" *ngIf="!isPaidProcess">
         <div class="buttons">
           <button class="btn btn-danger rounded-pill border-0" (click)="deleteOrder()">Eliminar</button>
           <button class="btn btn-success rounded-pill border-0" [disabled]="orderData.status !== 'aceptado'" (click)="goToBillingData()">Realizar pago</button>
         </div>
       </ion-row>
+    </div>
     </ion-grid>
+    <ion-grid class="card-second" *ngIf="isPaidProcess">
+      <div class="card">
+        <ion-row class="row-titulo">
+          <div class="titulo">
+            <ion-label>Datos de facturación</ion-label>
+          </div>
+        </ion-row>
+        <ion-row class="datas">
+          <div class="data">
+            <ion-label class="negrita "> <b>Nombre:&nbsp;</b> </ion-label>
+            <ion-label>{{first_name}}</ion-label>
+          </div>
+          <div class="data">
+            <ion-label class="negrita "><b>Apellido:&nbsp;</b> </ion-label>
+            <ion-label>{{last_name}}</ion-label>
+          </div>
+          <div class="data">
+            <ion-label class="negrita "><b>Cédula:&nbsp;</b> </ion-label>
+            <ion-label>{{dni}}</ion-label>
+          </div>
+          <ng-container >
+            <div class="data">
+              <ion-label class="negrita "><b>Teléfono&nbsp;</b> </ion-label>
+              <ion-label>{{phone_number}}</ion-label>
+            </div>
+          </ng-container>
+          <ng-container >
+            <div class="data">
+              <ion-label class="negrita "><b>Dirección:&nbsp;</b> </ion-label>
+              <ion-label>{{address}}</ion-label>
+            </div>
+          </ng-container>
+          <ng-container >
+            <div class="data">
+              <ion-label class="negrita "><b>Correo:&nbsp;</b> </ion-label>
+              <ion-label>{{email}}</ion-label>
+            </div>
+          </ng-container>
+        </ion-row>
+      </div>
+    </ion-grid>
+    <ion-grid class="card-second" *ngIf="isPaidProcess">
+      <div class="card">
+        <ion-row class="row-titulo">
+          <div class="titulo">
+            <ion-label>Tarjeta a usar</ion-label>
+          </div>
+        </ion-row>
+          <div #carddiv class="card-selected">
+            <div class="card-body">
+              <div class="logo">
+                <ion-img [src]="'assets/img/' + type + (type === 'cs' || type === 'up' ? '.png' : '.svg')" alt="Card logo"></ion-img>
+              </div>
+              <div class="card-content">
+                <ion-label><b>{{ holder_name }}</b></ion-label>
+                <ion-label><b>{{ bin }}***</b></ion-label>
+                <ion-label class="expiry">Expira {{expiry_month}}/{{expiry_year}}</ion-label>
+              </div>
+              <!--<div class="radio-btn">
+                <input class="form-check-input" type="radio" id="{{i}}" name="cardSelection" value="{{i}}" [checked]="currentCardIndex === i" (change)="onSelectionChange($event)">
+                <ion-label><b>usar</b></ion-label>
+              </div>!-->
+            </div>
+          </div>
+        <!--<ion-row class="datas">
+          <div class="data">
+            <ion-label class="negrita "> <b>Servicio:&nbsp;</b> </ion-label>
+            <ion-label>{{orderName}}</ion-label>
+          </div>
+          <div class="data">
+            <ion-label class="negrita "><b>Fecha de inicio:&nbsp;</b> </ion-label>
+            <ion-label>12/12/12</ion-label>
+          </div>
+          <div class="data">
+            <ion-label class="negrita "><b>Hora de inicio:&nbsp;</b> </ion-label>
+            <ion-label>12:00</ion-label>
+          </div>
+          <ng-container >
+            <div class="data">
+              <ion-label class="negrita "><b>Fecha de Finalización:&nbsp;</b> </ion-label>
+              <ion-label>12/12/12</ion-label>
+            </div>
+          </ng-container>
+          <ng-container >
+            <div class="data">
+              <ion-label class="negrita "><b>Hora de Finalización:&nbsp;</b> </ion-label>
+              <ion-label>12/12/12</ion-label>
+            </div>
+          </ng-container>
+          <ng-container >
+            <div class="data">
+              <ion-label class="negrita "><b>Duración:&nbsp;</b> </ion-label>
+              <ion-label>0h 0m 0s</ion-label>
+            </div>
+          </ng-container>
+  
+            <ng-container *ngIf="total === 'pendiente'">
+              <div class="data">
+                <ion-label class="negrita "> <b>Total:&nbsp;</b> </ion-label>
+                <ion-label> pendiente </ion-label>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="total !== 'pendiente'">
+              <div class="data">
+                <ion-label class="negrita "> <b>Subtotal:&nbsp;</b> </ion-label>
+                <ion-label> 12 dólares </ion-label>
+              </div>
+              <div class="data">
+                <ion-label class="negrita "> <b>IVA:&nbsp;</b> </ion-label>
+                <ion-label> 12 dólares </ion-label>
+              </div>
+              <div class="data">
+                <ion-label class="negrita "> <b>Total:&nbsp;</b> </ion-label>
+                <ion-label> 12 dólares </ion-label>
+              </div>            
+            </ng-container>
+        </ion-row>-->
+      </div>
+    </ion-grid>
+    <ion-row class="row-buttons" *ngIf="isPaidProcess">
+      <div class="buttons-card">
+        <button class="btn btn-danger rounded-pill border-0" (click)="goBackToOrder()">Cancelar</button>
+        <button class="btn btn-success rounded-pill border-0">Pagar</button>
+      </div>
+    </ion-row>
   </ion-grid>
   </ion-content>
