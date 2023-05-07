@@ -21,6 +21,7 @@ import * as CryptoJS from 'crypto-js';
 import { HttpParams } from '@angular/common/http';
 import { CardData } from "src/app/interfaces/client/cardData";
 import { CardNumber } from "src/app/interfaces/client/cardNumber";
+import { BillingData } from "src/app/interfaces/client/billingData";
 
 
 
@@ -146,16 +147,22 @@ export class ClienteWAService {
     return this.http.delete<MessageResponse>(endpoint, { headers: headers })
   }
 
-  getCurrentCard(token:string): Observable<CardNumber>{
+  /*getCurrentCard(token:string): Observable<CardNumber>{
     const endpoint:string = this.DJANGO_DOMAIN_NAME+'cardauth/currentCard/';
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     return this.http.get<CardNumber>(endpoint, { headers: headers })
+  }*/
+
+  changeOrderStatus(token:string, status:string, id:string): Observable<MessageResponse>{
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+`services/statusChange/?id=${id}`;
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+    return this.http.put<MessageResponse>(endpoint, {status:status}, { headers: headers })
   }
 
-  changeCurrentCard(token:string, data:CardNumber): Observable<MessageResponse>{
-    const endpoint:string = this.DJANGO_DOMAIN_NAME+'cardauth/currentCard/';
+  sendBillingData(token:string, data:BillingData): Observable<MessageResponse>{
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+'services/billing/';
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
-    return this.http.put<MessageResponse>(endpoint, data, { headers: headers })
+    return this.http.post<MessageResponse>(endpoint, data, { headers: headers })
   }
   
 

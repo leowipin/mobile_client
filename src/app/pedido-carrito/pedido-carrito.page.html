@@ -260,7 +260,7 @@
     <ion-row class="row-buttons" *ngIf="isPaidProcess">
       <div class="buttons-card">
         <button class="btn btn-danger rounded-pill border-0" (click)="goBackToOrder()">Cancelar</button>
-        <button class="btn btn-success rounded-pill border-0">Pagar</button>
+        <button class="btn btn-success rounded-pill border-0" (click)="paidOrder()">Pagar</button>
       </div>
     </ion-row>
   </ion-grid>

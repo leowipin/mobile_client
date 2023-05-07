@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 import { Renderer2 } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { UbicacionComponent } from 'src/app/ubicacion/ubicacion.component';
+import { CardData } from '../interfaces/client/cardData';
+import { BillingData } from '../interfaces/client/billingData';
 declare var google: any;
 
 
@@ -184,6 +186,115 @@ goToBillingData(){
     booleandest:this.requires_origin_and_destination,     
   };
   this.navCtrl.navigateForward(['/editarperfil'], { queryParams: queryParams });
+}
+
+paidOrder(){
+  const token = localStorage.getItem('token');
+  const base64Url = token.split('.')[1];
+  const base64 = base64Url.replace('-', '+').replace('_', '/');
+  const payload = JSON.parse(atob(base64));
+  const uid = payload.user_id.toString()
+  const email = payload.user_email
+
+  //let card_number = response.card.bin 
+  /*let card:CardData = {
+    token:this.token,
+    card_number: card_number
+  }*/
+  let datos = {
+    "card": {
+    "token": this.token
+    },
+    "user": {
+    "id": uid,
+    "email": email
+    },
+    "order":{
+      "amount":parseFloat(this.total),
+      "description":"servicio de seproamerica",
+      "dev_reference":`${uid}-${this.orderId}`,
+      "vat":parseFloat(this.iva)
+    }
+  }
+  
+  this.clienteWAService.changeOrderStatus(token, 'pagado', this.orderId).subscribe({
+    next: (response) => {
+      console.log(response)
+      this.clienteWAService.pagar(datos).subscribe({
+        next: (response) => {
+          console.log(response);
+          if (response.transaction.status == 'success') {
+            let bData: BillingData = {
+              first_name: this.first_name,
+              last_name:this.last_name,
+              dni:this.dni,
+              email:this.email,
+              phone_number:this.phone_number,
+              address:this.address,
+              pedido:this.orderId
+            }
+            this.clienteWAService.sendBillingData(token, bData).subscribe({
+              next: (response) => {
+                console.log(response)
+              },error: (error) => {
+                console.log(error)
+              }
+            });
+            this.alertController.create({
+              header: 'Pago servicio',
+              message: '¡Transacción realizada exitosamente!',
+              buttons: [{
+                text: 'Ok',
+                handler: () => {
+                  this.navCtrl.navigateForward(['/carrito']);
+                }
+              }]
+            }).then(alert => alert.present());
+          } else {
+            this.alertController.create({
+              header: 'Pago Servicio',
+              message: 'Hubo un error. La transacción NO se ha realizado',
+              buttons: [{
+                text: 'Ok',
+                handler: () => {
+                  this.navCtrl.navigateForward(['/carrito']);
+                }
+              }]
+            }).then(alert => alert.present());
+          }
+        },
+        error: (error) => {
+          console.log(error);
+          this.alertController.create({
+            header: 'Pago Servicio',
+            message: 'Hubo un error. La transacción NO se ha realizado',
+            buttons: [{
+              text: 'Ok',
+              handler: () => {
+                this.navCtrl.navigateForward(['/carrito']);
+              }
+            }]
+          }).then(alert => alert.present());
+        }
+      });
+    },
+    error: (error) => {
+      console.log(error)
+      this.alertController.create({
+        header: 'Pago Servicio',
+        message: 'Hubo un error. La transacción NO se ha realizado',
+        buttons: [{
+          text: 'Ok',
+          handler: () => {
+            this.navCtrl.navigateForward(['/carrito']);
+          }
+        }]
+      }).then(alert => alert.present());
+    }
+  });
+
+  
+  
 }
 
 /*backToSelectCard(){
