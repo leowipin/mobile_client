@@ -78,7 +78,7 @@ export class AgregarTarjetaPage implements OnInit {
         const payload = JSON.parse(atob(base64));
         const uid = payload.user_id.toString()
         let tokenCard = response.card.token
-        let card_number = response.card.bin 
+        let card_number = response.card.number 
         let card:CardData = {
           token:tokenCard,
           card_number: card_number

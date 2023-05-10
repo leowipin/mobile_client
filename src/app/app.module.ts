@@ -14,6 +14,8 @@ import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
 import { ClienteWAService } from './servicios/login-registro/login-registro.service';
 import { HttpClientModule } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 
 
@@ -23,7 +25,7 @@ import { HttpClientModule } from '@angular/common/http';
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule,ReactiveFormsModule, AngularFireAuthModule, AngularFirestoreModule,
-    AngularFireModule.initializeApp(environment.firebase), HttpClientModule],
+    AngularFireModule.initializeApp(environment.firebase), HttpClientModule, NgbModule],
   providers: [BarcodeScanner, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, Camera, ClienteWAService],
   bootstrap: [AppComponent],
 })

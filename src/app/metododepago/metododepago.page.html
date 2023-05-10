@@ -26,7 +26,7 @@
                   </div>
                   <div class="card-content">
                     <ion-label><b>{{ card.holder_name }}</b></ion-label>
-                    <ion-label><b>{{ card.bin }}***</b></ion-label>
+                    <ion-label><b> {{getCardName(card.type)}} ***{{ card.number }}</b></ion-label>
                     <ion-label class="expiry">Expira {{card.expiry_month}}/{{card.expiry_year}}</ion-label>
                   </div>
                   <button #closebtn class="delete-card" (click)="deleteCard(closebtn.value)" value="{{i}}" *ngIf="!isPaidProcess">

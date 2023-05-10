@@ -23,15 +23,11 @@ export class MetododepagoPage implements OnInit {
   phone_number:string;
   address:string;
   email:string;
-  //currentCardIndex: number;
-  //noSelectedCard: boolean = true;
-  //usedCard: number;
 
 
   constructor(private clienteWAService: ClienteWAService, private alertController: AlertController, private navCtrl: NavController, private route: ActivatedRoute) { }
 
   ionViewWillEnter() {
-    //this.noSelectedCard = true
     this.getCards();
     
   }
@@ -70,11 +66,7 @@ export class MetododepagoPage implements OnInit {
       }
     });
   }
-  /*onSelectionChange(event: any) {
-    this.noSelectedCard = false
-    this.currentCardIndex = event.target.value
-    console.log('Selected index:', this.currentCardIndex);
-  }*/
+
   getCardName(type: string): string {
     switch (type) {
       case 'vi':
@@ -132,74 +124,13 @@ export class MetododepagoPage implements OnInit {
     }
   }
 
-  /*saveDefaultCard(){
-    const token = localStorage.getItem('token');
-    let selectedCard = this.cardsList.cards[this.currentCardIndex];
-    let cardType = this.getCardName(selectedCard.type)
-    let number = selectedCard.bin
-    let newCurrentNumber:CardNumber = {
-      current_card:number
-    }
-    this.alertController.create({
-      header: "Guardar tarjeta",
-      message: `¿Desea usar la tarjeta ${cardType} con número ${number}*** como predeterminada?`,
-      buttons: [
-        {
-          text: 'No',
-          role: 'cancel'
-        },
-        {
-          text: 'Sí',
-          handler: () => {
-            this.clienteWAService.changeCurrentCard(token, newCurrentNumber).subscribe({
-              next: (response) => {
-                this.usedCard = this.currentCardIndex
-                this.noSelectedCard = true
-                this.alertController.create({
-                  header: "Tarjeta actualizada",
-                  message: "Tarjeta actualizada correctamente",
-                  buttons: ['Aceptar']
-                }).then(alert => alert.present())
-              },
-              error: (error) => {
-                this.alertController.create({
-                  header: "Error al actualizar tarjeta",
-                  message: "Hubo un error al actualizar la tarjeta",
-                  buttons: ['Aceptar']
-                }).then(alert => alert.present())
-              }
-            });
-          }
-        }
-      ]
-    }).then(alert => alert.present())
-  }*/
-
-  /*getCurrentCard(){
-    const token = localStorage.getItem('token');
-    this.clienteWAService.getCurrentCard(token).subscribe({
-      next: (response) => {
-        console.log(response)
-        if(response.current_card != null){
-          this.currentCardIndex = this.cardsList.cards.findIndex(card => card.bin === response.current_card);
-          this.usedCard = this.currentCardIndex
-        }
-        
-      },
-      error: (error) => {
-        console.log(error)
-      }
-    });
-  }*/
-
   deleteCard(value) {
     this.presentAlertConfirm(value);
     console.log(value)
-    //console.log(this.currentCardIndex)
   }
 
   async presentAlertConfirm(value) {
-    let index = parseInt(value); // Convierte el valor de value a un número
+    let index = parseInt(value);
     let typeCard = this.getCardName(this.cardsList.cards[index].type);
     let bin = this.cardsList.cards[index].bin;
     const alert = await this.alertController.create({
@@ -241,49 +172,16 @@ export class MetododepagoPage implements OnInit {
                 console.log(error)
               }
             }); 
-            /*if(this.usedCard!= null && this.usedCard.toString() === value && this.cardsList.cards.filter(card => card.status === 'valid').length > 1){
-              let index = value;
-              let bins = this.cardsList.cards
-              .filter((card, i) => i !== parseInt(index) && card.status == 'valid')
-              .map(card => card.bin);
-              let newBin = bins[Math.floor(Math.random() * bins.length)];
-              console.log(newBin);
-              console.log(bins);
-              let newCurrentNumber:CardNumber = {
-                current_card:newBin
-              }
-              this.clienteWAService.changeCurrentCard(token, newCurrentNumber).subscribe({
-                next: (response) => {
-                },
-                error: (error) => {
-                }
-              });
-            } 
-            if(this.cardsList.cards.filter(card => card.status === 'valid').length == 1 && this.usedCard != null){
-              let newCurrentNumber:CardNumber = {
-                current_card:null
-              }
-              this.clienteWAService.changeCurrentCard(token, newCurrentNumber).subscribe({
-                next: (response) => {
-                  console.log(response)
-                },
-                error: (error) => {
-                  console.log(error)
-                }
-              });
-            }*/
+
             this.clienteWAService.eliminarTarjeta(datos).subscribe({
               next: (response) => {
                 console.log(response)
-                //this.usedCard = undefined
-                //this.currentCardIndex = undefined
                 this.presentAlertDeleted();
               },
               error: (error) => {
                 console.log(error)
               }
             });
-            
           }
         }
       ]

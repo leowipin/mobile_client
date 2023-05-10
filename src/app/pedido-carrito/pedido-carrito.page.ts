@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild, ElementRef, EventEmitter, Output, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ClienteWAService } from '../servicios/login-registro/login-registro.service';
 import { AlertController } from '@ionic/angular';
@@ -8,11 +8,15 @@ import { TrackServicioComponent } from '../servicios/track-servicio/track-servic
 import { UbicacionService } from '../ubicacion/ubicacion.service';
 import { NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { Renderer2 } from '@angular/core';
+import { Renderer2, Injector, Inject} from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { UbicacionComponent } from 'src/app/ubicacion/ubicacion.component';
 import { CardData } from '../interfaces/client/cardData';
 import { BillingData } from '../interfaces/client/billingData';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+//import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+
 declare var google: any;
 
 
@@ -49,6 +53,8 @@ export class PedidoCarritoPage implements OnInit {
   type:string;
   expiry_month:string;
 
+  isPaidBtnDisabled:boolean = false;
+  modalElement: ElementRef;
   apiKey = environment.googleMapsApiKey;
 
   origen = {
@@ -59,7 +65,7 @@ export class PedidoCarritoPage implements OnInit {
     lat: -2.1676746,
     lng: -79.8956897
   };
-  constructor(private route: ActivatedRoute, private clienteWAService: ClienteWAService, private alertController: AlertController, private modalController: ModalController, private ubicacionService: UbicacionService, private renderer: Renderer2, private navCtrl: NavController, private router: Router) { 
+  constructor(private route: ActivatedRoute, private clienteWAService: ClienteWAService, private alertController: AlertController, private modalController: ModalController, private ubicacionService: UbicacionService, private renderer: Renderer2, private navCtrl: NavController, private router: Router, private modalService: NgbModal, private injector: Injector) { 
 
   }
 
@@ -189,18 +195,13 @@ goToBillingData(){
 }
 
 paidOrder(){
+  this.isPaidBtnDisabled = true
   const token = localStorage.getItem('token');
   const base64Url = token.split('.')[1];
   const base64 = base64Url.replace('-', '+').replace('_', '/');
   const payload = JSON.parse(atob(base64));
   const uid = payload.user_id.toString()
   const email = payload.user_email
-
-  //let card_number = response.card.bin 
-  /*let card:CardData = {
-    token:this.token,
-    card_number: card_number
-  }*/
   let datos = {
     "card": {
     "token": this.token
@@ -217,74 +218,77 @@ paidOrder(){
     }
   }
   
-  this.clienteWAService.changeOrderStatus(token, 'pagado', this.orderId).subscribe({
+  this.clienteWAService.pagar(datos).subscribe({
     next: (response) => {
-      console.log(response)
-      this.clienteWAService.pagar(datos).subscribe({
-        next: (response) => {
-          console.log(response);
-          if (response.transaction.status == 'success') {
-            let bData: BillingData = {
-              first_name: this.first_name,
-              last_name:this.last_name,
-              dni:this.dni,
-              email:this.email,
-              phone_number:this.phone_number,
-              address:this.address,
-              pedido:this.orderId
-            }
-            this.clienteWAService.sendBillingData(token, bData).subscribe({
-              next: (response) => {
-                console.log(response)
-              },error: (error) => {
-                console.log(error)
-              }
-            });
-            this.alertController.create({
-              header: 'Pago servicio',
-              message: '¡Transacción realizada exitosamente!',
-              buttons: [{
-                text: 'Ok',
-                handler: () => {
-                  this.navCtrl.navigateForward(['/carrito']);
-                }
-              }]
-            }).then(alert => alert.present());
-          } else {
+      console.log(response);
+      let bData: BillingData = {
+        first_name: this.first_name,
+        last_name:this.last_name,
+        dni:this.dni,
+        email:this.email,
+        phone_number:this.phone_number,
+        address:this.address,
+        pedido:this.orderId
+      }
+      if (response.transaction.status == 'success') {
+        
+        this.clienteWAService.sendBillingData(token, bData).subscribe({
+          next: (response) => {
+            console.log(response)
+          },error: (error) => {
+            console.log(error)
+          }
+        });
+        this.clienteWAService.changeOrderStatus(token, 'pagado', this.orderId).subscribe({
+          next: (response) => {
+            console.log(response)
+          },
+          error: (error) => {
+            console.log(error)
             this.alertController.create({
               header: 'Pago Servicio',
-              message: 'Hubo un error. La transacción NO se ha realizado',
+              message: 'El pago se ha realizado con éxito, pero nuestros servidores aún no se han actualizado. Por favor, contáctenos para obtener más información y asistencia. ¡Gracias por su comprensión!',
               buttons: [{
-                text: 'Ok',
+                text: 'Aceptar',
                 handler: () => {
                   this.navCtrl.navigateForward(['/carrito']);
                 }
               }]
             }).then(alert => alert.present());
           }
-        },
-        error: (error) => {
-          console.log(error);
-          this.alertController.create({
-            header: 'Pago Servicio',
-            message: 'Hubo un error. La transacción NO se ha realizado',
-            buttons: [{
-              text: 'Ok',
-              handler: () => {
-                this.navCtrl.navigateForward(['/carrito']);
-              }
-            }]
-          }).then(alert => alert.present());
-        }
-      });
+        });
+        this.alertController.create({
+          header: 'Pago servicio',
+          message: '¡Transacción realizada exitosamente!',
+          buttons: [{
+            text: 'Aceptar',
+            handler: () => {
+              this.navCtrl.navigateForward(['/carrito']);
+            }
+          }]
+        }).then(alert => alert.present());
+      } else if(response.transaction.status == 'pending'){
+        this.openModal(uid, response.transaction.id, "BY_OTP", token, bData, this.orderId)
+      } else {
+        this.alertController.create({
+          header: 'Pago Servicio',
+          message: 'Hubo un error. La transacción NO se ha realizado',
+          buttons: [{
+            text: 'Aceptar',
+            handler: () => {
+              this.navCtrl.navigateForward(['/carrito']);
+            }
+          }]
+        }).then(alert => alert.present());
+      }
     },
     error: (error) => {
-      console.log(error)
+      console.log(error);
       this.alertController.create({
         header: 'Pago Servicio',
         message: 'Hubo un error. La transacción NO se ha realizado',
         buttons: [{
-          text: 'Ok',
+          text: 'Aceptar',
           handler: () => {
             this.navCtrl.navigateForward(['/carrito']);
           }
@@ -292,9 +296,25 @@ paidOrder(){
       }).then(alert => alert.present());
     }
   });
+    
+  
+}
 
-  
-  
+openModal(userid: string, transactionid: string, type: string, token:string, bData:BillingData, orderId:any) {
+  const modalRef = this.modalService.open(MyModalComponent, {
+    injector: Injector.create({
+      providers: [
+        { provide: 'userid', useValue: userid },
+        { provide: 'transactionid', useValue: transactionid },
+        { provide: 'type', useValue: type },
+        { provide: 'token', useValue: token },
+        { provide: 'bData', useValue: bData },
+        { provide: 'orderId', useValue: orderId },
+      ],
+      parent: this.injector
+    })
+  });
+  this.isPaidBtnDisabled = false;
 }
 
 /*backToSelectCard(){
@@ -321,6 +341,13 @@ async goBackToOrder(){
     ]
   });
   await alert.present();
+}
+
+async abrirModal() {
+  const modal = await this.modalController.create({
+    component: MyModalComponent
+  });
+  return await modal.present();
 }
 
 async dibujarRuta() {
@@ -378,3 +405,153 @@ findPlaces(salida: any, llegada: any) {
     .catch((e) => window.alert("Geocoder failed due to: " + e));
 }
 }
+
+@Component({
+  selector: 'my-modal',
+  template: `
+  <div class="modal-header">
+    <h4 class="modal-title">Código OTP</h4>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="activeModal.close('Close click')"></button>
+  </div>
+  <div class="modal-body">
+    <p>Por favor, ingrese el código OTP que ha recibido de su banco para continuar con el proceso.</p>
+    <input type="text" class="form-control" [(ngModel)]="otpCode" placeholder="Código OTP">
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="activeModal.close('Close click')">Cerrar</button>
+    <button type="button" class="btn btn-primary" (click)="sendOtp()" [disabled]="isButtonDisabled()">Enviar</button>
+  </div>
+`,
+  styleUrls: ['mymodal.scss']
+})
+export class MyModalComponent{
+
+  otpCode:string
+
+
+  constructor(private clienteWAService: ClienteWAService, public activeModal: NgbActiveModal, private alertController: AlertController, private navCtrl: NavController,
+    @Inject('userid') public userid: string,
+    @Inject('transactionid') public transactionid: string,
+    @Inject('type') public type: string,
+    @Inject('token') public token: string,
+    @Inject('bData') public bData: BillingData,
+    @Inject('orderId') public orderId: any,) {
+  }
+
+
+  ngOnInit() {
+
+  }
+
+  sendOtp(){
+    console.log(this.otpCode)
+    console.log(this.userid)
+    console.log(this.transactionid)
+    console.log(this.type)
+    console.log(this.token)
+    console.log(this.bData)
+    console.log(this.orderId)
+    this.clienteWAService.dinersVerify(this.userid, this.transactionid, this.type, this.otpCode).subscribe({
+      next: (response) => {
+        console.log(response)
+        let alertMessage = this.getAlertMessage(response.status);
+        if(response.status === 1){
+          this.clienteWAService.sendBillingData(this.token, this.bData).subscribe({
+            next: (response) => {
+              console.log(response)
+            },error: (error) => {
+              console.log(error)
+            }
+          });
+          this.clienteWAService.changeOrderStatus(this.token, 'pagado', this.orderId).subscribe({
+            next: (response) => {
+              console.log(response)
+              this.alertController.create({
+                header:"Pago servicio",
+                message: alertMessage,
+                buttons: [
+                  {
+                    text: 'Aceptar',
+                    handler: () => {
+                      this.navCtrl.navigateRoot('/carrito');
+                    }
+                  }
+                ]
+              }).then(alert => alert.present())
+            },
+            error: (error) => {
+              this.alertController.create({
+                header:"Pago servicio",
+                message: 'El pago se ha realizado con éxito, pero nuestros servidores aún no se han actualizado. Por favor, contáctenos para obtener más información y asistencia. ¡Gracias por su comprensión!',
+                buttons: [
+                  {
+                    text: 'Aceptar',
+                    handler: () => {
+                      this.navCtrl.navigateRoot('/carrito');
+                    }
+                  }
+                ]
+              }).then(alert => alert.present())
+              console.log(error)
+            }
+          });
+        } else {
+          this.alertController.create({
+            header:"Pago servicio",
+            message: alertMessage,
+            buttons: [
+              {
+                text: 'Aceptar',
+                handler: () => {
+                  this.navCtrl.navigateRoot('/carrito');
+                }
+              }
+            ]
+          }).then(alert => alert.present())
+        }
+        
+      },error: (error) => {
+        console.log(error)
+        this.alertController.create({
+          header: "Pago servicio",
+          message: 'Hubo un error. La transacción NO se ha realizado',
+          buttons: [{
+            text: 'Aceptar',
+            handler: () => {
+              this.navCtrl.navigateForward(['/carrito']);
+            }
+          }]
+        }).then(alert => alert.present());
+      }
+    });
+    this.activeModal.close('Close click');
+  }
+
+  isButtonDisabled(): boolean {
+    if(this.otpCode == undefined){
+      return true
+    } else{
+      return this.otpCode.length < 6;
+    }
+    
+  }
+
+  getAlertMessage(status: number): string {
+    switch (status) {
+      case 0:
+        return 'Transacción pendiente.';
+      case 1:
+        return '¡Transacción realizada exitosamente!';
+      case 2:
+        return 'Transacción cancelada.';
+      case 4:
+        return 'Transacción rechazada.';
+      case 5:
+        return 'Transacción expirada.';
+      default:
+        return 'Estado de transacción desconocido.';
+    }
+  }
+  
+}
+

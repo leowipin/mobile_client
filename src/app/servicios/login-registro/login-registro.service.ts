@@ -30,7 +30,7 @@ import { BillingData } from "src/app/interfaces/client/billingData";
 })
 export class ClienteWAService {
   /*Url del servidor */
-  DJANGO_DOMAIN_NAME:string = 'https://seproamerica2022.pythonanywhere.com/'; //https://seproamerica2022.pythonanywhere.com/
+  DJANGO_DOMAIN_NAME:string = 'http://127.0.0.1:8000/'; //https://seproamerica2022.pythonanywhere.com/
   //DJANGO_TEST_DOMAIN_NAME:string = 'http://127.0.0.1:8000/'
   PAYMENTEZ_PROD_URL:string = "https://ccapi.paymentez.com/v2/"
   PAYMENTEZ_DEV_URL:string =  "https://ccapi-stg.paymentez.com/v2/";
@@ -201,6 +201,20 @@ pagar(tarjeta): Observable<any>{
     };
     const body = JSON.stringify(tarjeta);
     return this.http.post(this.PAYMENTEZ_DEV_URL + 'transaction/debit/', body, { headers });
+}
+
+dinersVerify(user_id: string, transaction_id: string, type:string, value: string): Observable<any> {
+  const headers = {
+    'Content-Type': 'application/json',
+    'Auth-Token': this.getAuthToken(this.paymentez.app_code_client, this.paymentez.app_key_client)
+  }
+  const body = JSON.stringify({
+    user: { id: user_id },
+    transaction: { id: transaction_id },
+    type: type,
+    value: value
+  });
+  return this.http.post(this.PAYMENTEZ_DEV_URL +'transaction/verify', body, { headers });
 }
 
 devolver(tarjeta): Observable<any>{

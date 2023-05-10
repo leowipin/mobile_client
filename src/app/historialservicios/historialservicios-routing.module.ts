@@ -6,12 +6,8 @@ import { HistorialserviciosPage } from './historialservicios.page';
 const routes: Routes = [
   {
     path: '',
-    component: HistorialserviciosPage
-  },  {
-    path: 'description',
-    loadChildren: () => import('./description/description.module').then( m => m.DescriptionPageModule)
-  }
-
+        component: HistorialserviciosPage
+  },
 ];
 
 @NgModule({

@@ -35,6 +35,8 @@
     "@ionic-native/geolocation": "^5.36.0",
     "@ionic-native/native-geocoder": "^5.36.0",
     "@ionic/angular": "^6.1.9",
+    "@ng-bootstrap/ng-bootstrap": "^14.1.1",
+    "@types/bootstrap": "^5.2.6",
     "bootstrap": "^5.2.3",
     "cordova-plugin-nativegeocoder": "^3.5.0",
     "crypto-js": "^4.1.1",
