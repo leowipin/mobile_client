@@ -1,0 +1,104 @@
+/* Estilos generales para ion-grid e ion-row */
+
+ion-grid.main {
+    height: 90%;
+    margin: 1.2rem 0;
+}
+
+ion-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Estilos específicos para cada clase de ion-row */
+ion-row.header {
+    justify-content: center;
+    height: 10%;
+}
+
+ion-row.header span {
+    background-color: #FFDDDD;
+    height: 26px;
+    position: absolute;
+    top: 53px;
+    width: 100%;
+    z-index: -1;
+}
+
+ion-grid.content {
+    height: 90%;
+    margin-top: 1.2rem;
+}
+
+ion-row.header ion-menu-button {
+    position: absolute;
+    left: 30px;
+    top: 8px;
+}
+
+ion-row.header ion-menu-button ion-img{
+    width: 30px;
+}
+
+ion-grid.content .order-row{
+    margin-bottom: 1.3rem;
+}
+
+ion-row.title ion-label {
+    color:#bf1a24;
+    font-size: 2rem;
+    font-family:BebasBold;
+}
+
+ion-row .order-pill {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #F2A9B0;
+    border: none;
+    border-radius: 50px;
+    color: white;
+    height: 4.5rem;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    width: 80%;
+    position: relative;
+}
+
+ion-row .order-pill .order-name{
+    color:#262626;
+    font-size: 1.3rem;
+    font-family:hp556;
+}
+
+ion-row .order-pill .order-status{
+    font-size: 0.9rem;
+    font-family:hp990;
+}
+
+ion-row .order-pill .order-date{
+    position: absolute;
+    color:white;
+    font-size: 0.7rem;
+    font-family:hp556;
+    left: 15px;
+}
+
+ion-row .order-pill .details{
+    position: absolute;
+    color:white;
+    font-size: 0.7rem;
+    font-family:hp556;
+    right: 15px;
+}
+
+ion-row .empty-cart{
+    color:#262626;
+    font-size: 1.2rem;
+    font-family:hp556;
+}
+

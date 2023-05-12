@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, NavController } from '@ionic/angular';
-import { ActivatedRoute, Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
+import { ClienteWAService } from '../servicios/login-registro/login-registro.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-historialservicios',
@@ -10,11 +11,47 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 export class HistorialserviciosPage implements OnInit {
  
+  cart:any;
 
-  constructor(private route: ActivatedRoute,private modalController: ModalController, private navCtrl: NavController) { }
+  constructor(private navCtrl: NavController, private clienteWAService: ClienteWAService, private alertController: AlertController,) { }
 
-  ngOnInit() {
+  ionViewWillEnter() {
+    this.getCart();
+  }
+  ngOnInit(): void {
+    
+  }
 
-  }  
+  getCart(){
+    const token = localStorage.getItem('token');
+    this.clienteWAService.getCart(token).subscribe({
+      next: (response) => {
+        this.cart = response;
+        this.cart.sort((a, b) => new Date(b.date_request).getTime() - new Date(a.date_request).getTime());
+        console.log(this.cart)
+      },
+      error: (error) => {
+        this.alertController.create({
+          message: "Error al cargar el carrito",
+          buttons: ['Aceptar']
+        }).then(alert=> alert.present())
+      }
+    });
+  }
+
+  goToPedido(id, name, requires_origin_and_destination, status){
+    let queryParams = {
+      id: id,
+      name: name,
+      booleandest: requires_origin_and_destination,
+      isHistoryOrder: true,
+      status: status,
+      isPaidProcess: false
+    };
+    console.log(queryParams)
+    this.navCtrl.navigateForward(['/pedido-carrito'], { queryParams: queryParams });
+  }
+
+  
 
 }

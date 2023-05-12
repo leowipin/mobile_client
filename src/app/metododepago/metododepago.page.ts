@@ -116,7 +116,7 @@ export class MetododepagoPage implements OnInit {
         token:arrayCard[0],
         holder_name:arrayCard[1],
         expiry_year:arrayCard[2],
-        bin:arrayCard[3],
+        card_num:arrayCard[3],
         type:arrayCard[4],
         expiry_month:arrayCard[5]
       };

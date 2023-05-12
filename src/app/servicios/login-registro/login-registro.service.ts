@@ -30,7 +30,7 @@ import { BillingData } from "src/app/interfaces/client/billingData";
 })
 export class ClienteWAService {
   /*Url del servidor */
-  DJANGO_DOMAIN_NAME:string = 'http://127.0.0.1:8000/'; //https://seproamerica2022.pythonanywhere.com/
+  DJANGO_DOMAIN_NAME:string = 'https://seproamerica2022.pythonanywhere.com/'; //https://seproamerica2022.pythonanywhere.com/
   //DJANGO_TEST_DOMAIN_NAME:string = 'http://127.0.0.1:8000/'
   PAYMENTEZ_PROD_URL:string = "https://ccapi.paymentez.com/v2/"
   PAYMENTEZ_DEV_URL:string =  "https://ccapi-stg.paymentez.com/v2/";
@@ -147,12 +147,6 @@ export class ClienteWAService {
     return this.http.delete<MessageResponse>(endpoint, { headers: headers })
   }
 
-  /*getCurrentCard(token:string): Observable<CardNumber>{
-    const endpoint:string = this.DJANGO_DOMAIN_NAME+'cardauth/currentCard/';
-    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
-    return this.http.get<CardNumber>(endpoint, { headers: headers })
-  }*/
-
   changeOrderStatus(token:string, status:string, id:string): Observable<MessageResponse>{
     const endpoint:string = this.DJANGO_DOMAIN_NAME+`services/statusChange/?id=${id}`;
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
@@ -163,6 +157,12 @@ export class ClienteWAService {
     const endpoint:string = this.DJANGO_DOMAIN_NAME+'services/billing/';
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     return this.http.post<MessageResponse>(endpoint, data, { headers: headers })
+  }
+
+  getBillingData(token:string, order:string): Observable<BillingData>{
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+`services/billing/?order=${order}`;
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+    return this.http.get<BillingData>(endpoint, { headers: headers })
   }
   
 

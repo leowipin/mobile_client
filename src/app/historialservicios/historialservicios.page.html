@@ -1,1 +1,29 @@
-<p>historial works</p>
+<ion-content>
+  <ion-grid class="main">
+    <ion-row class="header">
+      <ion-menu-button>
+        <ion-img src="assets/img/menuHamburguesa.png"></ion-img>
+      </ion-menu-button>
+      
+      <span></span>
+      <ion-img style="width: 160px;" src="assets/img/logosepro.png"></ion-img>
+    </ion-row>
+    <ion-grid class="content">
+      <ion-row class="title">
+        <ion-label>HISTORIAL DE SERVICIOS</ion-label>
+      </ion-row>
+      <ng-container *ngIf="cart">
+        <ng-container *ngFor="let item of cart">
+          <ion-row class="order-row" *ngIf="item.status == 'pagado' || item.status == 'reembolsado' || item.status == 'en proceso' || item.status == 'finalizado'">
+            <div class="order-pill" (click)="goToPedido(item.id, item.service_name, item.requires_origin_and_destination, item.status)">
+              <ion-label class="order-name">{{ item.service_name }}</ion-label>
+              <ion-label class="order-status" [ngStyle]="{'color': item.status === 'pagado' ? '#0e7a00' : item.status === 'en proceso' ? '#5761f7' : item.status === 'reembolsado' ? '#a30000' : '#3b3b3b' }">{{ item.status }}</ion-label>
+              <ion-label class="order-date">{{ item.date_request }}</ion-label>
+              <ion-label class="details">Ver detalles</ion-label>
+            </div>
+          </ion-row>
+        </ng-container>
+      </ng-container>
+    </ion-grid>
+  </ion-grid>
+  </ion-content>

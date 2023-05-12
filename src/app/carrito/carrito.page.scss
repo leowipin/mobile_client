@@ -19,11 +19,11 @@ ion-row.header {
 }
 
 ion-row.header span {
-    width: 100%;
-    position: fixed;
     background-color: #FFDDDD;
     height: 26px;
-    top: 56px;
+    position: absolute;
+    top: 53px;
+    width: 100%;
     z-index: -1;
 }
 

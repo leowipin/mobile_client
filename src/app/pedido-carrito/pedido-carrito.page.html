@@ -4,18 +4,21 @@
       <div *ngIf="!isPaidProcess">
         <ion-img src="assets/img/retroceder.png" [routerLink]="'/carrito'"></ion-img>
       </div>
+      <div *ngIf="isHistoryOrder">
+        <ion-img src="assets/img/retroceder.png" [routerLink]="'/historialservicios'"></ion-img>
+      </div>
       <span></span>
       <ion-img style="width: 160px;" src="assets/img/logosepro.png"></ion-img>
     </ion-row>
-    <ion-grid [ngClass]="{'second': !isPaidProcess, 'card-second': isPaidProcess}" *ngIf="orderData">
-      <div [ngClass]="{'content': !isPaidProcess, 'card': isPaidProcess}">
+    <ion-grid [ngClass]="{'second': !isPaidProcess && !isHistoryOrder, 'card-second': isPaidProcess||isHistoryOrder}" *ngIf="orderData">
+      <div [ngClass]="{'content': !isPaidProcess && !isHistoryOrder, 'card': isPaidProcess||isHistoryOrder}">
       <ion-row class="row-titulo">
         <div class="titulo">
-          <ion-label *ngIf="!isPaidProcess">Solicitud de servicio</ion-label>
-          <ion-label *ngIf="isPaidProcess">Datos del servicio</ion-label>
+          <ion-label *ngIf="!isPaidProcess && !isHistoryOrder">Solicitud de servicio</ion-label>
+          <ion-label *ngIf="isPaidProcess || isHistoryOrder">Datos del servicio</ion-label>
         </div>
       </ion-row>
-      <ion-row class="img-status" *ngIf="!isPaidProcess">
+      <ion-row class="img-status" *ngIf="!isPaidProcess && !isHistoryOrder">
         <ion-img src="assets/img/perfilcliente.png"></ion-img>
       </ion-row>
       <ion-row class="datas">
@@ -97,7 +100,6 @@
             </div>
           </ng-container>
         </ng-container>
-
           <ng-container *ngIf="total === 'pendiente'">
             <div class="data">
               <ion-label class="negrita "> <b>Total:&nbsp;</b> </ion-label>
@@ -127,7 +129,7 @@
           <button class="btn btn-primary rounded-pill border-0 ver-ruta" (click)="verUbicacion()">Ver ubicación</button> 
         </div>
       </ion-row>
-      <ion-row class="row-buttons" *ngIf="!isPaidProcess">
+      <ion-row class="row-buttons" *ngIf="!isPaidProcess && !isHistoryOrder">
         <div class="buttons">
           <button class="btn btn-danger rounded-pill border-0" (click)="deleteOrder()">Eliminar</button>
           <button class="btn btn-success rounded-pill border-0" [disabled]="orderData.status !== 'aceptado'" (click)="goToBillingData()">Realizar pago</button>
@@ -135,72 +137,82 @@
       </ion-row>
     </div>
     </ion-grid>
-    <ion-grid class="card-second" *ngIf="isPaidProcess">
-      <div class="card">
-        <ion-row class="row-titulo">
-          <div class="titulo">
-            <ion-label>Datos de facturación</ion-label>
-          </div>
-        </ion-row>
-        <ion-row class="datas">
-          <div class="data">
-            <ion-label class="negrita "> <b>Nombre:&nbsp;</b> </ion-label>
-            <ion-label>{{first_name}}</ion-label>
-          </div>
-          <div class="data">
-            <ion-label class="negrita "><b>Apellido:&nbsp;</b> </ion-label>
-            <ion-label>{{last_name}}</ion-label>
-          </div>
-          <div class="data">
-            <ion-label class="negrita "><b>Cédula:&nbsp;</b> </ion-label>
-            <ion-label>{{dni}}</ion-label>
-          </div>
-          <ng-container >
-            <div class="data">
-              <ion-label class="negrita "><b>Teléfono&nbsp;</b> </ion-label>
-              <ion-label>{{phone_number}}</ion-label>
+    <ng-container *ngIf="first_name">
+      <ion-grid class="card-second" *ngIf="isPaidProcess || isHistoryOrder">
+        <div class="card">
+          <ion-row class="row-titulo">
+            <div class="titulo">
+              <ion-label>Datos de facturación</ion-label>
             </div>
-          </ng-container>
-          <ng-container >
+          </ion-row>
+          <ion-row class="datas">
             <div class="data">
-              <ion-label class="negrita "><b>Dirección:&nbsp;</b> </ion-label>
-              <ion-label>{{address}}</ion-label>
+              <ion-label class="negrita "> <b>Nombre:&nbsp;</b> </ion-label>
+              <ion-label>{{first_name}}</ion-label>
             </div>
-          </ng-container>
-          <ng-container >
             <div class="data">
-              <ion-label class="negrita "><b>Correo:&nbsp;</b> </ion-label>
-              <ion-label>{{email}}</ion-label>
+              <ion-label class="negrita "><b>Apellido:&nbsp;</b> </ion-label>
+              <ion-label>{{last_name}}</ion-label>
             </div>
-          </ng-container>
-        </ion-row>
-      </div>
-    </ion-grid>
-    <ion-grid class="card-second" *ngIf="isPaidProcess">
-      <div class="card">
-        <ion-row class="row-titulo">
-          <div class="titulo">
-            <ion-label>Tarjeta a usar</ion-label>
-          </div>
-        </ion-row>
-          <div #carddiv class="card-selected">
-            <div class="card-body">
-              <div class="logo">
-                <ion-img [src]="'assets/img/' + type + (type === 'cs' || type === 'up' ? '.png' : '.svg')" alt="Card logo"></ion-img>
+            <div class="data">
+              <ion-label class="negrita "><b>Cédula:&nbsp;</b> </ion-label>
+              <ion-label>{{dni}}</ion-label>
+            </div>
+            <ng-container >
+              <div class="data">
+                <ion-label class="negrita "><b>Teléfono&nbsp;</b> </ion-label>
+                <ion-label>{{phone_number}}</ion-label>
               </div>
-              <div class="card-content">
-                <ion-label><b>{{ holder_name }}</b></ion-label>
-                <ion-label><b>{{ bin }}***</b></ion-label>
-                <ion-label class="expiry">Expira {{expiry_month}}/{{expiry_year}}</ion-label>
+            </ng-container>
+            <ng-container >
+              <div class="data">
+                <ion-label class="negrita "><b>Dirección:&nbsp;</b> </ion-label>
+                <ion-label>{{address}}</ion-label>
+              </div>
+            </ng-container>
+            <ng-container >
+              <div class="data">
+                <ion-label class="negrita "><b>Correo:&nbsp;</b> </ion-label>
+                <ion-label>{{email}}</ion-label>
+              </div>
+            </ng-container>
+          </ion-row>
+        </div>
+      </ion-grid>
+    </ng-container>
+    <ng-container *ngIf="holder_name">
+      <ion-grid class="card-second" *ngIf="isPaidProcess || isHistoryOrder">
+        <div class="card">
+          <ion-row class="row-titulo">
+            <div class="titulo">
+              <ion-label>Tarjeta a usar</ion-label>
+            </div>
+          </ion-row>
+            <div #carddiv class="card-selected">
+              <div class="card-body">
+                <div class="logo">
+                  <ion-img [src]="'assets/img/' + type + (type === 'cs' || type === 'up' ? '.png' : '.svg')" alt="Card logo"></ion-img>
+                </div>
+                <div class="card-content">
+                  <ion-label><b>{{ holder_name }}</b></ion-label>
+                  <ion-label><b>***{{ card_num }}</b></ion-label>
+                  <ion-label class="expiry">Expira {{expiry_month}}/{{expiry_year}}</ion-label>
+                </div>
               </div>
             </div>
-          </div>
-      </div>
-    </ion-grid>
+        </div>
+      </ion-grid>
+  </ng-container>
     <ion-row class="row-buttons" *ngIf="isPaidProcess">
       <div class="buttons-card">
         <button class="btn btn-danger rounded-pill border-0" (click)="goBackToOrder()">Cancelar</button>
-        <button class="btn btn-success rounded-pill border-0" (click)="paidOrder()" [disabled]="isPaidBtnDisabled">Pagar</button>
+        <button class="btn btn-success rounded-pill border-0" (click)="paid()" [disabled]="isPaidBtnDisabled">Pagar</button>
+      </div>
+    </ion-row>
+    <ion-row class="row-buttons" *ngIf="isHistoryOrder">
+      <div class="buttons-card">
+        <button class="btn btn-danger rounded-pill border-0" *ngIf="status=='reembolsado'|| status=='finalizado'" (click)="deleteOrder()">Eliminar</button>
+        <button class="btn btn-danger rounded-pill border-0" *ngIf="status=='pagado'" (click)="refund()">Reembolsar</button>
       </div>
     </ion-row>
   </ion-grid>

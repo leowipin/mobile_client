@@ -38,7 +38,8 @@
               <ion-card>
                 <ion-label class="title-service">{{item.name}}</ion-label>
                 <ion-card-content class="card-service">
-                  <ion-img src="../../assets/img/guardialogo.png"></ion-img>
+                <!--[src]="'assets/img/' + item.name + 'png'"--> 
+                  <ion-img [src]="'assets/img/' + item.name + '.png'"></ion-img>
                   <ion-label class="btn-container">
                     <button
                       type="button"

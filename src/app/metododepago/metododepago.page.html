@@ -19,7 +19,7 @@
       <ng-container *ngIf="cardsList">
           <ng-container *ngFor="let card of cardsList.cards; let i = index;">
             <ion-row class="card-row" *ngIf="card.status=='valid'">
-              <div #carddiv class="card" id="{{card.token}}-{{card.holder_name}}-{{card.expiry_year}}-{{card.bin}}-{{card.type}}-{{card.expiry_month}}" (click)="goToDetail(carddiv.id)">
+              <div #carddiv class="card" id="{{card.token}}-{{card.holder_name}}-{{card.expiry_year}}-{{card.number}}-{{card.type}}-{{card.expiry_month}}" (click)="goToDetail(carddiv.id)">
                 <div class="card-body">
                   <div class="logo">
                     <ion-img [src]="'assets/img/' + card.type + (card.type === 'cs' || card.type === 'up' ? '.png' : '.svg')" alt="Card logo"></ion-img>

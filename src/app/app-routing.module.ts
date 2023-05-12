@@ -41,7 +41,7 @@ const routes: Routes = [
     path: 'historialservicios',
     loadChildren: () => import('./historialservicios/historialservicios.module').then( m => m.HistorialserviciosPageModule)
   },
-  
+
   {
     path: 'detallesservicio',
     loadChildren: () => import('./detallesservicio/detallesservicio.module').then( m => m.DetallesservicioPageModule)
@@ -152,15 +152,6 @@ const routes: Routes = [
     path: 'agregar-tarjeta',
     loadChildren: () => import('./agregar-tarjeta/agregar-tarjeta.module').then( m => m.AgregarTarjetaPageModule)
   },
-
-
-
-
-
-
-
-
-
 
 ];
 

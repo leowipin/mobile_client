@@ -26,6 +26,7 @@ export class CarritoPage implements OnInit {
     this.clienteWAService.getCart(token).subscribe({
       next: (response) => {
         this.cart = response;
+        this.cart.sort((a, b) => new Date(b.date_request).getTime() - new Date(a.date_request).getTime());
         console.log(this.cart)
       },
       error: (error) => {
@@ -37,11 +38,14 @@ export class CarritoPage implements OnInit {
     });
   }
 
-  goToPedido(id, name, requires_origin_and_destination){
+  goToPedido(id, name, requires_origin_and_destination, status){
     let queryParams = {
       id: id,
       name: name,
       booleandest: requires_origin_and_destination,
+      status: status,
+      isHistoryOrder:false,
+      isPaidProcess:false
     };
     console.log(queryParams)
     this.navCtrl.navigateForward(['/pedido-carrito'], { queryParams: queryParams });

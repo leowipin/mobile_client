@@ -13,7 +13,7 @@
         <h1 *ngIf="!serviceData"></h1>
       </div>
       <div class="logo">
-        <ion-img style="width: 100px; height: 100px;" src="assets/img/guardialogo.png" *ngIf="serviceData"></ion-img>
+        <ion-img style="width: 100px; height: 100px;" [src]="'assets/img/' + serviceData.name + '.png'" *ngIf="serviceData"></ion-img>
       </div>
     </div>
     <div class="datos" *ngIf="serviceData">
@@ -112,7 +112,7 @@
             <button type="button" class="btn btn-primary rounded-pill border-0" (click)="addDirection(0)">Abrir mapa</button>
           </div>
           <div *ngIf="serviceData.requires_origin_and_destination" class="mapa">
-            <ion-label>Ubicación de destino</ion-label>
+            <ion-label>Ubicación destino</ion-label>
             <button type="button" class="btn btn-primary rounded-pill border-0"(click)="addDirection(1)">Abrir mapa</button>
           </div>
           <ng-template #singleLocation>

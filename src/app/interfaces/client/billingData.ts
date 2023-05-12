@@ -5,5 +5,7 @@ export interface BillingData {
     email:string,
     phone_number:string,
     address:string,
-    pedido:number
+    pedido:number,
+    card_num:string,
+    transaction_id:string,
 }

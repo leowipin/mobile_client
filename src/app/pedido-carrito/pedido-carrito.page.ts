@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild, ElementRef, EventEmitter, Output, AfterViewInit } from '@angular/core';
+import { Component, OnInit,ViewChild, ElementRef, OnDestroy  } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ClienteWAService } from '../servicios/login-registro/login-registro.service';
 import { AlertController } from '@ionic/angular';
@@ -38,7 +38,10 @@ export class PedidoCarritoPage implements OnInit {
   direccionOrigen: any;
   direccionDestino: any;
   googleLoaded = false;
-  isPaidProcess = false;
+  isPaidProcess:boolean;
+  isHistoryOrder:boolean;
+  status:string;
+  transaction_id:string;
 
   first_name:string;
   last_name:string;
@@ -49,7 +52,7 @@ export class PedidoCarritoPage implements OnInit {
   token:string;
   holder_name:string;
   expiry_year:string;
-  bin:string;
+  card_num:string;
   type:string;
   expiry_month:string;
 
@@ -69,10 +72,16 @@ export class PedidoCarritoPage implements OnInit {
 
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    
+  }
+
+  ionViewWillEnter() {
+    this.ubicacionService.init(this.renderer, document).then(() => {
+    });
     this.route.queryParams.subscribe(params => {
-      if(params['isPaidProcess'] != undefined){
-        this.isPaidProcess = params['isPaidProcess'] === 'true';
+      if(params['isPaidProcess'] === 'true'){
+        this.isPaidProcess = params['isPaidProcess'] ==='true';
         this.orderName = params['name']
         this.orderId = params['id']
         this.requires_origin_and_destination = params['booleandest'] === 'true'
@@ -85,14 +94,17 @@ export class PedidoCarritoPage implements OnInit {
         this.token = params['token'],
         this.holder_name = params['holder_name'],
         this.expiry_year = params['expiry_year'],
-        this.bin = params['bin'],
+        this.card_num = params['card_num'],
         this.type = params['type'],
         this.expiry_month = params['expiry_month']
+        this.isHistoryOrder = false;
+        this.status = "no status"
+        this.getOrder();
+      } else{
+        this.getOrder();
       }
     });
-    this.ubicacionService.init(this.renderer, document).then(() => {
-    });
-    this.getOrder();
+    
   }
 
   formattingDuration(){
@@ -105,16 +117,21 @@ export class PedidoCarritoPage implements OnInit {
   getOrder(){
     const token = localStorage.getItem('token');
     this.route.queryParams.subscribe(params => {
-      this.orderName = params['name']
-      this.orderId = params['id']
-      this.requires_origin_and_destination = params['booleandest']==='true'
+      this.orderName = this.orderName || params['name'];
+      this.orderId = this.orderId || params['id'];
+      this.requires_origin_and_destination = this.requires_origin_and_destination || params['booleandest'] === 'true';
+      this.isPaidProcess = this.isPaidProcess || params['isPaidProcess'] === 'true';
+      this.status = this.status || params['status'];
+      this.isHistoryOrder = this.isHistoryOrder || params['isHistoryOrder'] === 'true';
       
     });
+    if(this.isHistoryOrder){
+      this.getBillingData(token, this.orderId)
+    }
     this.clienteWAService.getOrder(token, this.orderId).subscribe({
       next: (response) => {
         this.orderData = response
         this.formattingDuration();
-        console.log(typeof(this.orderData.total))
         if(response.total==0.00){
           this.total = "pendiente"
         } else{
@@ -147,6 +164,7 @@ export class PedidoCarritoPage implements OnInit {
 
   deleteOrder(){
     this.alertController.create({
+      header: "Eliminar Servicio",
       message: "¿Está seguro que desea eliminar este servicio?",
       buttons: [
         {
@@ -157,22 +175,27 @@ export class PedidoCarritoPage implements OnInit {
           text: 'Sí',
           handler: () => {
             const token = localStorage.getItem('token');
-            const id = this.route.snapshot.paramMap.get('id');
-            this.clienteWAService.deleteOrder(token, id).subscribe({
+            this.clienteWAService.deleteOrder(token, this.orderId).subscribe({
               next: (response) => {
                 this.alertController.create({
+                  header: "Eliminar Servicio",
                   message: "Servicio eliminado correctamente",
                   buttons: [
                     {
                       text: 'Aceptar',
                       handler: () => {
-                        this.navCtrl.navigateRoot('/carrito');
+                        if(this.isHistoryOrder){
+                          this.navCtrl.navigateRoot('/historialservicios');
+                        }else{
+                          this.navCtrl.navigateRoot('/carrito');
+                        }
                       }
                     }
                   ]
                 }).then(alert => alert.present())
               },error: (error) => {
                 this.alertController.create({
+                  header: "Eliminar Servicio",
                   message: "Hubo un error al eliminar el servicio",
                   buttons: ['Aceptar']
                 }).then(alert => alert.present())
@@ -192,6 +215,42 @@ goToBillingData(){
     booleandest:this.requires_origin_and_destination,     
   };
   this.navCtrl.navigateForward(['/editarperfil'], { queryParams: queryParams });
+}
+
+getBillingData(token:string, order:string){
+  //const token = localStorage.getItem('token');
+  this.clienteWAService.getBillingData(token, order).subscribe({
+    next: (response) => {
+      this.first_name = response.first_name
+      this.last_name = response.last_name
+      this.dni = response.dni
+      this.phone_number = response.phone_number
+      this.address = response.address
+      this.email = response.email
+      this.card_num = response.card_num
+      this.transaction_id = response.transaction_id
+    },error: (error) => {
+    }
+  });
+}
+
+paid(){
+  this.alertController.create({
+    header: "Pago Servicio",
+    message: "¿Está seguro que desea realizar el pago del servicio?",
+    buttons: [
+      {
+        text: 'No',
+        role: 'cancel'
+      },
+      {
+        text: 'Sí',
+        handler: () => {
+          this.paidOrder()
+        }
+      }
+    ]
+  }).then(alert => alert.present())
 }
 
 paidOrder(){
@@ -220,7 +279,6 @@ paidOrder(){
   
   this.clienteWAService.pagar(datos).subscribe({
     next: (response) => {
-      console.log(response);
       let bData: BillingData = {
         first_name: this.first_name,
         last_name:this.last_name,
@@ -228,30 +286,28 @@ paidOrder(){
         email:this.email,
         phone_number:this.phone_number,
         address:this.address,
-        pedido:this.orderId
+        pedido:this.orderId,
+        card_num:this.card_num,
+        transaction_id:response.transaction.id
       }
       if (response.transaction.status == 'success') {
         
         this.clienteWAService.sendBillingData(token, bData).subscribe({
           next: (response) => {
-            console.log(response)
           },error: (error) => {
-            console.log(error)
           }
         });
         this.clienteWAService.changeOrderStatus(token, 'pagado', this.orderId).subscribe({
           next: (response) => {
-            console.log(response)
           },
           error: (error) => {
-            console.log(error)
             this.alertController.create({
               header: 'Pago Servicio',
               message: 'El pago se ha realizado con éxito, pero nuestros servidores aún no se han actualizado. Por favor, contáctenos para obtener más información y asistencia. ¡Gracias por su comprensión!',
               buttons: [{
                 text: 'Aceptar',
                 handler: () => {
-                  this.navCtrl.navigateForward(['/carrito']);
+                  this.navCtrl.navigateRoot(['/carrito']);
                 }
               }]
             }).then(alert => alert.present());
@@ -263,7 +319,7 @@ paidOrder(){
           buttons: [{
             text: 'Aceptar',
             handler: () => {
-              this.navCtrl.navigateForward(['/carrito']);
+              this.navCtrl.navigateRoot(['/historialservicios']);
             }
           }]
         }).then(alert => alert.present());
@@ -276,21 +332,20 @@ paidOrder(){
           buttons: [{
             text: 'Aceptar',
             handler: () => {
-              this.navCtrl.navigateForward(['/carrito']);
+              this.navCtrl.navigateRoot(['/carrito']);
             }
           }]
         }).then(alert => alert.present());
       }
     },
     error: (error) => {
-      console.log(error);
       this.alertController.create({
         header: 'Pago Servicio',
         message: 'Hubo un error. La transacción NO se ha realizado',
         buttons: [{
           text: 'Aceptar',
           handler: () => {
-            this.navCtrl.navigateForward(['/carrito']);
+            this.navCtrl.navigateRoot(['/carrito']);
           }
         }]
       }).then(alert => alert.present());
@@ -316,10 +371,101 @@ openModal(userid: string, transactionid: string, type: string, token:string, bDa
   });
   this.isPaidBtnDisabled = false;
 }
+refund(){
+  this.alertController.create({
+    header: "Reembolso Servicio",
+    message: "¿Está seguro que desea reembolsar este servicio?",
+    buttons: [
+      {
+        text: 'No',
+        role: 'cancel'
+      },
+      {
+        text: 'Sí',
+        handler: () => {
+          this.refundOrder()
+        }
+      }
+    ]
+  }).then(alert => alert.present())
+}
+refundOrder(){
+  let card: any = {
+    transaction:{
+      id:this.transaction_id
+    }
+  }
+  this.clienteWAService.devolver(card).subscribe({
+    next: (response) => {
+      if(response.status==='success'){
+        const token = localStorage.getItem('token');
+        this.clienteWAService.changeOrderStatus(token, "reembolsado" ,this.orderId).subscribe({
+          next: (response) => {
+          },error: (error) => {
+          }
+        });
+        this.alertController.create({
+          header: 'Reembolso Servicio',
+          message: '¡El reembolso del servicio se ha realizado con éxito!',
+          buttons: [{
+            text: 'Aceptar',
+            handler: () => {
+              this.navCtrl.navigateRoot(['/historialservicios']);
+            }
+          }]
+        }).then(alert => alert.present());
 
-/*backToSelectCard(){
-  this.navCtrl.navigateForward(['/metododepago'],);
-}*/
+      } else if(response.status === 'pending'){
+        this.alertController.create({
+          header: 'Reembolso servicio',
+          message: 'Reembolso pendiente',
+          buttons: [{
+            text: 'Aceptar',
+            handler: () => {
+              this.navCtrl.navigateRoot(['/historialservicios']);
+            }
+          }]
+        }).then(alert => alert.present());
+      } else{
+        this.alertController.create({
+          header: 'Reembolso servicio',
+          message: 'Reembolso fallido',
+          buttons: [{
+            text: 'Aceptar',
+            handler: () => {
+              this.navCtrl.navigateRoot(['/historialservicios']);
+            }
+          }]
+        }).then(alert => alert.present());
+      }
+    },error: (error) => {
+    }
+  });
+}
+
+resetParams(){
+  this.route.queryParams.subscribe(params => {
+    this.isPaidProcess = null
+    this.orderName =null
+    this.orderId = null
+    this.requires_origin_and_destination = null
+    this.first_name = null
+    this.last_name = null
+    this.dni = null
+    this.phone_number = null
+    this.address = null
+    this.email = null
+    this.token = null
+    this.holder_name = null
+    this.expiry_year = null
+    this.card_num = null
+    this.type = null
+    this.expiry_month = null
+    this.isHistoryOrder = null;
+    this.status = null
+    
+  });
+}
 
 async goBackToOrder(){
   const alert = await this.alertController.create({
@@ -414,7 +560,7 @@ findPlaces(salida: any, llegada: any) {
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="activeModal.close('Close click')"></button>
   </div>
   <div class="modal-body">
-    <p>Por favor, ingrese el código OTP que ha recibido de su banco para continuar con el proceso.</p>
+    <p>Ingrese el código OTP que ha recibido de su banco para continuar con el proceso.</p>
     <input type="text" class="form-control" [(ngModel)]="otpCode" placeholder="Código OTP">
   </div>
   <div class="modal-footer">
@@ -444,28 +590,17 @@ export class MyModalComponent{
   }
 
   sendOtp(){
-    console.log(this.otpCode)
-    console.log(this.userid)
-    console.log(this.transactionid)
-    console.log(this.type)
-    console.log(this.token)
-    console.log(this.bData)
-    console.log(this.orderId)
     this.clienteWAService.dinersVerify(this.userid, this.transactionid, this.type, this.otpCode).subscribe({
       next: (response) => {
-        console.log(response)
         let alertMessage = this.getAlertMessage(response.status);
         if(response.status === 1){
           this.clienteWAService.sendBillingData(this.token, this.bData).subscribe({
             next: (response) => {
-              console.log(response)
             },error: (error) => {
-              console.log(error)
             }
           });
           this.clienteWAService.changeOrderStatus(this.token, 'pagado', this.orderId).subscribe({
             next: (response) => {
-              console.log(response)
               this.alertController.create({
                 header:"Pago servicio",
                 message: alertMessage,
@@ -473,7 +608,7 @@ export class MyModalComponent{
                   {
                     text: 'Aceptar',
                     handler: () => {
-                      this.navCtrl.navigateRoot('/carrito');
+                      this.navCtrl.navigateRoot('/historialservicios');
                     }
                   }
                 ]
@@ -492,7 +627,6 @@ export class MyModalComponent{
                   }
                 ]
               }).then(alert => alert.present())
-              console.log(error)
             }
           });
         } else {
@@ -511,14 +645,13 @@ export class MyModalComponent{
         }
         
       },error: (error) => {
-        console.log(error)
         this.alertController.create({
           header: "Pago servicio",
           message: 'Hubo un error. La transacción NO se ha realizado',
           buttons: [{
             text: 'Aceptar',
             handler: () => {
-              this.navCtrl.navigateForward(['/carrito']);
+              this.navCtrl.navigateRoot(['/carrito']);
             }
           }]
         }).then(alert => alert.present());
@@ -552,6 +685,8 @@ export class MyModalComponent{
         return 'Estado de transacción desconocido.';
     }
   }
+
+  
   
 }
 
