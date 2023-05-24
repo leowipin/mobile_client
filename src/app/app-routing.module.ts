@@ -151,7 +151,11 @@ const routes: Routes = [
   {
     path: 'agregar-tarjeta',
     loadChildren: () => import('./agregar-tarjeta/agregar-tarjeta.module').then( m => m.AgregarTarjetaPageModule)
+  },  {
+    path: 'notificaciones',
+    loadChildren: () => import('./notificaciones/notificaciones.module').then( m => m.NotificacionesPageModule)
   },
+
 
 ];
 

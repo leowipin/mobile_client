@@ -43,6 +43,7 @@ export class ClienteWAService {
     return this.http.post<SignInResponse>(endpoint, data).pipe(
       tap(response => {
         localStorage.setItem('token', response.token);
+        //
         location.reload();
       }),
     );
