@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -8,10 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NotificacionesPage implements OnInit {
 
-  constructor() { }
+  constructor(private route: ActivatedRoute) { }
+
+  id:string;
 
   ngOnInit() {
-    
+    this.route.queryParams.subscribe(params => {
+      this.id = params['id'];
+      // Use the id as needed
+  });
   }
 
 }

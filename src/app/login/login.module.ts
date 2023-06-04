@@ -9,7 +9,6 @@ import { LoginPageRoutingModule } from './login-routing.module';
 import { LoginPage } from './login.page';
 import { HttpClientModule } from '@angular/common/http';
 import { ClienteWAService } from '../servicios/login-registro/login-registro.service';
-import { AuthService } from '../servicios/login-registro/auth.service';
 import { MyModalComponent } from './login.page';
 
 
@@ -23,6 +22,6 @@ import { MyModalComponent } from './login.page';
     HttpClientModule
   ],
   declarations: [LoginPage, MyModalComponent],
-  providers:[ ClienteWAService,AuthService ]
+  providers:[ ClienteWAService ]
 })
 export class LoginPageModule {}

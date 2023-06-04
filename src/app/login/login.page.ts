@@ -3,11 +3,11 @@ import { AlertController } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ClienteWAService } from '../servicios/login-registro/login-registro.service';
-import { AuthService } from '../servicios/login-registro/auth.service';
 import { SignIn } from '../interfaces/client/signin';
 import { ModalController, NavParams} from '@ionic/angular';
 import { ClientEmail } from '../interfaces/client/clientEmail';
 import { ResetPasswordToken } from '../interfaces/client/resetPasswordToken';
+import { UserDataService } from '../servicios/login-registro/userDataService';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -20,14 +20,21 @@ export class LoginPage implements OnInit {
   
   isSubmitted = false;
 
+  nombreur:string;
+  apellidour:string;
+  tokenfcm:string;
 
   constructor(private navCtrl: NavController, 
     public formBuilder: FormBuilder, 
     private alertController: AlertController,
     private clienteWAService: ClienteWAService,
-    public authService:AuthService,
-    public modalController: ModalController
-    ) { }
+    public modalController: ModalController,
+    private userDataService: UserDataService,
+    ) {
+      this.userDataService.tokenfcm$.subscribe(tokenfcm => {
+        this.tokenfcm = tokenfcm;
+      });
+     }
 
   ngOnInit() {
     this.ionicForm = this.formBuilder.group({
@@ -78,6 +85,29 @@ export class LoginPage implements OnInit {
     
     this.clienteWAService.signin(data).subscribe({
       next: (response) => {
+        const token = localStorage.getItem('token');
+        console.log(this.tokenfcm)
+        if(this.tokenfcm !== ""){
+          this.clienteWAService.registerToken(token, this.tokenfcm).subscribe(
+            (response) => {
+              console.log(response)
+            },
+            (error) => {
+              console.log(error)
+            }
+          );
+        }
+        this.clienteWAService.getNames(token).subscribe(
+          (response) => {
+            // Actualizar detalles del usuario en el menú de hamburguesas
+            this.userDataService.updateNombreur(response.first_name);
+            this.userDataService.updateApellidour(response.last_name);
+          },
+          (error) => {
+            // Manejar el error de la solicitud HTTP
+            console.log(error);
+          }
+        );
         this.redirigirServicios()
         },
       error: (error) => {

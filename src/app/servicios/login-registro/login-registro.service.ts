@@ -43,8 +43,6 @@ export class ClienteWAService {
     return this.http.post<SignInResponse>(endpoint, data).pipe(
       tap(response => {
         localStorage.setItem('token', response.token);
-        //
-        location.reload();
       }),
     );
   }
@@ -164,6 +162,12 @@ export class ClienteWAService {
     const endpoint:string = this.DJANGO_DOMAIN_NAME+`services/billing/?order=${order}`;
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     return this.http.get<BillingData>(endpoint, { headers: headers })
+  }
+
+  registerToken(token:string, fcmToken:string): Observable<MessageResponse>{
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+'notifications/fcmToken/';
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+    return this.http.post<MessageResponse>(endpoint, {token:fcmToken}, { headers: headers })
   }
   
 

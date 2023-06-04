@@ -1,9 +1,19 @@
 import { Component } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
-import { saveConfig } from '@ionic/core';
 import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner/ngx'
 import { ClienteWAService } from './servicios/login-registro/login-registro.service';
+import { UserDataService } from './servicios/login-registro/userDataService';
+import { FCM } from '@capacitor-community/fcm';
+
+import {
+  ActionPerformed,
+  PushNotificationSchema,
+  PushNotifications,
+  Token,
+} from '@capacitor/push-notifications';
+
+let listenerAdded = false;
 
 @Component({
   selector: 'app-root',
@@ -15,7 +25,14 @@ export class AppComponent {
   nombreur: any;
   apellidour: any;
 
-  constructor(private route: ActivatedRoute, private navCtrl: NavController, private barcodeScanner: BarcodeScanner, private clienteWAService: ClienteWAService) { }
+  constructor(private route: ActivatedRoute, private navCtrl: NavController, private barcodeScanner: BarcodeScanner, private clienteWAService: ClienteWAService, private userDataService: UserDataService) {
+    this.userDataService.nombreur$.subscribe(nombreur => {
+      this.nombreur = nombreur;
+    });
+    this.userDataService.apellidour$.subscribe(apellidour => {
+      this.apellidour = apellidour;
+    });
+   }
 
   myDate: String = new Date().toISOString();
 
@@ -32,6 +49,7 @@ export class AppComponent {
       this.navCtrl.navigateRoot('/login')
     }
     // Actualizar detalles del usuario en el menú de hamburguesas
+    this.initPushNotifications();
     this.actualizarUsuario();
   }
   
@@ -57,6 +75,55 @@ export class AppComponent {
       this.nombreur = "Nombre";
       this.apellidour = "Apellido";
     }
+  }
+
+  initPushNotifications(){
+    console.log('Initializing HomePage');
+
+    // Request permission to use push notifications
+    // iOS will prompt user and return if they granted permission or not
+    // Android will just grant without prompting
+    PushNotifications.requestPermissions().then(result => {
+      if (result.receive === 'granted') {
+        // Register with Apple / Google to receive push via APNS/FCM
+        PushNotifications.register();
+        FCM.subscribeTo({ topic: 'cliente' });
+      } else {
+        // Show some error
+      }
+    });
+    if(!listenerAdded){
+      PushNotifications.addListener('registration', (token: Token) => {
+        alert('Push registration success, token: ' + token.value);
+        this.userDataService.updateTokenfcm(token.value);
+      });
+  
+      PushNotifications.addListener('registrationError', (error: any) => {
+        alert('Error on registration: ' + JSON.stringify(error));
+      });
+  
+      PushNotifications.addListener(
+        'pushNotificationReceived',
+        (notification: PushNotificationSchema) => {
+          alert('Push received: ' + JSON.stringify(notification));
+        },
+      );
+  
+      PushNotifications.addListener(
+        'pushNotificationActionPerformed',
+        (notification: ActionPerformed) => {
+          alert('Push action performed: ' + JSON.stringify(notification));
+          let id = notification.notification.data.noti_id;
+          this.navCtrl.navigateForward(['/notificaciones'], {
+            queryParams: {
+                id: id
+            }
+        });
+        },
+      );
+      listenerAdded = true;
+    }
+    
   }
 
 // Idealmente con el QR Generado por el BackEnd 

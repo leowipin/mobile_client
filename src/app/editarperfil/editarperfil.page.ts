@@ -90,36 +90,34 @@ export class EditarperfilPage implements OnInit {
     });
   }
 
-  modifyData(){
-    const data: ClientData = {
-      first_name: this.ionicForm.value.name,
-      last_name: this.ionicForm.value.lastname,
-      dni: this.ionicForm.value.cedula,
-      phone_number: this.ionicForm.value.mobile,
-      birthdate:this.ionicForm.value.bday,
-      address: this.ionicForm.value.direccion,
-      gender: this.ionicForm.value.gender,
-      email: this.ionicForm.value.email
-    }
-    const token = localStorage.getItem('token');
-    this.clienteWAService.modifyClientData(token, data).subscribe({
-      next: (response) => {
-        this.alertController.create({
-          header: 'Guardar datos',
-          message: response.message,
-          buttons: ['Aceptar']
-        }).then(alert=> alert.present())
-        },
-      error: (error) => {
-        let keyError: string = Object.keys(error.error)[0]
-        this.alertController.create({
-          header: 'Error al guardar',
-          message: error.error[keyError],
-          buttons: ['Aceptar']
-        }).then(alert=> alert.present())
+  async modifyData(){
+    try {
+      const data: ClientData = {
+        first_name: this.ionicForm.value.name,
+        last_name: this.ionicForm.value.lastname,
+        dni: this.ionicForm.value.cedula,
+        phone_number: this.ionicForm.value.mobile,
+        birthdate: this.ionicForm.value.bday,
+        address: this.ionicForm.value.direccion,
+        gender: this.ionicForm.value.gender,
+        email: this.ionicForm.value.email
       }
-    });
+      const token = localStorage.getItem('token');
+      const response = await this.clienteWAService.modifyClientData(token, data).toPromise();
+      this.presentAlert('Guardar datos', response.message);
+    } catch (error) {
+      const keyError = Object.keys(error.error)[0];
+      this.presentAlert('Error al guardar', error.error[keyError]);
+    }
+  }
 
+  async presentAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ['Aceptar']
+    });
+    await alert.present();
   }
 
   initForm() {

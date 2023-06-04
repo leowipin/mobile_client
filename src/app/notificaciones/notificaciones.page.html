@@ -1,3 +1,36 @@
 <ion-content>
-  <p>notificaciones works!</p>
+  <ion-content>
+    <ion-grid class="main">
+      <ion-row class="header">
+        <ion-menu-button>
+          <ion-img src="assets/img/menuHamburguesa.png"></ion-img>
+        </ion-menu-button>
+        <span></span>
+        <ion-img style="width: 160px;" src="assets/img/logosepro.png"></ion-img>
+      </ion-row>
+      <ion-grid class="content">
+        <ion-row class="title">
+          <ion-label>NOTIFICACIONES</ion-label>
+        </ion-row>
+
+        <ion-row class="notification-row">
+          <div class="card">
+            <div class="card-body">
+              <div class="logo">
+                <ion-icon name="notifications" class="noti-icon"></ion-icon>
+              </div>
+              <div class="card-content">
+                <ion-label><b>Titulo</b></ion-label>
+                <div class="message-cont">
+                  <ion-label class="expiry">Notification ID: {{id}}</ion-label>
+                </div>
+              </div>
+              <button #closebtn class="delete-notification">
+                <ion-icon class="thrash-icon" name="trash-outline" style="color: rgb(61, 61, 61);"></ion-icon>
+              </button>
+            </div>
+          </div>
+        </ion-row>
+      </ion-grid>
+    </ion-grid>  
 </ion-content>

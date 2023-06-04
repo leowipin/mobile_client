@@ -7,6 +7,8 @@ import { TrackServicioComponent } from '../track-servicio/track-servicio.compone
 import { environment } from 'src/environments/environment';
 import { UbicacionComponent } from 'src/app/ubicacion/ubicacion.component';
 import { UbicacionService } from '../../ubicacion/ubicacion.service';
+import firebase from 'firebase/compat/app'
+import '@firebase/messaging';
 
 import * as moment from 'moment';
 
@@ -124,6 +126,7 @@ export class SolicitudServicioPage implements OnInit {
         this.clienteWAService.createOrder(orderData, token).subscribe({
           next: (response) => {
             console.log(response.message)
+            //send notification
           },
           error: (error) => {
             let keyError: string = Object.keys(error.error)[0]
@@ -196,4 +199,31 @@ export class SolicitudServicioPage implements OnInit {
       })
       .catch((e) => window.alert("Geocoder failed due to: " + e));
   }
+
+  /*sendNotificationToTopic(title: string, body: string, topic: string) {
+    const message = {
+      notification: {
+        title: title,
+        body: body
+      },
+      topic: topic
+    };
+    firebase
+      .messaging()
+      .send(message)
+      .then(response => {
+        console.log('Notification sent successfully:', response);
+      })
+      .catch(error => {
+        console.log('Error sending notification:', error);
+      });
+  }
+
+  sendNotification() {
+    const title = 'Título de la notificación';
+    const body = 'Cuerpo de la notificación';
+    const topic = 'Nombre del tema';
+    this.sendNotificationToTopic(title, body, topic);
+  }*/
+
 }
