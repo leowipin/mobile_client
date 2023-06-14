@@ -46,10 +46,6 @@ ion-grid.content {
     margin-top: 1.2rem;
 }
 
-.add-notification-row{
-    margin-top: 1.2rem;
-}
-
 .card {
     width: 91%;
     //border: 2px solid #F2A9B0;
@@ -58,7 +54,7 @@ ion-grid.content {
 }
 
 .notification-row{
-    margin-top: 1.3rem;
+    margin-top: 1rem;
 }
 
 .buttons{
@@ -73,13 +69,14 @@ ion-grid.content {
 .card-body{
     height: 64%;
     padding-left: 3%;
+    margin-left: 2%;
     display: flex;
     align-items: center;
 }
 
 .card-body div:first-child {
     margin-right: 4.9%;
-    margin-left: 2%;
+    //margin-left: 5px;
 }
 
 .card-content{
@@ -133,13 +130,20 @@ ion-grid.content {
     align-items: center;
 }
 
-.expiry{
+.message-body, .date-sended{
     color: #a7a7a7;
 }
 
+.date-sended{
+    position: absolute;
+    font-size: 0.7rem;
+    right: 7%;
+    top: 5%;
+}
+
 .thrash-icon{
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
 }
 
 ion-row.header div{
@@ -158,9 +162,30 @@ ion-row.header div ion-img{
 }
 
 .message-cont{
-    width: 88%;
+    width: 96%;
     height: 100%;
     overflow: hidden;
     word-wrap: break-word;
     word-break: break-all;
+}
+.title-cont{
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 0%;
+}
+
+.button-delete{
+    font-family: hp556;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+}
+
+.delete-row{
+    position: absolute;
+    right: 7%;
+}
+
+.first{
+    margin-top: 45px;
 }

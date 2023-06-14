@@ -24,6 +24,10 @@ export class HomeperfilPage implements OnInit {
     this.navCtrl.navigateForward(['/editarperfil'], { queryParams: queryParams });
   }
 
+  goToNoti(){
+    this.navCtrl.navigateForward(['/notificaciones']);
+  }
+
   ngOnInit() {
   }
 

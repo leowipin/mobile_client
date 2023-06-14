@@ -12,25 +12,31 @@
         <ion-row class="title">
           <ion-label>NOTIFICACIONES</ion-label>
         </ion-row>
-
-        <ion-row class="notification-row">
-          <div class="card">
-            <div class="card-body">
-              <div class="logo">
-                <ion-icon name="notifications" class="noti-icon"></ion-icon>
-              </div>
-              <div class="card-content">
-                <ion-label><b>Titulo</b></ion-label>
-                <div class="message-cont">
-                  <ion-label class="expiry">Notification ID: {{id}}</ion-label>
+        <ion-row class="delete-row">
+          <button class="btn btn-danger rounded-pill border-0 button-delete" (click)="presentDeleteConfirmation()" [disabled]="!notifications || notifications.length === 0">Eliminar Todo   <ion-icon class="thrash-icon" name="trash-outline" style="color: white"></ion-icon></button>
+        </ion-row>
+        <ng-container *ngIf="notifications">
+          <ng-container *ngFor="let noti of notifications; let i = index;">
+            <ion-row class="notification-row" [class.first]="i === 0">
+              <div #card class="card" (click)="showNotification(card.dataset.value)" [attr.data-value]="i">
+                <div class="card-body">
+                  <div class="logo">
+                    <ion-icon name="notifications" class="noti-icon"></ion-icon>
+                  </div>
+                  <div class="card-content">
+                    <div class="title-cont">
+                      <ion-label><b>{{noti.title}}</b></ion-label>
+                      <ion-label class="date-sended">{{ noti.date_sended | date:'yyyy-MM-dd HH:mm' }}</ion-label>
+                    </div>
+                    <div class="message-cont">
+                      <ion-label class="message-body">{{noti.message}}</ion-label>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <button #closebtn class="delete-notification">
-                <ion-icon class="thrash-icon" name="trash-outline" style="color: rgb(61, 61, 61);"></ion-icon>
-              </button>
-            </div>
-          </div>
-        </ion-row>
+            </ion-row>
+          </ng-container>
+        </ng-container>
       </ion-grid>
     </ion-grid>  
 </ion-content>

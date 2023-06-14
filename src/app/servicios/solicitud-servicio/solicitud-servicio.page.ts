@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, NavController,AlertController } from '@ionic/angular';
 import { OrderData } from 'src/app/interfaces/client/orderData';
+import { RequestOrderNotification } from 'src/app/interfaces/client/requestOrder';
 import { ClienteWAService } from '../login-registro/login-registro.service';
 import { TrackServicioComponent } from '../track-servicio/track-servicio.component';
 import { environment } from 'src/environments/environment';
@@ -125,8 +126,27 @@ export class SolicitudServicioPage implements OnInit {
       const token = localStorage.getItem('token');
         this.clienteWAService.createOrder(orderData, token).subscribe({
           next: (response) => {
-            console.log(response.message)
-            //send notification
+            console.log(response.message);
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace('-', '+').replace('_', '/');
+            const payload = JSON.parse(atob(base64));
+            const email = payload.user_email;
+            let requestOrder:RequestOrderNotification = {
+              title:"Solicitud de servicio",
+              message:`el cliente ${email} ha solicitado el servicio de  ${this.datosRecibidos.serviceName}`,
+              order: response.order_id,
+            }
+            this.clienteWAService.sendRequestOrderNotification(token, requestOrder).subscribe({
+              next: (response) => {
+                console.log(requestOrder);
+                console.log(response.message)
+              },
+              error: (error) => {
+                let keyError: string = Object.keys(error.error)[0]
+                console.log(error)
+                console.log(error.error[keyError])
+              }
+            });
           },
           error: (error) => {
             let keyError: string = Object.keys(error.error)[0]

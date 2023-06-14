@@ -142,20 +142,16 @@ export class MetododepagoPage implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
-            console.log('Cancel clicked');
           }
         }, {
           text: 'Sí',
           handler: () => {
-            console.log('Confirm clicked');
             const token = localStorage.getItem('token');
             const base64Url = token.split('.')[1];
             const base64 = base64Url.replace('-', '+').replace('_', '/');
             const payload = JSON.parse(atob(base64));
             const uid = payload.user_id.toString()
-            console.log(uid)
             let tokenCard = this.cardsList.cards[value].token;
-            console.log(tokenCard)
             let datos = {
               "card": {
               "token": tokenCard
@@ -196,7 +192,7 @@ export class MetododepagoPage implements OnInit {
       message: 'La tarjeta ha sido eliminada correctamente.',
       buttons: [
         {
-          text: 'OK',
+          text: 'Aceptar',
           handler: () => {
             this.getCards();
           }

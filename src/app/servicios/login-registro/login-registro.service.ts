@@ -22,6 +22,9 @@ import { HttpParams } from '@angular/common/http';
 import { CardData } from "src/app/interfaces/client/cardData";
 import { CardNumber } from "src/app/interfaces/client/cardNumber";
 import { BillingData } from "src/app/interfaces/client/billingData";
+import { Notifications } from "src/app/interfaces/client/notification";
+import { RequestOrderNotification } from "src/app/interfaces/client/requestOrder";
+import { MessageOrderResponse } from "src/app/interfaces/response/messageOrder";
 
 
 
@@ -43,6 +46,8 @@ export class ClienteWAService {
     return this.http.post<SignInResponse>(endpoint, data).pipe(
       tap(response => {
         localStorage.setItem('token', response.token);
+        localStorage.setItem('firebase_token', response.firebase_token);
+        //location.reload();
       }),
     );
   }
@@ -110,10 +115,10 @@ export class ClienteWAService {
     return this.http.get<ServiceData>(endpoint, { headers: headers })
   }
 
-  createOrder(data:OrderData, token:string): Observable<MessageResponse>{
+  createOrder(data:OrderData, token:string): Observable<MessageOrderResponse>{
     const endpoint:string = this.DJANGO_DOMAIN_NAME+'services/orderClient/';
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
-    return this.http.post<MessageResponse>(endpoint, data, { headers: headers })
+    return this.http.post<MessageOrderResponse>(endpoint, data, { headers: headers })
   }
 
   getCart(token:string): Observable<Cart>{
@@ -169,7 +174,29 @@ export class ClienteWAService {
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     return this.http.post<MessageResponse>(endpoint, {token:fcmToken}, { headers: headers })
   }
+
+  getNotifications(token:string): Observable<Notifications>{
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+`notifications/clientNoti/`;
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+    return this.http.get<Notifications>(endpoint, { headers: headers })
+  }
   
+  deleteNotifications(token:string): Observable<Notifications>{
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+`notifications/clientNoti/`;
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+    return this.http.delete<Notifications>(endpoint, { headers: headers })
+  }
+
+  sendRequestOrderNotification(token:string, data:RequestOrderNotification): Observable<MessageResponse>{
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+'notifications/orderAdminNoti/';
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+    return this.http.post<MessageResponse>(endpoint, data, { headers: headers })
+  }
+  /*getSpecificNotification(token:string, id:string): Observable<SpecificNotification>{
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+`notifications/getSpecificClientNoti/?id=${id}`;
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+    return this.http.get<SpecificNotification>(endpoint, { headers: headers })
+  }*/
 
   //PAYMENTEZ
 

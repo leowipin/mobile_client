@@ -15,6 +15,7 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { ClienteWAService } from './servicios/login-registro/login-registro.service';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MyModalComponent } from './app.component';
 
 
 
@@ -22,7 +23,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, MyModalComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule,ReactiveFormsModule, AngularFireAuthModule, AngularFirestoreModule,
     AngularFireModule.initializeApp(environment.firebase), HttpClientModule, NgbModule],

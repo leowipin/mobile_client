@@ -1,3 +1,4 @@
 export interface SignInResponse {
-    token:string
+    token:string,
+    firebase_token:string,
 }

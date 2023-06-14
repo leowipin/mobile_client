@@ -324,7 +324,7 @@ paidOrder(){
           }]
         }).then(alert => alert.present());
       } else if(response.transaction.status == 'pending'){
-        this.openModal(uid, response.transaction.id, "BY_OTP", token, bData, this.orderId)
+        this.openModal(uid, response.transaction.id, "BY_OTP", token, bData, this.orderId) //bootstrap modal
       } else {
         this.alertController.create({
           header: 'Pago Servicio',
@@ -355,7 +355,7 @@ paidOrder(){
   
 }
 
-openModal(userid: string, transactionid: string, type: string, token:string, bData:BillingData, orderId:any) {
+openModal(userid: string, transactionid: string, type: string, token:string, bData:BillingData, orderId:any) { //bootstrap modal
   const modalRef = this.modalService.open(MyModalComponent, {
     injector: Injector.create({
       providers: [
@@ -552,7 +552,7 @@ findPlaces(salida: any, llegada: any) {
 }
 }
 
-@Component({
+@Component({ //bootstrap modal
   selector: 'my-modal',
   template: `
   <div class="modal-header">

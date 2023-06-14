@@ -10,8 +10,11 @@ import { AlertController, NavController } from '@ionic/angular';
 export class ServiciosEmpresaPage implements OnInit {
 
   servicesNamesList:any;
+  noti:any;
 
-  constructor(private clienteWAService: ClienteWAService, private alertController: AlertController, private navCtrl: NavController,) { }
+  constructor(private clienteWAService: ClienteWAService, private alertController: AlertController, private navCtrl: NavController,) {//
+    
+   }
 
   ngOnInit() {
     this.getNames()

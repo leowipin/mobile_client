@@ -8,6 +8,8 @@ import { ModalController, NavParams} from '@ionic/angular';
 import { ClientEmail } from '../interfaces/client/clientEmail';
 import { ResetPasswordToken } from '../interfaces/client/resetPasswordToken';
 import { UserDataService } from '../servicios/login-registro/userDataService';
+import { NotificationsService } from '../servicios/login-registro/notifiactionsService';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -30,6 +32,7 @@ export class LoginPage implements OnInit {
     private clienteWAService: ClienteWAService,
     public modalController: ModalController,
     private userDataService: UserDataService,
+    private notificationsService: NotificationsService,
     ) {
       this.userDataService.tokenfcm$.subscribe(tokenfcm => {
         this.tokenfcm = tokenfcm;
@@ -86,7 +89,6 @@ export class LoginPage implements OnInit {
     this.clienteWAService.signin(data).subscribe({
       next: (response) => {
         const token = localStorage.getItem('token');
-        console.log(this.tokenfcm)
         if(this.tokenfcm !== ""){
           this.clienteWAService.registerToken(token, this.tokenfcm).subscribe(
             (response) => {
@@ -108,12 +110,13 @@ export class LoginPage implements OnInit {
             console.log(error);
           }
         );
+        this.notificationsService.executeInitFirestoreDocument();
         this.redirigirServicios()
         },
       error: (error) => {
         let keyError: string = Object.keys(error.error)[0]
         this.alertController.create({
-          message: error.error[keyError],
+          message: "Correo o contraseña incorrectos.",
           buttons: ['Aceptar']
         }).then(alert=> alert.present())
       }

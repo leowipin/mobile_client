@@ -27,7 +27,6 @@ export class CarritoPage implements OnInit {
       next: (response) => {
         this.cart = response;
         this.cart.sort((a, b) => new Date(b.date_request).getTime() - new Date(a.date_request).getTime());
-        console.log(this.cart)
       },
       error: (error) => {
         this.alertController.create({

@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, Injector } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
+import { ClienteWAService } from '../servicios/login-registro/login-registro.service';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AlertController, ModalController, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-notificaciones',
@@ -9,15 +11,139 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class NotificacionesPage implements OnInit {
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private clienteWAService: ClienteWAService, private modalService: NgbModal, private injector: Injector, private alertController: AlertController) { }
 
-  id:string;
+  id:number;
+  notifications:any;
+  notification:any;
+  token:string;
 
   ngOnInit() {
+    this.token = localStorage.getItem('token');
     this.route.queryParams.subscribe(params => {
-      this.id = params['id'];
-      // Use the id as needed
+      this.id = parseInt(params['id']);
   });
+  this.getNotifications();
+  }
+
+  getNotifications(){
+    this.clienteWAService.getNotifications(this.token).subscribe({
+      next: (response) => {
+        this.notifications = response
+        if(this.id != undefined){
+          let index = this.notifications.findIndex(notification => notification.id === this.id);
+          let noti = this.notifications[index];
+          this.openModal(noti.title, noti.message, noti.url_img)
+        }
+      },
+      error: (error) => {
+        console.log(error)
+      }
+    });
+  }
+
+  showNotification(value){
+    let noti = this.notifications[value];
+    this.openModal(noti.title, noti.message, noti.url_img)
+  }
+
+  async presentDeleteConfirmation() {
+    const alert = await this.alertController.create({
+      header: 'Eliminar notificaciones',
+      message: '¿Estas seguro que deseas eliminar todas las notificaciones?',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel'
+        },
+        {
+          text: 'Sí',
+          handler: () => {
+            this.deleteNotifications();
+          }
+        }
+      ]
+    });
+  
+    await alert.present();
+  }
+  
+  deleteNotifications() {
+    this.clienteWAService.deleteNotifications(this.token).subscribe({
+      next: async (response) => {
+        const alert = await this.alertController.create({
+          header: 'Eliminar notificaciones',
+          message: 'Las notificaciones se han eliminado correctamente',
+          buttons: [ {
+            text: 'Aceptar',
+            handler: () => {
+              this.getNotifications();
+            }
+          }]
+        });
+        await alert.present();
+      },
+      error: async (error) => {
+        console.log(error);
+        const alert = await this.alertController.create({
+          header: 'Eliminar notificaciones',
+          message: 'Las notificaciones no han podido ser eliminadas',
+          buttons: ['Aceptar']
+        });
+        await alert.present();
+      }
+    });
+  }
+
+  openModal(title:string, message:string, url_img:string|null) { //bootstrap modal
+    const modalRef = this.modalService.open(MyModalComponent, {
+      centered: true,
+      injector: Injector.create({
+        providers: [
+          { provide: 'title', useValue: title },
+          { provide: 'message', useValue: message },
+          { provide: 'url_img', useValue: url_img },
+        ],
+        parent: this.injector
+      })
+    });
+  }
+
+}
+
+@Component({ //bootstrap modal
+  selector: 'my-modal',
+  template: `
+  <div class="modal-header">
+    <h4 class="modal-title">{{title}}</h4>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="activeModal.close('Close click')"></button>
+  </div>
+  <div class="modal-body">
+    <p>{{message}}</p>
+    <ion-img src="assets/img/checkmark.png"></ion-img>
+  </div>
+  <div class="modal-footer justify-content-center" *ngIf="url_img === null">
+    <button type="button" class="btn btn-primary rounded-pill border-0" (click)="goToCart()">Ir a carrito</button>
+  </div>
+`,
+  styleUrls: ['mymodal.scss']
+})
+export class MyModalComponent{
+
+  constructor(private clienteWAService: ClienteWAService, public activeModal: NgbActiveModal, private alertController: AlertController, private navCtrl: NavController, private modalController: ModalController,
+    @Inject('title') public title: string,
+    @Inject('message') public message: string,
+    @Inject('url_img') public url_img: string|null) {
+  }
+
+
+  ngOnInit() {
+  }
+
+  goToCart() {
+    this.navCtrl.navigateRoot(['/carrito']).then(() => {
+      this.activeModal.close();
+    });
   }
 
 }
