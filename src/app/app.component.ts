@@ -44,7 +44,9 @@ export class AppComponent {
     this.userDataService.apellidour$.subscribe(apellidour => {
       this.apellidour = apellidour;
     });
-    
+    this.userDataService.photo$.subscribe(photo => {
+      this.photo = photo;
+    });
     this.notificationsService.miObservable.subscribe(() => {
       this.initFirestoreDocument();
     });

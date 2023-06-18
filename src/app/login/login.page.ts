@@ -9,6 +9,7 @@ import { ClientEmail } from '../interfaces/client/clientEmail';
 import { ResetPasswordToken } from '../interfaces/client/resetPasswordToken';
 import { UserDataService } from '../servicios/login-registro/userDataService';
 import { NotificationsService } from '../servicios/login-registro/notifiactionsService';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Component({
   selector: 'app-login',
@@ -25,6 +26,8 @@ export class LoginPage implements OnInit {
   nombreur:string;
   apellidour:string;
   tokenfcm:string;
+  uid:any;
+  photo:string;
 
   constructor(private navCtrl: NavController, 
     public formBuilder: FormBuilder, 
@@ -33,6 +36,7 @@ export class LoginPage implements OnInit {
     public modalController: ModalController,
     private userDataService: UserDataService,
     private notificationsService: NotificationsService,
+    private storage: AngularFireStorage,
     ) {
       this.userDataService.tokenfcm$.subscribe(tokenfcm => {
         this.tokenfcm = tokenfcm;
@@ -88,6 +92,7 @@ export class LoginPage implements OnInit {
     
     this.clienteWAService.signin(data).subscribe({
       next: (response) => {
+        this.getProfilePicture();
         const token = localStorage.getItem('token');
         if(this.tokenfcm !== ""){
           this.clienteWAService.registerToken(token, this.tokenfcm).subscribe(
@@ -122,6 +127,27 @@ export class LoginPage implements OnInit {
       }
     });
     
+  }
+
+  async getProfilePicture(){
+    this.getUid();
+    const filePath = `profilePictures/${this.uid}`;
+    const fileRef = this.storage.ref(filePath);
+    try {
+      this.photo = await fileRef.getDownloadURL().toPromise();
+      this.userDataService.updatePhoto(this.photo);
+    } catch (error) {
+      this.photo = 'assets/img/backcliente.png';
+      this.userDataService.updatePhoto(this.photo);
+    }
+  }
+
+  getUid(){
+    const token = localStorage.getItem('token');
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace('-', '+').replace('_', '/');
+    const payload = JSON.parse(atob(base64));
+    this.uid = payload.user_id.toString()
   }
 
   async presentModal() {
