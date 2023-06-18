@@ -9,8 +9,12 @@
         </ion-toolbar>
       </ion-header>
       <ion-content scroll-y=true>
-        <ion-menu-toggle auto-hide="false" text-center>
-          <p align="center"><ion-img menuClose src="assets/img/backcliente.png" (click)="openPage()"></ion-img></p>
+        <ion-menu-toggle auto-hide="false" text-center (click)="openPage()" *ngIf="photo">
+          <div class="container">
+            <div class="outer"
+              [ngStyle]="{'background-image': 'url(' + photo + ')'}">
+             </div>
+          </div>
           <p ion-text header-subtitle>{{nombreur}} {{apellidour}}</p>
         </ion-menu-toggle>
         

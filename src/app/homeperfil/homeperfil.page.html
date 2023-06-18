@@ -21,19 +21,21 @@
     <ion-grid class= "gridperfil">
       <ion-row>
         <ion-col>
-        <div class="logo">
-          <ion-img  src="assets/img/perfilcliente.png"></ion-img>
-        </div>
+          <div class="container" *ngIf="photo">
+            <div class="outer"
+              [ngStyle]="{'background-image': 'url(' + photo + ')'}">
+             </div>
+          </div>
         </ion-col>
         <ion-col class = "coldatosuser">
           <ion-row>
              <ion-label class="bienvenido">
-            BIENVENIDO (A)
+            BIENVENIDO {{nombreur}}
           </ion-label>
           </ion-row>
           <ion-row>
             <ion-label class = "user">
-              {{nombreur}} {{apellidour}}
+             
           </ion-label>
           </ion-row>
         </ion-col>

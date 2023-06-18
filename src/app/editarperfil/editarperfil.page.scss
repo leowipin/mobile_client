@@ -190,7 +190,8 @@ div.logosepro {
     width: 150px;
     height: 150px;
     margin: 0 auto;
-    margin-bottom: 0;
+    display: flex;
+    justify-content: center;
   }
   .profile-pic {
     width: 150px;

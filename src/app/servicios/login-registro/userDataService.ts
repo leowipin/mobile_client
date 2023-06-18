@@ -9,11 +9,13 @@ export class UserDataService {
   private apellidourSource = new BehaviorSubject<string>('');
   private uid = new BehaviorSubject<string>('');
   private tokenfcmSource = new BehaviorSubject<string>('');
+  private photoSource = new BehaviorSubject<string>('');
 
   nombreur$ = this.nombreurSource.asObservable();
   apellidour$ = this.apellidourSource.asObservable();
   uid$ = this.uid.asObservable();
   tokenfcm$ = this.tokenfcmSource.asObservable();
+  photo$ = this.photoSource.asObservable();
 
   updateNombreur(nombreur: string) {
     this.nombreurSource.next(nombreur);
@@ -29,5 +31,9 @@ export class UserDataService {
 
   updateTokenfcm(tokenfcm: string) {
     this.tokenfcmSource.next(tokenfcm);
+  }
+
+  updatePhoto(photo: string) {
+    this.photoSource.next(photo);
   }
 }

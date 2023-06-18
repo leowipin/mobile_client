@@ -6,7 +6,7 @@ import { ClienteWAService } from './servicios/login-registro/login-registro.serv
 import { UserDataService } from './servicios/login-registro/userDataService';
 import { FCM } from '@capacitor-community/fcm';
 import { AngularFirestore, AngularFirestoreDocument  } from '@angular/fire/compat/firestore';
-
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 import {
   ActionPerformed,
@@ -31,17 +31,20 @@ export class AppComponent {
   apellidour: any;
   private unsubscribe: Subscription;
   isPushNotification:boolean = false;
+  uid:any;
+  photo:string;
 
   constructor(private route: ActivatedRoute, private navCtrl: NavController, private barcodeScanner: BarcodeScanner, 
     private clienteWAService: ClienteWAService, private userDataService: UserDataService, private db: AngularFirestore, 
     private notificationsService: NotificationsService, private alertController: AlertController, private modalService: NgbModal,
-    private injector: Injector) {
+    private injector: Injector, private storage: AngularFireStorage) {
     this.userDataService.nombreur$.subscribe(nombreur => {
       this.nombreur = nombreur;
     });
     this.userDataService.apellidour$.subscribe(apellidour => {
       this.apellidour = apellidour;
     });
+    
     this.notificationsService.miObservable.subscribe(() => {
       this.initFirestoreDocument();
     });
@@ -104,12 +107,17 @@ export class AppComponent {
   
 
   openPage() {
-    this.navCtrl.navigateForward("/homeperfil");
+    this.navCtrl.navigateForward(['/homeperfil'], {
+      queryParams: {
+          photo: this.photo
+      }
+  });
   }
 
 
   ngOnInit() {
     console.log("212")
+    this.getProfilePicture();
     const token = localStorage.getItem('token');
     if (token) {
       this.navCtrl.navigateRoot('/servicios-empresa');
@@ -151,8 +159,10 @@ export class AppComponent {
       this.clienteWAService.getNames(token).subscribe(
         (response) => {
           // Actualizar detalles del usuario en el menú de hamburguesas
-          this.nombreur = response.first_name;
-          this.apellidour = response.last_name;
+          //this.nombreur = response.first_name;
+          this.userDataService.updateNombreur(response.first_name)
+          this.userDataService.updateApellidour(response.last_name)
+          //this.apellidour = response.last_name;
         },
         (error) => {
           // Manejar el error de la solicitud HTTP
@@ -222,6 +232,25 @@ export class AppComponent {
         parent: this.injector
       })
     });
+  }
+
+  async getProfilePicture(){
+    this.getUid();
+    const filePath = `profilePictures/${this.uid}`;
+    const fileRef = this.storage.ref(filePath);
+    try {
+      this.photo = await fileRef.getDownloadURL().toPromise();
+    } catch (error) {
+      this.photo = 'assets/img/backcliente.png';
+    }
+  }
+
+  getUid(){
+    const token = localStorage.getItem('token');
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace('-', '+').replace('_', '/');
+    const payload = JSON.parse(atob(base64));
+    this.uid = payload.user_id.toString()
   }
 
 // Idealmente con el QR Generado por el BackEnd 

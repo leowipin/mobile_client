@@ -67,7 +67,6 @@ export class EditarperfilPage implements OnInit {
         this.requires_origin_and_destination = params['booleandest']
       }
     });
-    console.log(this.isProfileInformation);
     this.initForm();
     this.getClientData();
     this.getProfilePicture();
@@ -122,7 +121,6 @@ export class EditarperfilPage implements OnInit {
         const fileRef = this.storage.ref(filePath);
         const task = fileRef.putString(photo, 'data_url');
         await task.then();
-        console.log(filePath)
         this.clienteWAService.saveProfilePic(token, filePath).subscribe({
           next: (response) => {
           },
@@ -189,7 +187,6 @@ export class EditarperfilPage implements OnInit {
 
   submitForm(boton:string) {
     //!this.ionicForm.valid
-    console.log(boton)
     if(boton === 'guardar'){
       var today = moment(new Date());
       var test = moment(new Date(this.ionicForm.value.bday)).format("YYYY-MM-DD");
@@ -238,7 +235,6 @@ export class EditarperfilPage implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-            console.log('ORIGEN');
           }
         }
       ]
@@ -246,7 +242,6 @@ export class EditarperfilPage implements OnInit {
 
     await alert.present();
     let result = await alert.onDidDismiss();
-    console.log(result);
   }
 
 
@@ -272,7 +267,6 @@ export class EditarperfilPage implements OnInit {
 
     await alert.present();
     let result = await alert.onDidDismiss();
-    console.log(result);
   }
 
   async presentAlertGuardar() {
@@ -285,7 +279,6 @@ export class EditarperfilPage implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-            console.log('Datos guardados!');
           }
         }
       ]
@@ -295,7 +288,6 @@ export class EditarperfilPage implements OnInit {
 
     await alert.present();
     let result = await alert.onDidDismiss();
-    console.log(result);
   }
 
   async presentAlertIncompleto() {
@@ -326,11 +318,12 @@ export class EditarperfilPage implements OnInit {
 
 
   finEdicion() {
-    this.navCtrl.navigateForward("/homeperfil", {
+    if(this.photo == 'assets/img/perfilcliente.png'){
+      this.photo = 'assets/img/backcliente.png';
+    }
+    this.navCtrl.navigateRoot("/homeperfil", {
       queryParams: {
-        datos: this.ionicForm.value, nombreusua: this.nombreu, apellidousua: this.apellidou,
-        emailusua: this.emailu, fechanacimientousua: this.fechanacimientou, celularusua: this.celularu, cedulausua: this.cedulau,
-        direccionusua: this.direccionu, perfil: this.photo
+        photo:this.photo
       }
     });
 
@@ -343,7 +336,6 @@ export class EditarperfilPage implements OnInit {
       name: this.orderName,
       booleandest: this.requires_origin_and_destination
     };
-    console.log(queryParams)
     this.navCtrl.navigateForward("/pedido-carrito", { queryParams: queryParams })
     //this.ionicForm.reset()
   }
@@ -390,7 +382,6 @@ export class EditarperfilPage implements OnInit {
     if (type === 'Camera') {
       sourceType = CameraSource.Camera;
     } else {
-      console.log("else")
       sourceType = CameraSource.Photos;
     }
     const image = await Camera.getPhoto({
@@ -400,7 +391,6 @@ export class EditarperfilPage implements OnInit {
       source: sourceType
     });
     this.photo = 'data:image/jpeg;base64,' + image.base64String;
-    console.log(this.photo);
   }
 
   async openOptionSelection() {
@@ -410,7 +400,6 @@ export class EditarperfilPage implements OnInit {
     });
     modal.onDidDismiss()
       .then(res => {
-        console.log(res);
         if (res.role == 'select') {
           this.takePicture(res.data);
         } else if(res.data == 'delete'){
@@ -424,6 +413,7 @@ export class EditarperfilPage implements OnInit {
     const filePath = `profilePictures/${this.uid}`;
     const fileRef = this.storage.ref(filePath);
     await fileRef.delete().toPromise();
+    this.photo = 'assets/img/perfilcliente.png';
     const token = localStorage.getItem('token');
     this.presentAlert("Eliminar imagen", "La imagen de perfil ha sido eliminada correctamente.")
     this.clienteWAService.deleteProfilePic(token).subscribe({
