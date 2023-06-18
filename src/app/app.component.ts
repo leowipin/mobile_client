@@ -55,22 +55,18 @@ export class AppComponent {
     const base64 = base64Url.replace('-', '+').replace('_', '/');
     const payload = JSON.parse(atob(base64));
     const uid = payload.user_id.toString()
-    console.log("UID: "+uid)
     const userRef: AngularFirestoreDocument<any> = this.db.collection('notificaciones').doc(uid);
     this.createDocumentIfNotExists(userRef);
-    console.log("USER REF: "+userRef )
     this.unsubscribe = userRef.valueChanges().subscribe(data => {
       if (data) {
-        console.log('El length de data.notifications es:', data.notifications.length);
-        console.log("IS PUSH: "+this.isPushNotification)
         if(data.notifications.length > 0 && !this.isPushNotification){
           const notification = data.notifications[data.notifications.length-1];
           this.openModal(notification.title, notification.message, null);
-          this.updateDocumentIfItExists(userRef, []);
         }
+        this.updateDocumentIfItExists(userRef, []);
+        this.isPushNotification = false;
       }
     });
-    this.isPushNotification = false;
   }
 
   stopListeningForNotifications() {
@@ -83,8 +79,6 @@ export class AppComponent {
   createDocumentIfNotExists(userRef: AngularFirestoreDocument<any>) {
     userRef.get().subscribe(docSnapshot => {
       if (!docSnapshot.exists) {
-        console.log("el doc no existe")
-        // El documento no existe, crearlo con el ID especificado
         userRef.set({ notifications: [] });
       }
     });
@@ -100,13 +94,10 @@ export class AppComponent {
       if (docSnapshot.exists) {
         const data = docSnapshot.data();
         if (data && data.notifications && data.notifications.length != 0) {
-          // El tamaño del arreglo de notificaciones es 0, actualizarlo
           this.updateDocumentNotifications(userRef, notifications);
+          
         }
-      } else {
-        // El documento no existe
-        console.log('El documento no existe');
-      }
+      } else {}
     });
   }
   
@@ -149,8 +140,13 @@ export class AppComponent {
   actualizarUsuario() {
     // Recuperar token del LocalStorage
     const token = localStorage.getItem('token');
-  
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace('-', '+').replace('_', '/');
+    const payload = JSON.parse(atob(base64));
+    const uid = payload.user_id.toString()
+    this.userDataService.updateUid(uid);
     if (token) {
+      this.userDataService.updateTokenfcm(token);
       // Hacer una solicitud HTTP para obtener detalles del usuario
       this.clienteWAService.getNames(token).subscribe(
         (response) => {
@@ -200,7 +196,7 @@ export class AppComponent {
       PushNotifications.addListener(
         'pushNotificationActionPerformed',
         (notification: ActionPerformed) => {
-          this.isPushNotification = true
+          this.isPushNotification = true;
           let id = notification.notification.data.noti_id;
           this.navCtrl.navigateForward(['/notificaciones'], {
             queryParams: {

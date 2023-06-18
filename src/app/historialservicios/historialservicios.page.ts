@@ -32,7 +32,7 @@ export class HistorialserviciosPage implements OnInit {
       },
       error: (error) => {
         this.alertController.create({
-          message: "Error al cargar el carrito",
+          message: "Error al cargar el historial de servicios",
           buttons: ['Aceptar']
         }).then(alert=> alert.present())
       }

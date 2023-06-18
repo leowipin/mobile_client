@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators, ValidationErrors, ValidatorFn } from "@angular/forms";
-import * as validarcedula from 'src/scripts/validarcedula.js';
-import { validarCedulaAlg } from 'src/app/editarperfil/cedula.validator';
 import { ModalController } from '@ionic/angular';
 import { ProfilePhotoOptionComponent } from '../components/profile-photo-option/profile-photo-option.component';
 import { ClienteWAService } from '../servicios/login-registro/login-registro.service';
@@ -14,6 +12,8 @@ import { ClientData } from '../interfaces/client/clientData';
 import { ClientEmail } from '../interfaces/client/clientEmail';
 import { ClientNewPassword } from '../interfaces/client/clientNewPassword';
 import { ActivatedRoute } from '@angular/router';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { UserDataService } from '../servicios/login-registro/userDataService';
 
 @Component({
   selector: 'app-editarperfil',
@@ -22,7 +22,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class EditarperfilPage implements OnInit {
 
-  photo = 'assets/img/perfilcliente.png';
+  photo:string;
   
 
   public validador = true;
@@ -45,10 +45,20 @@ export class EditarperfilPage implements OnInit {
   orderName:string;
   orderId:any;
   requires_origin_and_destination:string;
+  uid:any;
 
-  constructor(private modalController: ModalController, private navCtrl: NavController, public formBuilder: FormBuilder, public alertController: AlertController, private clienteWAService: ClienteWAService, private route: ActivatedRoute) { }
+  constructor(private modalController: ModalController, private navCtrl: NavController, public formBuilder: FormBuilder, 
+    public alertController: AlertController, private clienteWAService: ClienteWAService, private route: ActivatedRoute,
+    private storage: AngularFireStorage, private userDataService: UserDataService,) {
+
+     }
 
   ngOnInit() {
+    const token = localStorage.getItem('token');
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace('-', '+').replace('_', '/');
+    const payload = JSON.parse(atob(base64));
+    this.uid = payload.user_id.toString()
     this.route.queryParams.subscribe(params => {
       if(params['isProfileInformation'] != undefined){
         this.isProfileInformation = params['isProfileInformation'] === 'true';
@@ -60,6 +70,7 @@ export class EditarperfilPage implements OnInit {
     console.log(this.isProfileInformation);
     this.initForm();
     this.getClientData();
+    this.getProfilePicture();
   }
 
   getClientData() {
@@ -104,6 +115,23 @@ export class EditarperfilPage implements OnInit {
       }
       const token = localStorage.getItem('token');
       const response = await this.clienteWAService.modifyClientData(token, data).toPromise();
+      // Obtener la imagen de this.photo
+      try {
+        const photo = this.photo;
+        const filePath = `profilePictures/${this.uid}`;
+        const fileRef = this.storage.ref(filePath);
+        const task = fileRef.putString(photo, 'data_url');
+        await task.then();
+        console.log(filePath)
+        this.clienteWAService.saveProfilePic(token, filePath).subscribe({
+          next: (response) => {
+          },
+          error: (error) => {
+          }
+        });
+      } catch (error) {
+        this.presentAlert("Error", "Error al guardar la imagen")
+      }
       this.presentAlert('Guardar datos', response.message);
     } catch (error) {
       const keyError = Object.keys(error.error)[0];
@@ -137,7 +165,15 @@ export class EditarperfilPage implements OnInit {
     return this.ionicForm.hasError('CedulaNoValida') && this.ionicForm.get('cedula').dirty;
   }
 
-
+  async getProfilePicture(){
+    const filePath = `profilePictures/${this.uid}`;
+    const fileRef = this.storage.ref(filePath);
+    try {
+      this.photo = await fileRef.getDownloadURL().toPromise();
+    } catch (error) {
+      this.photo = 'assets/img/perfilcliente.png';
+    }
+  }
 
   getDate(e) {
     let date = new Date(e.target.value).toISOString().substring(0, 10);
@@ -216,6 +252,7 @@ export class EditarperfilPage implements OnInit {
 
   async presentAlertEditar() {
     const alert = await this.alertController.create({
+      header: 'Perfil',
       message: '¿Está seguro de salir?',
       buttons: [
         {
@@ -374,11 +411,28 @@ export class EditarperfilPage implements OnInit {
     modal.onDidDismiss()
       .then(res => {
         console.log(res);
-        if (res.role !== 'backdrop') {
+        if (res.role == 'select') {
           this.takePicture(res.data);
+        } else if(res.data == 'delete'){
+          this.deletePic();
         }
       });
     return await modal.present();
+  }
+
+  async deletePic(){
+    const filePath = `profilePictures/${this.uid}`;
+    const fileRef = this.storage.ref(filePath);
+    await fileRef.delete().toPromise();
+    const token = localStorage.getItem('token');
+    this.presentAlert("Eliminar imagen", "La imagen de perfil ha sido eliminada correctamente.")
+    this.clienteWAService.deleteProfilePic(token).subscribe({
+      next: (response) => {
+      },
+      error: (error) => {
+      }
+    });
+    //llamar al endpoint
   }
 
   async changeEmailModal() {

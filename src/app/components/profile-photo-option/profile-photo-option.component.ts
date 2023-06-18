@@ -21,4 +21,8 @@ export class ProfilePhotoOptionComponent implements OnInit {
     this.modalController.dismiss(type, 'select');
   }
 
+  deletePhoto(){
+    this.modalController.dismiss('delete')
+  }
+
 }

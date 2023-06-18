@@ -33,7 +33,7 @@ import { MessageOrderResponse } from "src/app/interfaces/response/messageOrder";
 })
 export class ClienteWAService {
   /*Url del servidor */
-  DJANGO_DOMAIN_NAME:string = 'https://seproamerica2022.pythonanywhere.com/'; //https://seproamerica2022.pythonanywhere.com/
+  DJANGO_DOMAIN_NAME:string = 'http://127.0.0.1:8000/'; //https://seproamerica2022.pythonanywhere.com/
   //DJANGO_TEST_DOMAIN_NAME:string = 'http://127.0.0.1:8000/'
   PAYMENTEZ_PROD_URL:string = "https://ccapi.paymentez.com/v2/"
   PAYMENTEZ_DEV_URL:string =  "https://ccapi-stg.paymentez.com/v2/";
@@ -191,6 +191,18 @@ export class ClienteWAService {
     const endpoint:string = this.DJANGO_DOMAIN_NAME+'notifications/orderAdminNoti/';
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     return this.http.post<MessageResponse>(endpoint, data, { headers: headers })
+  }
+
+  saveProfilePic(token:string, url_img:string): Observable<MessageResponse>{
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+'users/userPicture/';
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+    return this.http.post<MessageResponse>(endpoint, {url_img:url_img}, { headers: headers })
+  }
+
+  deleteProfilePic(token:string): Observable<MessageResponse>{
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+`users/userPicture/`;
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+    return this.http.delete<MessageResponse>(endpoint, { headers: headers })
   }
   /*getSpecificNotification(token:string, id:string): Observable<SpecificNotification>{
     const endpoint:string = this.DJANGO_DOMAIN_NAME+`notifications/getSpecificClientNoti/?id=${id}`;
