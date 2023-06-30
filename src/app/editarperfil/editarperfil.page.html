@@ -19,14 +19,15 @@
     <h4 *ngIf="!isProfileInformation">DATOS DE FACTURACIÓN</h4>
   </div>
 
-  <div class="container" *ngIf="isProfileInformation && photo">
+  <div class="container" *ngIf="isProfileInformation">
     <div class="outer"
-      [ngStyle]="{'background-image': 'url(' + photo + ')'}">
+      [ngStyle]="{'background-image': photo ? 'url(' + photo + ')' : 'url(assets/img/perfilcliente.png)'}">
         <div class="inner" (click)="openOptionSelection()">
            <ion-icon name="camera" class="camera-icon"></ion-icon>
         </div>
      </div>
   </div>
+
 
 	
   <div class="datosinput">

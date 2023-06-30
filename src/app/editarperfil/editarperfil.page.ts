@@ -69,7 +69,6 @@ export class EditarperfilPage implements OnInit {
     });
     this.initForm();
     this.getClientData();
-    this.getProfilePicture();
   }
 
   getClientData() {
@@ -88,12 +87,12 @@ export class EditarperfilPage implements OnInit {
           email: response.email,
         });
         this.email = response.email;
+        this.photo = response.url_img;
         },
       error: (error) => {
-        let keyError: string = Object.keys(error.error)[0]
         this.alertController.create({
           header: 'Error al mostrar datos',
-          message: error.error[keyError],
+          message: "Hubo un error al obtener los datos",
           buttons: ['Aceptar']
         }).then(alert=> alert.present())
       }
@@ -110,30 +109,17 @@ export class EditarperfilPage implements OnInit {
         birthdate: this.ionicForm.value.bday,
         address: this.ionicForm.value.direccion,
         gender: this.ionicForm.value.gender,
-        email: this.ionicForm.value.email
+        email: this.ionicForm.value.email,
+        url_img: this.photo
       }
       const token = localStorage.getItem('token');
       const response = await this.clienteWAService.modifyClientData(token, data).toPromise();
-      // Obtener la imagen de this.photo
-      try {
-        const photo = this.photo;
-        const filePath = `profilePictures/${this.uid}`;
-        const fileRef = this.storage.ref(filePath);
-        const task = fileRef.putString(photo, 'data_url');
-        await task.then();
-        this.clienteWAService.saveProfilePic(token, filePath).subscribe({
-          next: (response) => {
-          },
-          error: (error) => {
-          }
-        });
-      } catch (error) {
-        this.presentAlert("Error", "Error al guardar la imagen")
+      if(response.message.includes('True')){
+        this.userDataService.updatePhoto(this.photo)
       }
-      this.presentAlert('Guardar datos', response.message);
+      this.presentAlert('Guardar datos', "Datos modificados correctamente");
     } catch (error) {
-      const keyError = Object.keys(error.error)[0];
-      this.presentAlert('Error al guardar', error.error[keyError]);
+      this.presentAlert('Error al guardar', "Los cambios no se guardaron");
     }
   }
 
@@ -163,15 +149,6 @@ export class EditarperfilPage implements OnInit {
     return this.ionicForm.hasError('CedulaNoValida') && this.ionicForm.get('cedula').dirty;
   }
 
-  async getProfilePicture(){
-    const filePath = `profilePictures/${this.uid}`;
-    const fileRef = this.storage.ref(filePath);
-    try {
-      this.photo = await fileRef.getDownloadURL().toPromise();
-    } catch (error) {
-      this.photo = 'assets/img/perfilcliente.png';
-    }
-  }
 
   getDate(e) {
     let date = new Date(e.target.value).toISOString().substring(0, 10);
@@ -318,7 +295,7 @@ export class EditarperfilPage implements OnInit {
 
 
   finEdicion() {
-    if(this.photo == 'assets/img/perfilcliente.png'){
+    if(this.photo == null){
       this.photo = 'assets/img/backcliente.png';
     }
     this.navCtrl.navigateRoot("/homeperfil", {
@@ -410,16 +387,17 @@ export class EditarperfilPage implements OnInit {
   }
 
   async deletePic(){
-    const filePath = `profilePictures/${this.uid}`;
-    const fileRef = this.storage.ref(filePath);
-    await fileRef.delete().toPromise();
-    this.photo = 'assets/img/perfilcliente.png';
+
     const token = localStorage.getItem('token');
-    this.presentAlert("Eliminar imagen", "La imagen de perfil ha sido eliminada correctamente.")
+    
     this.clienteWAService.deleteProfilePic(token).subscribe({
       next: (response) => {
+        this.presentAlert("Eliminar imagen", "La imagen de perfil ha sido eliminada correctamente.")
+        this.photo = 'assets/img/perfilcliente.png';
+        this.userDataService.updatePhoto('assets/img/backcliente.png')
       },
       error: (error) => {
+        this.presentAlert("Error", "La imagen de perfil no pudo ser eliminada.")
       }
     });
     //llamar al endpoint

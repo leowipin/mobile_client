@@ -1,6 +1,6 @@
 {
 	"appId": "io.cliente.sepro",
-	"appName": "Seproamerica Cliente",
+	"appName": "Seproamerica",
 	"webDir": "www",
 	"bundledWebRuntime": false
 }

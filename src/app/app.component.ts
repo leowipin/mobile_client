@@ -283,8 +283,20 @@ export class AppComponent {
   </div>
   <div class="modal-body">
     <p>{{message}}</p>
-    <ion-img src="assets/img/checkmark.png"></ion-img>
+    <ng-container *ngIf="url_img === null">
+      <ion-img *ngIf="message.includes('aceptado') && message.includes('Guardia de seguridad')" src="assets/img/Guardia de seguridad verde.png"></ion-img>
+      <ion-img *ngIf="message.includes('aceptado') && message.includes('Transporter')" src="assets/img/Transporter verde.png"></ion-img>
+      <ion-img *ngIf="message.includes('aceptado') && message.includes('Chofer seguro')" src="assets/img/Chofer seguro verde.png"></ion-img>
+      <ion-img *ngIf="message.includes('aceptado') && message.includes('Custodia armada')" src="assets/img/Custodia armada verde.png"></ion-img>
+      <ion-img *ngIf="message.includes('rechazado') && message.includes('Guardia de seguridad')" src="assets/img/Guardia de seguridad rojo.png"></ion-img>
+      <ion-img *ngIf="message.includes('rechazado') && message.includes('Transporter')" src="assets/img/Transporter rojo.png"></ion-img>
+      <ion-img *ngIf="message.includes('rechazado') && message.includes('Chofer seguro')" src="assets/img/Chofer seguro rojo.png"></ion-img>
+      <ion-img *ngIf="message.includes('rechazado') && message.includes('Custodia armada')" src="assets/img/Custodia armada rojo.png"></ion-img>
+      <ion-img *ngIf="(message.includes('aceptado') && !message.includes('Guardia de seguridad') && !message.includes('Transporter') && !message.includes('Chofer seguro') && !message.includes('Custodia armada'))" src="assets/img/checkmark.png"></ion-img>
+      <ion-img *ngIf="(message.includes('rechazado') && !message.includes('Guardia de seguridad') && !message.includes('Transporter') && !message.includes('Chofer seguro') && !message.includes('Custodia armada'))" src="assets/img/x.png"></ion-img>
+    </ng-container>
   </div>
+
   <div class="modal-footer justify-content-center" *ngIf="url_img === null">
     <button type="button" class="btn btn-primary rounded-pill border-0" (click)="goToCart()">Ir a carrito</button>
   </div>

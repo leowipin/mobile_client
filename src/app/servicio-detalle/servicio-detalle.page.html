@@ -109,16 +109,16 @@
 
           <div *ngIf="serviceData.requires_origin_and_destination; else singleLocation" class="mapa">
             <ion-label>Ubicación origen</ion-label>
-            <button type="button" class="btn btn-primary rounded-pill border-0" (click)="addDirection(0)">Abrir mapa</button>
+            <button type="button" class="btn btn-primary rounded-pill border-0" (click)="addDirection(0)" [disabled]="blockOrigen">Abrir mapa</button>
           </div>
           <div *ngIf="serviceData.requires_origin_and_destination" class="mapa">
             <ion-label>Ubicación destino</ion-label>
-            <button type="button" class="btn btn-primary rounded-pill border-0"(click)="addDirection(1)">Abrir mapa</button>
+            <button type="button" class="btn btn-primary rounded-pill border-0"(click)="addDirection(1)" [disabled]="blockDestino">Abrir mapa</button>
           </div>
           <ng-template #singleLocation>
             <div class="mapa">
               <ion-label>Elegir ubicación</ion-label>
-              <button type="button" class="btn btn-primary rounded-pill border-0" (click)="addDirection(0)">Abrir mapa</button>
+              <button type="button" class="btn btn-primary rounded-pill border-0" (click)="addDirection(0)" [disabled]="blockOrigen">Abrir mapa</button>
             </div>
           </ng-template>
           

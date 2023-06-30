@@ -1,6 +1,5 @@
 export interface OrderData {
     service: string,
-    date_request: Date,
     start_date: Date,
     start_time: string,
     end_date: Date,
@@ -11,6 +10,7 @@ export interface OrderData {
     destination_lat: number,
     destination_lng: number,
     total: number,
+    km_distance: number,
     payment_method: string,
     status: string,
     staff: string[],

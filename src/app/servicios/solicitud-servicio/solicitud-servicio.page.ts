@@ -98,7 +98,6 @@ export class SolicitudServicioPage implements OnInit {
       this.navCtrl.navigateForward("/estado-solicitud");
       let orderData: OrderData = {
         service: this.datosRecibidos.serviceID,
-        date_request: this.datosRecibidos.dateRequest,
         start_date: this.datosRecibidos.startDate,
         start_time: this.datosRecibidos.startTime,
         end_date: this.datosRecibidos.endDate,
@@ -109,6 +108,7 @@ export class SolicitudServicioPage implements OnInit {
         destination_lat: this.datosRecibidos.destinationLat,
         destination_lng: this.datosRecibidos.destinationLng,
         total: this.datosRecibidos.total,
+        km_distance:this.datosRecibidos.km_distance,
         payment_method: this.value,
         status: "pendiente",
         staff: this.datosRecibidos.staff,

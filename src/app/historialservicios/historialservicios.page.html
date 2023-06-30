@@ -18,8 +18,8 @@
             <div class="order-pill" (click)="goToPedido(item.id, item.service_name, item.requires_origin_and_destination, item.status)">
               <ion-label class="order-name">{{ item.service_name }}</ion-label>
               <ion-label class="order-status" [ngStyle]="{'color': item.status === 'pagado' ? '#0e7a00' : item.status === 'en proceso' ? '#5761f7' : item.status === 'reembolsado' ? '#a30000' : '#3b3b3b' }">{{ item.status }}</ion-label>
-              <ion-label class="order-date">{{ item.date_request }}</ion-label>
-              <ion-label class="details">Ver detalles</ion-label>
+              <ion-label class="order-date">{{ item.date_request | date:'yyyy-MM-dd' }}</ion-label>
+              <ion-label class="details">{{ item.date_request | date:'HH:mm' }}</ion-label>
             </div>
           </ion-row>
         </ng-container>

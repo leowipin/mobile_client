@@ -8,6 +8,8 @@ import * as moment from 'moment';
 import { ClienteWAService } from '../servicios/login-registro/login-registro.service';
 import { ServiceData } from '../interfaces/client/serviceData';
 import { environment } from 'src/environments/environment';
+import { Geolocation } from '@capacitor/geolocation';
+import { UserDataService } from '../servicios/login-registro/userDataService';
 
 declare var google: any;
 
@@ -30,7 +32,6 @@ export class ServicioDetallePage implements OnInit {
   maxiFecha2= addDaysToDate(new Date(), 1);
   minFecha2: string= (this.maxiFecha2.getFullYear()).toString()+"-"+(this.maxiFecha2.getMonth()+1).toString()+"-"+(this.maxiFecha2.getDate()).toString() ;
   maxFecha2: string = (new Date().getFullYear() + 2).toString();
-  dateRequest: any;
   fechaInicio: any;
   horaInicio: any;
   fechaFinalizacion: any;
@@ -50,6 +51,8 @@ export class ServicioDetallePage implements OnInit {
   include_equipment:boolean=false
   totalDistancePrice:number;
   total:number = 0;
+  blockOrigen:boolean = false;
+  blockDestino:boolean = false;
 
   origen = {
     lat: -2.19616,
@@ -87,7 +90,8 @@ export class ServicioDetallePage implements OnInit {
   }
 
   constructor(public alertController: AlertController, private navCtrl: NavController,
-    private modalController: ModalController, public formBuilder: FormBuilder, private clienteWAService: ClienteWAService, private route: ActivatedRoute, private ubicacionService: UbicacionService) {
+    private modalController: ModalController, public formBuilder: FormBuilder, private clienteWAService: ClienteWAService, 
+    private route: ActivatedRoute, private ubicacionService: UbicacionService, private userDataService: UserDataService) {
 
   }
   cancelar() {
@@ -192,7 +196,6 @@ export class ServicioDetallePage implements OnInit {
 
   submitForm() {
     let validationValue = this.validations();
-    this.dateRequest = moment().format("YYYY-MM-DD");
     //staff lists
     this.staff_number_required = new Array(this.serviceData.staff.length);
     let staff_selected = new Array(this.serviceData.staff.length);
@@ -251,7 +254,6 @@ export class ServicioDetallePage implements OnInit {
       serviceID: this.serviceData.id,
       serviceName: this.serviceData.name,
       requiresDestination: this.serviceData.requires_origin_and_destination,
-      dateRequest: this.dateRequest,
       startDate: this.fechaInicio,
       endDate: this.fechaFinalizacion,
       startTime: this.horaInicio,
@@ -276,15 +278,17 @@ export class ServicioDetallePage implements OnInit {
       equipmentNumberOptional: this.serviceData.equipment_number_is_optional,
       equipmentPrice: this.serviceData.equipment_price,
       equipmentNumberRequired: this.equipment_number_required,
+      km_distance:null,
       total: 0
     };
     // here create the object with the interface Order
     //distance traveled
     let distanceTraveled:number=0;
-    if(this.serviceData.requires_origin_and_destination && this.serviceData.set_price){
+    if(this.serviceData.requires_origin_and_destination){
       this.ubicacionService.calculateDistance(this.origen, this.destino)
       .then(distance => { 
         distanceTraveled = distance/1000 //km
+        console.log("DISTANCE TRAVELED: ", distanceTraveled)
         let total:number = 0;
         if (distanceTraveled >= this.serviceData.lower_limit1 && distanceTraveled <= this.serviceData.upper_limit1) {
             total = distanceTraveled * this.serviceData.price_range1;
@@ -299,7 +303,11 @@ export class ServicioDetallePage implements OnInit {
         }
         if(distanceTraveled != 0){
           queryParams.total = parseFloat(total.toFixed(2));
+          queryParams.km_distance = distanceTraveled
           if(validationValue){
+            if(!this.serviceData.set_price){
+              total = 0
+            }
             this.navCtrl.navigateForward("/servicio-solicitud", { queryParams });
           }
         }
@@ -474,7 +482,8 @@ export class ServicioDetallePage implements OnInit {
   async addDirection(tipo: number) {
 
     if (tipo === 0) {
-      if (navigator.geolocation) {
+      this.blockOrigen = true
+      if (navigator.geolocation) { 
         navigator.geolocation.getCurrentPosition(async (position) => {
           if(!this.haydirOrigen){
             this.origen.lat = position.coords.latitude;
@@ -490,8 +499,8 @@ export class ServicioDetallePage implements OnInit {
               swipeToClose: true,
               componentProps: { position: this.origen }
             });
-      
             await modalAdd.present();
+            this.blockOrigen = false;
             this.presentAlertOrigen();
             const { data } = await modalAdd.onWillDismiss();
             if (data) {
@@ -499,10 +508,17 @@ export class ServicioDetallePage implements OnInit {
               this.dirOrigen = data.dir;
               this.presentAlertDirOrigen();
             }
+          } else{
+            this.blockOrigen = false;
           }
-        });
+        }, async(error)=>{
+          this.blockOrigen = false;
+          this.presentAlerts("Ubicación", "No se pudo determinar la ubicación del dispositivo. Por favor, asegúrese de haber habilitado la ubicación y otorgado los permisos.")
+          
+        }, { timeout: 5000 });
       }
     } else if (tipo === 1) {
+        this.blockDestino = true;
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(async (position) => {
           if(!this.haydirDestino){
@@ -511,7 +527,6 @@ export class ServicioDetallePage implements OnInit {
           }
           const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.destino.lat},${ this.destino.lng}&key=${this.apiKey}`);
           const data = await response.json();
-          console.log(data.results)
           if (data.results && data.results.length > 0) {
             const modalAdd = await this.modalController.create({
               component: UbicacionComponent,
@@ -519,8 +534,8 @@ export class ServicioDetallePage implements OnInit {
               swipeToClose: true,
               componentProps: { position: this.destino }
             });
-      
             await modalAdd.present();
+            this.blockDestino = false;
             this.presentAlertDestino();
             const { data } = await modalAdd.onWillDismiss();
             if (data) {
@@ -528,15 +543,34 @@ export class ServicioDetallePage implements OnInit {
               this.dirDestino = data.dir;
               this.presentAlertDirDestino();
             }
+          } else{
+            this.blockDestino = false;
           }
-        });
+        }, async(error)=>{
+          this.blockDestino = false;
+          this.presentAlerts("Ubicación", "No se pudo determinar la ubicación del dispositivo. Por favor, asegúrese de haber habilitado la ubicación y otorgado los permisos.")
+          
+        }, { timeout: 5000 });
       }
     }
   }
+  async presentAlerts(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ['Aceptar']
+    });
+    await alert.present();
+  }
 }
+
+
+
+
 
 function addDaysToDate(date, days){
   var res = new Date(date);
   res.setDate(res.getDate() + days);
   return res;
 }
+

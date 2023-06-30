@@ -7,4 +7,5 @@ export interface ClientData {
     gender: string,
     address: string,
     phone_number: string,
+    url_img: null|string,
 }
