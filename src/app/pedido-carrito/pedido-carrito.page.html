@@ -135,7 +135,7 @@
           <button class="btn btn-success rounded-pill border-0" [disabled]="orderData.status !== 'aceptado'" (click)="goToBillingData()">Realizar pago</button>
         </div>
       </ion-row>
-    </div>
+      </div>
     </ion-grid>
     <ng-container *ngIf="first_name">
       <ion-grid class="card-second" *ngIf="isPaidProcess || isHistoryOrder">
@@ -202,7 +202,52 @@
             </div>
         </div>
       </ion-grid>
-  </ng-container>
+    </ng-container>
+    <ng-container *ngIf="isHistoryOrder">
+      <ion-grid class="card-second" *ngIf="leaderData">
+        <div class="card">
+          <ion-row class="row-titulo">
+            <div class="titulo">
+              <ion-label>Datos del empleado líder</ion-label>
+            </div>
+          </ion-row>
+          <ion-row class="datas">
+            <div class="img-div">
+              <div class="container" *ngIf="leaderData.url_img == null">
+                <div class="outer"
+                  [ngStyle]="{'background-image': 'url(' + 'assets/img/perfilcliente.png' + ')'}">
+                 </div>
+              </div>
+              <div class="container" *ngIf="leaderData.url_img != null">
+                <div class="outer"
+                  [ngStyle]="{'background-image': 'url(' + leaderData.url_img + ')'}">
+                 </div>
+              </div>
+            </div>
+            <div class="data">
+              <ion-label class="negrita "> <b>Nombre:&nbsp;</b> </ion-label>
+              <ion-label>{{leaderData.first_name}}</ion-label>
+            </div>
+            <div class="data">
+              <ion-label class="negrita "><b>Apellido:&nbsp;</b> </ion-label>
+              <ion-label>{{leaderData.last_name}}</ion-label>
+            </div>
+            <div class="data">
+              <ion-label class="negrita "><b>Correo:&nbsp;</b> </ion-label>
+              <ion-label>{{leaderData.email}}</ion-label>
+            </div>
+            <div class="data">
+              <ion-label class="negrita "><b>Cédula&nbsp;</b> </ion-label>
+              <ion-label>{{leaderData.dni}}</ion-label>
+            </div>
+            <div class="data">
+              <ion-label class="negrita "><b>Teléfono:&nbsp;</b> </ion-label>
+              <ion-label>{{leaderData.phone_number}}</ion-label>
+            </div>
+          </ion-row>
+        </div>
+      </ion-grid>
+    </ng-container>
     <ion-row class="row-buttons" *ngIf="isPaidProcess">
       <div class="buttons-card">
         <button class="btn btn-danger rounded-pill border-0" (click)="goBackToOrder()">Cancelar</button>

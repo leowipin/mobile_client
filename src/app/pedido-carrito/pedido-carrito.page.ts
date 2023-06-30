@@ -60,6 +60,8 @@ export class PedidoCarritoPage implements OnInit {
   modalElement: ElementRef;
   apiKey = environment.googleMapsApiKey;
 
+  leaderData:any;
+
   origen = {
     lat: -2.1676746,
     lng: -79.8956897
@@ -102,6 +104,15 @@ export class PedidoCarritoPage implements OnInit {
         this.getOrder();
       } else{
         this.getOrder();
+      }
+      if(this.isHistoryOrder){
+        const token = localStorage.getItem('token');
+        this.clienteWAService.getLeaderStaff(token, this.orderId).subscribe({
+          next: (response) => {
+            this.leaderData = response
+          },error: (error) => {
+          }
+        });
       }
     });
     

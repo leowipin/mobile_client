@@ -25,6 +25,7 @@ import { BillingData } from "src/app/interfaces/client/billingData";
 import { Notifications } from "src/app/interfaces/client/notification";
 import { RequestOrderNotification } from "src/app/interfaces/client/requestOrder";
 import { MessageOrderResponse } from "src/app/interfaces/response/messageOrder";
+import { LeaderStaffData } from "src/app/interfaces/client/leaderStaff";
 
 
 
@@ -203,6 +204,12 @@ export class ClienteWAService {
     const endpoint:string = this.DJANGO_DOMAIN_NAME+`users/userPicture/`;
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     return this.http.delete<MessageResponse>(endpoint, { headers: headers })
+  }
+
+  getLeaderStaff(token:string, order:string): Observable<LeaderStaffData>{
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+`services/leaderStaff/?id=${order}`;
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+    return this.http.get<LeaderStaffData>(endpoint, { headers: headers })
   }
   /*getSpecificNotification(token:string, id:string): Observable<SpecificNotification>{
     const endpoint:string = this.DJANGO_DOMAIN_NAME+`notifications/getSpecificClientNoti/?id=${id}`;
