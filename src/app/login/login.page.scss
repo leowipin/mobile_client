@@ -1,9 +1,11 @@
 ion-content{
     --background: none;
     background-image: url("../../assets/bg-rojo3.png");
-    background-position: center; 
+    //background-position: center; 
     background-repeat: no-repeat; 
-    background-size: cover; 
+    background-size: cover;
+    margin: 0;
+    padding: 0;
   }
   .logo{
     margin-bottom: 2rem;
@@ -51,45 +53,36 @@ ion-content{
         margin-right: auto;
     }
   }
-  .centrar-text{
-    display: flex;
-    justify-content: center
+  .align-text{
+    padding-left: 18px;
+    color: rgb(219, 219, 219);
+  }
+  .field{
+    margin-top: 0.8rem;
   }
   .error{
     font-size: x-small;
     font-family:'hp265';
     font-size: 0.9rem;
   }
-  .botones button{
-    text-align:center;
-    width: 10rem;
-    height: 2.3rem;
-    border-radius: 60px ;
-    background-color:#3887bd;
-    color:#ffffff;
-    font-family:'hp265';
-    font-size: 1.2rem;
   
-  }
-  .botones {
-    margin-top: 20%;
-    justify-content: space-between;
-    text-align:center;
-    .ingresar{
-        background-color:#3da631;
-        width: 65%;
-        padding: 0;
-    }
-  }
 
   .item-background-color{
     --ion-item-background:transparent;
   }
   ion-input {
     background-color: #ffffff;
-    border-radius: 25rem;
+    //border-radius: 25rem;
     text-align: center;
   }
+
+  .sign-in{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5%;
+  }
+
   ion-label{
     justify-content: space-between;
     text-align:center;
@@ -131,4 +124,10 @@ ion-content{
   top: 50%; 
   transform: translateY(-40%); 
   z-index: 10;
+}
+
+.input-text {
+  font-family: 'LemonMilkMedium';
+  color: black;
+  font-size: 12px;
 }

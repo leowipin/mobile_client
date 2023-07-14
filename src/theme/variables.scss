@@ -4,27 +4,41 @@
 /** Ionic CSS Variables **/
 
 
+@font-face {
+  font-family: 'LemonMilkLightItalic';
+  src: url('/assets/fonts/LEMONMILK-LightItalic.otf');
+}
 
 @font-face {
-  font-family: 'BebasBold';
-  src: url('/assets/fonts/BebasNeueBold.otf');
+  font-family: 'LemonMilkRegular';
+  src: url('/assets/fonts/LEMONMILK-Regular.otf');
 }
+
 @font-face {
-  font-family: 'BebasRegular';
-  src: url('/assets/fonts/BebasNeueRagular.otf');
+  font-family: 'LemonMilkRegularItalic';
+  src: url('/assets/fonts/LEMONMILK-RegularItalic.otf');
 }
+
 @font-face {
-  font-family: 'hp265';
-  src: url('/assets/fonts/hp-simplified-265.ttf');
+  font-family: 'LemonMilkMedium';
+  src: url('/assets/fonts/LEMONMILK-Medium.otf');
 }
+
 @font-face {
-  font-family: 'hp556';
-  src: url('/assets/fonts/hp-simplified-556.ttf');
+  font-family: 'LemonMilkMediumItalic';
+  src: url('/assets/fonts/LEMONMILK-MediumItalic.otf');
 }
+
 @font-face {
-  font-family: 'hp990';
-  src: url('/assets/fonts/hp-simplified-990.ttf');
+  font-family: 'LemonMilkBold';
+  src: url('/assets/fonts/LEMONMILK-Bold.otf');
 }
+
+@font-face {
+  font-family: 'LemonMilkBoldItalic';
+  src: url('/assets/fonts/LEMONMILK-BoldItalic.otf');
+}
+
 :root {
   /** primary **/
   --ion-color-primary: #3880ff;

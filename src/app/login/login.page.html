@@ -13,51 +13,48 @@
 
 
         <div class="itemdatos">
-
-          <ion-label class="centrar-text">Email</ion-label>
-          <ion-item>
-            <div class="mail-wrapper">
-              <ion-icon id="ico-mail" name="mail" item-start class="icono-input"></ion-icon>
+          <div class="field">
+            <div class="align-text light-italic12">C O R R E O</div>
+            <ion-item class="credentials">
+              <ion-input  class="input-text" formControlName="email" type="email"></ion-input>
+            </ion-item>
+            <div *ngIf="ionicForm.get('email').invalid && (ionicForm.get('email').dirty || ionicForm.get('email').touched)" class="error-message">
+              <span class="error ion-padding" *ngIf="ionicForm.get('email').hasError('required')">Ingrese un correo electrónico</span>
+              <span class="error ion-padding" *ngIf="ionicForm.get('email').hasError('pattern')">Ingrese un correo eletrónico válido</span>
             </div>
-            <ion-input formControlName="email" type="email"></ion-input>
-          </ion-item>
-          <div *ngIf="ionicForm.get('email').invalid && (ionicForm.get('email').dirty || ionicForm.get('email').touched)" class="error-message">
-            <span class="error ion-padding" *ngIf="ionicForm.get('email').hasError('required')">Ingrese un correo electrónico</span>
-            <span class="error ion-padding" *ngIf="ionicForm.get('email').hasError('pattern')">Ingrese un correo eletrónico válido</span>
           </div>
-          <ion-label class="centrar-text mt-2">Contraseña</ion-label>
-          <ion-item>
-            <div class="eye-wrapper">
-              <button class="btn-eye" type="button" (click)="togglePasswordClick()">
-                <ion-icon [hidden]="showPassword" name="eye-off-outline"></ion-icon>
-                <ion-icon [hidden]="!showPassword" name="eye-outline"></ion-icon>
-              </button>
+          <div class="field">
+            <div class="align-text light-italic12">C O N T R A S E Ñ A</div>
+            <ion-item>
+              <div class="eye-wrapper">
+                <button class="btn-eye" type="button" (click)="togglePasswordClick()">
+                  <ion-icon [hidden]="showPassword" name="eye-off-outline"></ion-icon>
+                  <ion-icon [hidden]="!showPassword" name="eye-outline"></ion-icon>
+                </button>
+              </div>
+              <ion-input class="input-text" type="{{showPassword ? 'text' : 'password'}}" formControlName="password"
+              required> </ion-input>
+            </ion-item>
+            
+            <div *ngIf="ionicForm.get('password').invalid && (ionicForm.get('password').dirty || ionicForm.get('password').touched)" class="error-message">
+              <span class="error ion-padding" *ngIf="ionicForm.get('password').hasError('required')">Ingrese una contraseña</span>
+              <span class="error ion-padding" *ngIf="ionicForm.get('password').hasError('minlength')">La contraseña debe contener mínimo 4 caracteres</span>
             </div>
-            <ion-input type="{{showPassword ? 'text' : 'password'}}" formControlName="password"
-            required> </ion-input>
-          </ion-item>
-          
-          <div *ngIf="ionicForm.get('password').invalid && (ionicForm.get('password').dirty || ionicForm.get('password').touched)" class="error-message">
-            <span class="error ion-padding" *ngIf="ionicForm.get('password').hasError('required')">Ingrese una contraseña</span>
-            <span class="error ion-padding" *ngIf="ionicForm.get('password').hasError('minlength')">La contraseña debe contener mínimo 4 caracteres</span>
           </div>
-
         </div>
 
-        <div class="botones">
-          <ion-col>
-            <button  ion-button class="ingresar">Ingresar</button>
-          </ion-col>
-        </div>
+        <ion-col class="sign-in">
+          <button class="black-button"><span class="medium-italic14">I N G R E S A R</span></button>
+        </ion-col>
       </ion-list>
     </form>
     <div id="opciones" class="text-white text-center">
       <br>
-      <a (click)="redirigirRegistrar()">Crear Cuenta</a><br><br>
-      <a (click)="presentModal()">Olvidé de mi contraseña</a>
+      <a (click)="redirigirRegistrar()" class="medium-italic12">Crear cuenta</a><br><br>
+      <a (click)="presentModal()" class="medium-italic12">Olvidé de mi contraseña</a>
 
       <div class="container-omitir">
-        <a (click)="redirigirServicios()">Omitir Registro</a>
+        <a (click)="redirigirServicios()" class="medium-italic12">Omitir Registro</a>
       </div>
   
     </div>
