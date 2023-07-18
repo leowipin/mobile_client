@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import { ClienteWAService } from '../servicios/login-registro/login-registro.service';
+import { ClienteWAService } from '../login-registro/login-registro.service';
 import { AlertController } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
@@ -96,7 +96,7 @@ export class MetododepagoPage implements OnInit {
     let queryParams = {
       isProfileInformation: value
     };
-    this.navCtrl.navigateForward(['/editarperfil'],);
+    this.navCtrl.navigateForward(['/tabs/carrito/pedido-carrito/editarperfil'],);
   }
 
   goToDetail(value){
@@ -120,7 +120,7 @@ export class MetododepagoPage implements OnInit {
         type:arrayCard[4],
         expiry_month:arrayCard[5]
       };
-      this.navCtrl.navigateForward(['/pedido-carrito'], { queryParams: queryParams });
+      this.navCtrl.navigateForward(['/tabs/carrito/pedido-carrito/editarperfil/tarjetas/pedido-detalle'], { queryParams: queryParams });
     }
   }
 

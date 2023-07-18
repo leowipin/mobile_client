@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ClienteWAService } from '../servicios/login-registro/login-registro.service';
+import { ClienteWAService } from '../login-registro/login-registro.service';
 import { AlertController, NavController } from '@ionic/angular';
 
 @Component({

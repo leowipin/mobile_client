@@ -9,7 +9,7 @@
         </ion-toolbar>
       </ion-header>
       <ion-content scroll-y=true>
-        <ion-menu-toggle auto-hide="false" text-center (click)="openPage()" *ngIf="photo">
+        <ion-menu-toggle auto-hide="false" text-center *ngIf="photo">
           <div class="container">
             <div class="outer"
               [ngStyle]="{'background-image': 'url(' + photo + ')'}">
@@ -21,24 +21,12 @@
         <div class="front">
           <ion-list class="opciones" lines="none">
             <ion-menu-toggle auto-hide="false">
-
-              <div class="linea">
-                <ion-img center src="assets/img/lineablanca.png"></ion-img>
-              </div>
-              
-              <ion-item class="opcion" [routerDirection]="'root'" [routerLink]="'/servicios-empresa'">
-                <ion-img menuClose src="assets/img/serviciosicono.png"></ion-img>
-                <ion-label>
-                  Servicios
-                </ion-label>
-                
-              </ion-item>
               
               <div class="linea">
                 <ion-img center src="assets/img/lineablanca.png"></ion-img>
               </div>
 
-              <ion-item class="opcion" [routerDirection]="'root'" [routerLink]="'/historialservicios'">
+              <ion-item class="opcion" [routerLink]="'/tabs/historialservicios'">
                 <ion-img menuClose src="assets/img/historialicono.png"></ion-img>
                 <ion-label>
                   Historial de servicios
@@ -49,19 +37,7 @@
                 <ion-img center src="assets/img/lineablanca.png"></ion-img>
               </div>
 
-              <ion-item class="opcion" [routerDirection]="'root'" [routerLink]="'/notificaciones'" style="--ion-background-color:rgb(107, 107, 107);">
-                <ion-img menuClose src="assets/img/notificacionesicono.png"></ion-img>
-                <ion-label>
-                  Notificaciones
-                </ion-label>
-                
-              </ion-item>
-
-              <div class="linea">
-                <ion-img center src="assets/img/lineablanca.png"></ion-img>
-              </div>
-
-              <ion-item class="opcion" [routerDirection]="'root'" [routerLink]="'/carrito'"style="--ion-background-color:rgb(107, 107, 107);">
+              <ion-item class="opcion" [routerLink]="'/tabs/carrito'"style="--ion-background-color:rgb(107, 107, 107);">
                 
                   <ion-img menuClose src="assets/img/carritoicono.png"></ion-img>
                 
@@ -74,7 +50,7 @@
                 <ion-img center src="assets/img/lineablanca.png"></ion-img>
               </div>
 
-              <ion-item class="opcion" [routerDirection]="'root'" [routerLink]="'/metododepago'">
+              <ion-item class="opcion"[routerLink]="'/tabs/tarjetas'">
                 <ion-img menuClose src="assets/img/tarjetasicono.png"></ion-img>
                 <ion-label>
                   Tarjetas
@@ -85,7 +61,7 @@
                 <ion-img center src="assets/img/lineablanca.png"></ion-img>
               </div>
 
-              <ion-item class="opcion" [routerDirection]="'root'" [routerLink]=""style="--ion-background-color:rgb(107, 107, 107);">
+              <ion-item class="opcion"[routerLink]=""style="--ion-background-color:rgb(107, 107, 107);">
                 <ion-img menuClose src="assets/img/chatsicono.png"></ion-img>
                 <ion-label>
                   Chats
@@ -96,7 +72,7 @@
                 <ion-img center src="assets/img/lineablanca.png"></ion-img>
               </div>
 
-              <ion-item class="opcion" [routerDirection]="'root'" (click) = "startScan()" style="--ion-background-color:rgb(107, 107, 107);">
+              <ion-item class="opcion" (click) = "startScan()" style="--ion-background-color:rgb(107, 107, 107);">
                 <ion-img menuClose src="assets/img/escanearicono.png"></ion-img>
                 <ion-label>
                   Escanear código QR
@@ -107,7 +83,7 @@
                 <ion-img center src="assets/img/lineablanca.png"></ion-img>
               </div>
 
-              <ion-item class="opcion" [routerDirection]="'root'" [routerLink]="'/sucursales'">
+              <ion-item class="opcion">
                 <ion-img menuClose src="assets/img/sucursalesicono.png"></ion-img>
                 <ion-label>
                   Sucursales

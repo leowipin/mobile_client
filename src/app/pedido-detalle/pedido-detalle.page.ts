@@ -15,17 +15,15 @@ import { CardData } from '../interfaces/client/cardData';
 import { BillingData } from '../interfaces/client/billingData';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-//import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 declare var google: any;
 
-
 @Component({
-  selector: 'app-pedido-carrito',
-  templateUrl: './pedido-carrito.page.html',
-  styleUrls: ['./pedido-carrito.page.scss'],
+  selector: 'app-pedido-detalle',
+  templateUrl: './pedido-detalle.page.html',
+  styleUrls: ['./pedido-detalle.page.scss'],
 })
-export class PedidoCarritoPage implements OnInit {
+export class PedidoDetallePage implements OnInit {
 
   orderData:OrderData;
   orderName:string;
@@ -700,4 +698,3 @@ export class MyModalComponent{
   
   
 }
-

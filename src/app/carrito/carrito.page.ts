@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ClienteWAService } from '../servicios/login-registro/login-registro.service';
+import { ClienteWAService } from '../login-registro/login-registro.service';
 import { AlertController } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
 
@@ -46,7 +46,7 @@ export class CarritoPage implements OnInit {
       isPaidProcess:false
     };
     console.log(queryParams)
-    this.navCtrl.navigateForward(['/pedido-carrito'], { queryParams: queryParams });
+    this.navCtrl.navigateForward(['/tabs/carrito/pedido-carrito'], { queryParams: queryParams });
   }
 
 }

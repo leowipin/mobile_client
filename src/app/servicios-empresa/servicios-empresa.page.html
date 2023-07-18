@@ -34,7 +34,7 @@
       <ion-row *ngIf="i % 2 === 0">
         <ng-container *ngFor="let item of servicesNamesList.slice(i, i + 2)">
           <ion-col size="6">
-            <a [routerLink]="['/servicios-empresa/servicio-detalle', item.id]">
+            <a [routerLink]="['servicio-detalle', item.id]">
               <ion-card>
                 <ion-label class="title-service">{{item.name}}</ion-label>
                 <ion-card-content class="card-service">

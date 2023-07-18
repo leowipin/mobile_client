@@ -7,7 +7,15 @@ const routes: Routes = [
   {
     path: '',
     component: MetododepagoPage
-  }
+  },
+  {
+    path: 'agregar-tarjeta',
+    loadChildren: () => import('../agregar-tarjeta/agregar-tarjeta.module').then( m => m.AgregarTarjetaPageModule)
+  },
+  {
+    path: 'pedido-detalle',
+    loadChildren: () => import('../pedido-detalle/pedido-detalle.module').then( m => m.PedidoDetallePageModule)
+  },
 ];
 
 @NgModule({

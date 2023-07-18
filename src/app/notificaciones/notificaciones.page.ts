@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, Injector } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ClienteWAService } from '../servicios/login-registro/login-registro.service';
+import { ClienteWAService } from '../login-registro/login-registro.service';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertController, ModalController, NavController } from '@ionic/angular';
 

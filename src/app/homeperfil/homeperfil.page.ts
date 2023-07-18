@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserDataService } from '../servicios/login-registro/userDataService';
+import { UserDataService } from '../login-registro/userDataService';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Component({
@@ -31,11 +31,11 @@ export class HomeperfilPage implements OnInit {
     let queryParams = {
       isProfileInformation: true
     };
-    this.navCtrl.navigateForward(['/editarperfil'], { queryParams: queryParams });
+    this.navCtrl.navigateForward(['/tabs/perfil/editarperfil'], { queryParams: queryParams });
   }
 
   goToNoti(){
-    this.navCtrl.navigateForward(['/notificaciones']);
+    this.navCtrl.navigateRoot(['/tabs/notificaciones']);
   }
 
   ngOnInit() {

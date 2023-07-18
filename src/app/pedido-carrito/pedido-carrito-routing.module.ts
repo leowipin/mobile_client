@@ -9,9 +9,9 @@ const routes: Routes = [
     component: PedidoCarritoPage
   },
   {
-    path: 'carrito',
-    loadChildren: () => import('../carrito/carrito.module').then( m => m.CarritoPageModule)
-  },
+    path: 'editarperfil',
+    loadChildren: () => import('../editarperfil/editarperfil.module').then( m => m.EditarperfilPageModule)
+  }
 ];
 
 @NgModule({

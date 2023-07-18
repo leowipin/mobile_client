@@ -12,7 +12,7 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from '../environments/environment';
 import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
-import { ClienteWAService } from './servicios/login-registro/login-registro.service';
+import { ClienteWAService } from './login-registro/login-registro.service';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MyModalComponent } from './app.component';

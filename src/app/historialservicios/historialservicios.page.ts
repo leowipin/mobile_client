@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { ClienteWAService } from '../servicios/login-registro/login-registro.service';
+import { ClienteWAService } from '../login-registro/login-registro.service';
 import { AlertController } from '@ionic/angular';
 
 @Component({
@@ -49,7 +49,7 @@ export class HistorialserviciosPage implements OnInit {
       isPaidProcess: false
     };
     console.log(queryParams)
-    this.navCtrl.navigateForward(['/pedido-carrito'], { queryParams: queryParams });
+    this.navCtrl.navigateForward(['/tabs/historialservicios/pedido-carrito'], { queryParams: queryParams });
   }
 
   

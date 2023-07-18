@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ClienteWAService } from '../servicios/login-registro/login-registro.service';
+import { ClienteWAService } from '../login-registro/login-registro.service';
 import { environment } from 'src/environments/environment';
 import { CardData } from '../interfaces/client/cardData';
 import { NavController } from '@ionic/angular';
@@ -140,7 +140,7 @@ export class AgregarTarjetaPage implements OnInit {
     });
 
     retryButton.addEventListener('click', (event) => {
-      this.navCtrl.navigateForward(['/metododepago']);
+      this.navCtrl.navigateForward(['/tabs/tarjetas']);
     });
 
   }

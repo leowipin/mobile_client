@@ -5,11 +5,11 @@ import { UbicacionComponent } from 'src/app/ubicacion/ubicacion.component';
 import { UbicacionService } from '../ubicacion/ubicacion.service';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import * as moment from 'moment';
-import { ClienteWAService } from '../servicios/login-registro/login-registro.service';
+import { ClienteWAService } from '../login-registro/login-registro.service';
 import { ServiceData } from '../interfaces/client/serviceData';
 import { environment } from 'src/environments/environment';
 import { Geolocation } from '@capacitor/geolocation';
-import { UserDataService } from '../servicios/login-registro/userDataService';
+import { UserDataService } from '../login-registro/userDataService';
 
 declare var google: any;
 
@@ -95,7 +95,7 @@ export class ServicioDetallePage implements OnInit {
 
   }
   cancelar() {
-    this.navCtrl.navigateForward("/servicios-empresa");
+    this.navCtrl.navigateBack("/tabs/inicio");
   }
   async presentAlert() {
     const alert = await this.alertController.create({
@@ -308,7 +308,7 @@ export class ServicioDetallePage implements OnInit {
             if(!this.serviceData.set_price){
               total = 0
             }
-            this.navCtrl.navigateForward("/servicio-solicitud", { queryParams });
+            this.navCtrl.navigateForward(`/tabs/inicio/servicio-detalle/${this.serviceData.id}/servicio-solicitud`, { queryParams });
           }
         }
       })
@@ -326,17 +326,9 @@ export class ServicioDetallePage implements OnInit {
     }
 
     if(validationValue){
-      this.navCtrl.navigateForward("/servicio-solicitud", { queryParams });
+      this.navCtrl.navigateForward(`/tabs/inicio/servicio-detalle/${this.serviceData.id}/servicio-solicitud`, { queryParams });
     }
 
-  }
-  solicitando(){
-    this.navCtrl.navigateForward(`/servicio-solicitud/solicitud`, {
-      queryParams: {
-        servicio: "Guardia", datos: this.ionicForm.value, cantGuardia: this.currentNumber,
-        origen: this.origen, destino: this.destino,duracion:this.duracion
-      }
-    });
   }
 
   ngOnInit() {

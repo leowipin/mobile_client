@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
         component: CarritoPage
-  }
+  },
+  {
+    path: 'pedido-carrito',
+    loadChildren: () => import('../pedido-carrito/pedido-carrito.module').then( m => m.PedidoCarritoPageModule)
+  },
 ];
 
 @NgModule({

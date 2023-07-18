@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { RegistrarPageRoutingModule } from './registrar-routing.module';
 
 import { RegistrarPage } from './registrar.page';
-import { ClienteWAService } from '../servicios/login-registro/login-registro.service';
+import { ClienteWAService } from '../login-registro/login-registro.service';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({

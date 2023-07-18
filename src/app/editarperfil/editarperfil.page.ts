@@ -4,7 +4,7 @@ import { NavController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators, ValidationErrors, ValidatorFn } from "@angular/forms";
 import { ModalController } from '@ionic/angular';
 import { ProfilePhotoOptionComponent } from '../components/profile-photo-option/profile-photo-option.component';
-import { ClienteWAService } from '../servicios/login-registro/login-registro.service';
+import { ClienteWAService } from '../login-registro/login-registro.service';
 
 import { CameraResultType, CameraSource, Camera } from '@capacitor/camera';
 import * as moment from 'moment';
@@ -13,7 +13,7 @@ import { ClientEmail } from '../interfaces/client/clientEmail';
 import { ClientNewPassword } from '../interfaces/client/clientNewPassword';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { UserDataService } from '../servicios/login-registro/userDataService';
+import { UserDataService } from '../login-registro/userDataService';
 
 @Component({
   selector: 'app-editarperfil',
@@ -196,7 +196,7 @@ export class EditarperfilPage implements OnInit {
           address: this.ionicForm.value.direccion,
           email: this.ionicForm.value.email
         };
-        this.navCtrl.navigateForward(['/metododepago'], { queryParams: queryParams });
+        this.navCtrl.navigateForward(['/tabs/carrito/pedido-carrito/editarperfil/tarjetas'], { queryParams: queryParams });
       }
     }
     
@@ -298,7 +298,7 @@ export class EditarperfilPage implements OnInit {
     if(this.photo == null){
       this.photo = 'assets/img/backcliente.png';
     }
-    this.navCtrl.navigateRoot("/homeperfil", {
+    this.navCtrl.navigateBack("/tabs/perfil", {
       queryParams: {
         photo:this.photo
       }
@@ -313,7 +313,7 @@ export class EditarperfilPage implements OnInit {
       name: this.orderName,
       booleandest: this.requires_origin_and_destination
     };
-    this.navCtrl.navigateForward("/pedido-carrito", { queryParams: queryParams })
+    this.navCtrl.navigateForward("/tabs/carrito/pedido-carrito", { queryParams: queryParams })
     //this.ionicForm.reset()
   }
 

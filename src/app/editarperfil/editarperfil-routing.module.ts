@@ -7,6 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: EditarperfilPage
+  },
+  {
+    path: 'tarjetas',
+    loadChildren: () =>
+      import('../metododepago/metododepago.module').then((m) => m.MetododepagoPageModule),
   }
 ];
 

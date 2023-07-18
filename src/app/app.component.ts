@@ -2,8 +2,8 @@ import { Component, Inject, Injector } from '@angular/core';
 import { AlertController, ModalController, NavController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner/ngx'
-import { ClienteWAService } from './servicios/login-registro/login-registro.service';
-import { UserDataService } from './servicios/login-registro/userDataService';
+import { ClienteWAService } from './login-registro/login-registro.service';
+import { UserDataService } from './login-registro/userDataService';
 import { FCM } from '@capacitor-community/fcm';
 import { AngularFirestore, AngularFirestoreDocument  } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
@@ -15,7 +15,7 @@ import {
   Token,
 } from '@capacitor/push-notifications';
 import { Subscription } from 'rxjs';
-import { NotificationsService } from './servicios/login-registro/notifiactionsService';
+import { NotificationsService } from './login-registro/notifiactionsService';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 let listenerAdded = false;
@@ -106,15 +106,6 @@ export class AppComponent {
     });
   }
   
-  
-
-  openPage() {
-    this.navCtrl.navigateForward(['/homeperfil'], {
-      queryParams: {
-          photo: this.photo
-      }
-  });
-  }
 
 
   ngOnInit() {
@@ -122,9 +113,9 @@ export class AppComponent {
     this.getProfilePicture();
     const token = localStorage.getItem('token');
     if (token) {
-      this.navCtrl.navigateRoot('/servicios-empresa');
+      this.navCtrl.navigateRoot('tabs');
     } else{
-      this.navCtrl.navigateRoot('/login')
+      this.navCtrl.navigateRoot('login')
     }
     // Actualizar detalles del usuario en el menú de hamburguesas
     this.initPushNotifications();
@@ -210,7 +201,7 @@ export class AppComponent {
         (notification: ActionPerformed) => {
           this.isPushNotification = true;
           let id = notification.notification.data.noti_id;
-          this.navCtrl.navigateForward(['/notificaciones'], {
+          this.navCtrl.navigateRoot(['/tabs/notificaciones'], {
             queryParams: {
                 id: id
             }
@@ -242,8 +233,10 @@ export class AppComponent {
     const fileRef = this.storage.ref(filePath);
     try {
       this.photo = await fileRef.getDownloadURL().toPromise();
+      this.userDataService.updatePhoto(this.photo)
     } catch (error) {
       this.photo = 'assets/img/backcliente.png';
+      this.userDataService.updatePhoto(this.photo)
     }
   }
 

@@ -6,17 +6,12 @@ import { ServicioDetallePage } from './servicio-detalle.page';
 const routes: Routes = [
   {
     path: '',
-    children: [
-      {
-        path: 'servicio-solicitud',
-        loadChildren: () => import('../servicios/solicitud-servicio/solicitud-servicio.module').then( m => m.SolicitudServicioPageModule)
-      },
-      {
-        path: '',
-        component: ServicioDetallePage
-      },
-    ]
+    component: ServicioDetallePage
   },
+  {
+    path: 'servicio-solicitud',
+    loadChildren: () => import('../solicitud-servicio/solicitud-servicio.module').then( m => m.SolicitudServicioPageModule)
+  }
   
 ];
 

@@ -3,7 +3,7 @@ import { AlertController, LoadingController } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { RegisterModel } from '../modelos/register.model';
-import { ClienteWAService } from '../servicios/login-registro/login-registro.service';
+import { ClienteWAService } from '../login-registro/login-registro.service';
 import { SignUp } from '../interfaces/client/signup';
 @Component({
   selector: 'app-registrar',

@@ -2,13 +2,13 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { ClienteWAService } from '../servicios/login-registro/login-registro.service';
+import { ClienteWAService } from '../login-registro/login-registro.service';
 import { SignIn } from '../interfaces/client/signin';
 import { ModalController, NavParams} from '@ionic/angular';
 import { ClientEmail } from '../interfaces/client/clientEmail';
 import { ResetPasswordToken } from '../interfaces/client/resetPasswordToken';
-import { UserDataService } from '../servicios/login-registro/userDataService';
-import { NotificationsService } from '../servicios/login-registro/notifiactionsService';
+import { UserDataService } from '../login-registro/userDataService';
+import { NotificationsService } from '../login-registro/notifiactionsService';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Component({
@@ -74,7 +74,7 @@ export class LoginPage implements OnInit {
   }
   
   redirigirServicios() {
-    this.navCtrl.navigateForward('/servicios-empresa');
+    this.navCtrl.navigateRoot('/tabs/inicio');
     this.ionicForm.reset();
   }
   

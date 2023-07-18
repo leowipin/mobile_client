@@ -4,10 +4,6 @@ import { DataResolverService } from './resolver/data-resolver.service';
 
 const routes: Routes = [
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
-  },
-  {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'
@@ -17,21 +13,8 @@ const routes: Routes = [
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
   {
-    path: 'servicios',
-    loadChildren: () => import('./servicios/servicios.module').then( m => m.ServiciosPageModule),
-
-  },
-  {
     path: 'servicio-solicitud',
-    loadChildren: () => import('./servicios/solicitud-servicio/solicitud-servicio.module').then( m => m.SolicitudServicioPageModule)
-  },
-  {
-    path: 'perfil',
-    loadChildren: () => import('./perfil/perfil.module').then( m => m.PerfilPageModule)
-  },
-  {
-    path: 'editarperfil',
-    loadChildren: () => import('./editarperfil/editarperfil.module').then( m => m.EditarperfilPageModule)
+    loadChildren: () => import('./solicitud-servicio/solicitud-servicio.module').then( m => m.SolicitudServicioPageModule)
   },
   {
     path: 'metododepago',
@@ -42,26 +25,11 @@ const routes: Routes = [
     loadChildren: () => import('./historialservicios/historialservicios.module').then( m => m.HistorialserviciosPageModule)
   },
 
-  {
-    path: 'detallesservicio',
-    loadChildren: () => import('./detallesservicio/detallesservicio.module').then( m => m.DetallesservicioPageModule)
-  },
-
-  {
-    path: 'detallesservicio/:id',
-    resolve: {
-      special: DataResolverService
-    },
-    loadChildren: () => import('./detallesservicio/detallesservicio.module').then( m => m.DetallesservicioPageModule)
-  },
   {
     path: 'menuprueba',
     loadChildren: () => import('./menuprueba/menuprueba.module').then( m => m.MenupruebaPageModule)
   },
-  {
-    path: 'perfil',
-    loadChildren: () => import('./perfil/perfil.module').then( m => m.PerfilPageModule)
-  },
+
   {
     path: 'editarperfil',
     loadChildren: () => import('./editarperfil/editarperfil.module').then( m => m.EditarperfilPageModule)
@@ -75,18 +43,6 @@ const routes: Routes = [
     loadChildren: () => import('./historialservicios/historialservicios.module').then( m => m.HistorialserviciosPageModule)
   },
 
-  {
-    path: 'detallesservicio',
-    loadChildren: () => import('./detallesservicio/detallesservicio.module').then( m => m.DetallesservicioPageModule)
-  },
-
-  {
-    path: 'detallesservicio/:id',
-    resolve: {
-      special: DataResolverService
-    },
-    loadChildren: () => import('./detallesservicio/detallesservicio.module').then( m => m.DetallesservicioPageModule)
-  },
   {
     path: 'menuprueba',
     loadChildren: () => import('./menuprueba/menuprueba.module').then( m => m.MenupruebaPageModule)
@@ -145,16 +101,25 @@ const routes: Routes = [
     loadChildren: () => import('./pedido-carrito/pedido-carrito.module').then( m => m.PedidoCarritoPageModule)
   },
   {
-    path: 'route-locations',
-    loadChildren: () => import('./route-locations/route-locations.module').then( m => m.RouteLocationsPageModule)
-  },
-  {
     path: 'agregar-tarjeta',
     loadChildren: () => import('./agregar-tarjeta/agregar-tarjeta.module').then( m => m.AgregarTarjetaPageModule)
-  },  {
+  },
+  {
     path: 'notificaciones',
     loadChildren: () => import('./notificaciones/notificaciones.module').then( m => m.NotificacionesPageModule)
   },
+  {
+    path: 'tabs',
+    loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule)
+  },  {
+    path: 'pedido-detalle',
+    loadChildren: () => import('./pedido-detalle/pedido-detalle.module').then( m => m.PedidoDetallePageModule)
+  },
+  {
+    path: 'header',
+    loadChildren: () => import('./header/header.module').then( m => m.HeaderPageModule)
+  },
+
 
 
 ];

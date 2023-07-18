@@ -8,6 +8,10 @@ const routes: Routes = [
     path: '',
         component: HistorialserviciosPage
   },
+  {
+    path: 'pedido-carrito',
+    loadChildren: () => import('../pedido-carrito/pedido-carrito.module').then( m => m.PedidoCarritoPageModule)
+  },
 ];
 
 @NgModule({
