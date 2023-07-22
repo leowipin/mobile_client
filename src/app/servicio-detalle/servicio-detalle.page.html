@@ -1,176 +1,149 @@
-<ion-header>
-  
-</ion-header>
-
-<ion-content class="fondo">
-  <div class="front">
-    <div class="titulo">
-      <div class="header-container">
-        <div class="regresar">
-          <ion-img src="assets/img/retroceder.png" (click)="cancelar()"></ion-img>
-        </div>
-        <h1 *ngIf="serviceData">{{serviceData.name}}</h1>
-        <h1 *ngIf="!serviceData"></h1>
-      </div>
-      <div class="logo">
-        <ion-img style="width: 100px; height: 100px;" [src]="'assets/img/' + serviceData.name + '.png'" *ngIf="serviceData"></ion-img>
-      </div>
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <div class="header">
+      <ion-img class="back-arrow" src="assets/img/icono-para-atras.png" (click)="cancelar()"> </ion-img>
+      <ion-img class="logosepro" src="assets/img/logosepro.png"> </ion-img>
+      <div class="line"></div>
     </div>
-    <div class="datos" *ngIf="serviceData">
-      <form [formGroup]="ionicForm" (ngSubmit)="submitForm()" validate>
-        <ion-list class="dat">
-          
-          <div class="seleccion" id="open-modal">
-            <ion-label>Fecha de Inicio</ion-label>
-            <ion-item button="true" id="open-date-input" >
-              <ion-label>{{dateValue | date: 'dd/MM/yyyy'}}</ion-label>
-              <ion-icon name="calendar-clear-outline"  item-right></ion-icon>
-              <ion-modal trigger="open-modal">
-                
-                <ion-popover trigger="open-date-input" show-backdrop="false">
-                <ng-template>
-                  <ion-content >
-                    <ion-datetime formControlName="fechaInicio" [max]="maxFecha" [min]="minFecha" displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY" #popoverDatetime
-                    presentation="date"
-                    (ionChange)="dateValue =popoverDatetime.value">   
-                    <div slot="title">     
-                    </div>            
-                    </ion-datetime>
-                  </ion-content>
-                </ng-template>
-              </ion-popover>
-              </ion-modal>
-              
-            </ion-item>
-            
-            
-          </div>
-    
-          <div class="seleccion" id="open-modal7" >
-            <ion-label>Hora de Inicio</ion-label>
-            <ion-item button="true" id="open-date-input7" >
-              <ion-label>{{dateValue7 | date: 'hh:mma'}}</ion-label>
-              <ion-icon name="time-outline" item-right></ion-icon>
-              <ion-modal class="horaval" trigger="open-modal7"> 
-                <ion-popover trigger="open-date-input7" show-backdrop="false">
-                <ng-template>
-                    <ion-datetime hour-cycle="h23" formControlName="horaInicio" displayFormat="hh:mma" presentation="time" #popoverDatetime
-                    (ionChange)="dateValue7 =popoverDatetime.value"> 
-                    </ion-datetime>
-                </ng-template>
-              </ion-popover>
-              </ion-modal>
-            </ion-item>
-            
-          </div>
-        
-          
-          <div class="seleccion" id="open-modal8" *ngIf="!requires_origin_and_destination">
-            <ion-label>Fecha de Finalización</ion-label>
-            <ion-item button="true" id="open-date-input8" >
-              <ion-label>{{dateValue8 | date: 'dd/MM/yyyy'}}</ion-label>
-              <ion-icon name="calendar-clear-outline"  item-right></ion-icon>
-              <ion-modal trigger="open-modal8">
-                
-                <ion-popover trigger="open-date-input8" show-backdrop="false">
-                <ng-template>
-                  <ion-content >
-                    <ion-datetime formControlName="fechaFinalizacion" [max]="maxFecha" [min]="minFecha" displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY" #popoverDatetime
-                    presentation="date"
-                    (ionChange)="dateValue8 =popoverDatetime.value">   
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid class="main-grid">
+    <ion-grid class="service-head">
+      <ion-row class="service-name bold14" *ngIf="serviceData">{{serviceData.name}}</ion-row>
+      <ion-row class="service-name bold14" *ngIf="!serviceData"></ion-row>
+      <ion-row class="picture">
+        <ion-img style="width: 100px; height: 100px;" [src]="'assets/img/' + serviceData.name + ' red.png'" *ngIf="serviceData"></ion-img>
+      </ion-row>
+    </ion-grid>
+    <form [formGroup]="ionicForm" (ngSubmit)="submitForm()" validate>
+      <ion-grid class="info-grid" *ngIf="serviceData">
+        <ion-grid class="input-data">
+
+          <ion-row class="input">
+            <div id="open-modal">
+              <ion-label class="regular12">Fecha de Inicio</ion-label>
+              <div button="true" id="open-date-input">
+                <ion-label class="light12">{{dateValue | date: 'dd/MM/yyyy'}}</ion-label>
+                <ion-icon name="calendar-clear-outline" class="calendar-icon"></ion-icon>
+                <ion-modal trigger="open-modal">
+                  <ion-popover trigger="open-date-input" show-backdrop="false">
+                  <ng-template>
+                    <ion-content >
+                      <ion-datetime formControlName="fechaInicio" [max]="maxFecha" [min]="minFecha" displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY" #popoverDatetime
+                      presentation="date"
+                      (ionChange)="dateValue =popoverDatetime.value">   
                       <div slot="title">     
-                      </div>
-                      
-                    </ion-datetime>
-                  </ion-content>
-                </ng-template>
-              </ion-popover>
-              </ion-modal>
-              
-            </ion-item>
-          </div>
-
-          <div class="seleccion" id="open-modal9" *ngIf="!requires_origin_and_destination">
-            <ion-label>Hora de Finalización</ion-label>
-            <ion-item button="true" id="open-date-input9" >
-              <ion-label>{{dateValue9 | date: 'hh:mma'}}</ion-label>
-              <ion-icon name="time-outline" item-right></ion-icon>
-              <ion-modal class="horaval" trigger="open-modal9"> 
-                <ion-popover trigger="open-date-input9" show-backdrop="false">
-                <ng-template>
-                    <ion-datetime hour-cycle="h23" formControlName="horaFinalizacion" displayFormat="hh:mma" presentation="time" #popoverDatetime
-                    (ionChange)="dateValue9 =popoverDatetime.value"> 
-                    </ion-datetime>
-                </ng-template>
-              </ion-popover>
-              </ion-modal>
-            </ion-item>
-          </div>
-
-          <div *ngIf="serviceData.requires_origin_and_destination; else singleLocation" class="mapa">
-            <ion-label>Ubicación origen</ion-label>
-            <button type="button" class="btn btn-primary rounded-pill border-0" (click)="addDirection(0)" [disabled]="blockOrigen">Abrir mapa</button>
-          </div>
-          <div *ngIf="serviceData.requires_origin_and_destination" class="mapa">
-            <ion-label>Ubicación destino</ion-label>
-            <button type="button" class="btn btn-primary rounded-pill border-0"(click)="addDirection(1)" [disabled]="blockDestino">Abrir mapa</button>
-          </div>
-          <ng-template #singleLocation>
-            <div class="mapa">
-              <ion-label>Elegir ubicación</ion-label>
-              <button type="button" class="btn btn-primary rounded-pill border-0" (click)="addDirection(0)" [disabled]="blockOrigen">Abrir mapa</button>
+                      </div>            
+                      </ion-datetime>
+                    </ion-content>
+                  </ng-template>
+                </ion-popover>
+                </ion-modal>
+              </div>
             </div>
-          </ng-template>
-          
+          </ion-row>
 
-          <div *ngFor="let staff of serviceData.staff; let i = index">
-            <div *ngIf="serviceData.staff_is_optional[i]" class="checks">
+          <ion-row class="input">
+            <div id="open-modal7" >
+              <ion-label class="regular12">Hora de inicio</ion-label>
+              <div button="true" id="open-date-input7" >
+                <ion-label class="light12">{{dateValue7 | date: 'hh:mma'}}</ion-label>
+                <ion-icon name="time-outline" class="calendar-icon"></ion-icon>
+                <ion-modal class="horaval" trigger="open-modal7"> 
+                  <ion-popover trigger="open-date-input7" show-backdrop="false">
+                  <ng-template>
+                      <ion-datetime hour-cycle="h23" formControlName="horaInicio" displayFormat="hh:mma" presentation="time" #popoverDatetime
+                      (ionChange)="dateValue7 =popoverDatetime.value"> 
+                      </ion-datetime>
+                  </ng-template>
+                </ion-popover>
+                </ion-modal>
+              </div>
+            </div>
+          </ion-row>
+
+          <ion-row class="input" *ngIf="!requires_origin_and_destination">
+            <div id="open-modal8">
+              <ion-label class="regular12">Fecha de finalización</ion-label>
+              <div button="true" id="open-date-input8" >
+                <ion-label class="light12">{{dateValue8 | date: 'dd/MM/yyyy'}}</ion-label>
+                <ion-icon name="calendar-clear-outline"  class="calendar-icon"></ion-icon>
+                <ion-modal trigger="open-modal8">
+                  <ion-popover trigger="open-date-input8" show-backdrop="false">
+                  <ng-template>
+                    <ion-content >
+                      <ion-datetime formControlName="fechaFinalizacion" [max]="maxFecha" [min]="minFecha" displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY" #popoverDatetime
+                      presentation="date"
+                      (ionChange)="dateValue8 =popoverDatetime.value">   
+                        <div slot="title">     
+                        </div>
+                      </ion-datetime>
+                    </ion-content>
+                  </ng-template>
+                </ion-popover>
+                </ion-modal>
+              </div>
+            </div>
+          </ion-row>
+
+          <ion-row class="input" *ngIf="!requires_origin_and_destination">
+            <div id="open-modal9">
+              <ion-label class="regular12">Hora de finalización</ion-label>
+              <div button="true" id="open-date-input9" >
+                <ion-label class="light12">{{dateValue9 | date: 'hh:mma'}}</ion-label>
+                <ion-icon name="time-outline" class="calendar-icon"></ion-icon>
+                <ion-modal class="horaval" trigger="open-modal9"> 
+                  <ion-popover trigger="open-date-input9" show-backdrop="false">
+                  <ng-template>
+                      <ion-datetime hour-cycle="h23" formControlName="horaFinalizacion" displayFormat="hh:mma" presentation="time" #popoverDatetime
+                      (ionChange)="dateValue9 =popoverDatetime.value"> 
+                      </ion-datetime>
+                  </ng-template>
+                </ion-popover>
+                </ion-modal>
+              </div>
+            </div>
+          </ion-row>
+
+          <ion-row class="map regular12" *ngIf="serviceData.requires_origin_and_destination;">
+              <ion-label>Ubicación origen&nbsp;&nbsp;&nbsp;</ion-label>
+              <button type="button" (click)="addDirection(0)" [disabled]="blockOrigen" class="map-btn"><ion-img src="assets/img/mapa.png" class="map-img"></ion-img></button>
+          </ion-row>
+          <ion-row class="map regular12" *ngIf="serviceData.requires_origin_and_destination">
+              <ion-label>Ubicación destino&nbsp;&nbsp;&nbsp;</ion-label>
+              <button type="button" (click)="addDirection(1)" [disabled]="blockDestino" class="map-btn"><ion-img src="assets/img/mapa.png" class="map-img"></ion-img></button>
+          </ion-row>
+          <ion-row class="map regular12" *ngIf="!serviceData.requires_origin_and_destination;">
+              <ion-label>Elegir ubicación&nbsp;&nbsp;&nbsp;</ion-label>
+              <button type="button" (click)="addDirection(0)" [disabled]="blockOrigen" class="map-btn"><ion-img src="assets/img/mapa.png" class="map-img"></ion-img></button>
+          </ion-row>
+          <ng-container *ngFor="let staff of serviceData.staff; let i = index">
+            <ion-row class="checkb" *ngIf="serviceData.staff_is_optional[i]">
               <ion-checkbox (ionChange)="updateIncludeStaff($event)"></ion-checkbox>
-              <ion-label>Incluir {{staff}}</ion-label>
-            </div>
-          </div>
-
-          <div *ngFor="let staff of serviceData.staff; let i = index">
-            <div class="cantidad-container" *ngIf="serviceData.staff_number_is_optional[i]">
-              <ion-label class="label-num">Cantidad de {{staff}}</ion-label>
+              <ion-label class="light12">&nbsp;&nbsp;Incluir {{staff}}</ion-label>
+            </ion-row>
+          </ng-container>
+          <ng-container *ngFor="let staff of serviceData.staff; let i = index">
+            <ion-row class="spinner" *ngIf="serviceData.staff_number_is_optional[i]">
+              <ion-label class="label-num regular12">Cantidad de {{staff}}&nbsp;&nbsp;&nbsp;</ion-label>
               <div class="cantidad">
                 <ion-icon class="decremento" name="remove-circle-outline" (click)="decrement(1)"></ion-icon>
-                <ion-label> {{currentNumber}}</ion-label>
+                <ion-label class="cnumber">&nbsp;{{currentNumber}}&nbsp;</ion-label>
                 <ion-icon class="aumento" name="add-circle-outline" (click)="increment(1)"></ion-icon>
               </div>
-            </div>
-          </div>
-          
-          <div *ngFor="let equipment of serviceData.equipment let i = index">
-            <div *ngIf="serviceData.equipment_is_optional[i]" class="checks">
+            </ion-row>
+          </ng-container>
+          <ng-container *ngFor="let equipment of serviceData.equipment let i = index">
+            <ion-row *ngIf="serviceData.equipment_is_optional[i]" class="checkb">
               <ion-checkbox (ionChange)="updateIncludeEquipment($event)"></ion-checkbox>
-              <ion-label>Incluir {{equipment}}</ion-label>
-            </div>
-          </div>
+              <ion-label class="light12">&nbsp;&nbsp;Incluir {{equipment}}</ion-label>
+            </ion-row>
+          </ng-container>
 
-          <div *ngFor="let equipment of serviceData.equipment; let i = index">
-            <div class="cantidad-container" *ngIf="serviceData.equipment_number_is_optional[i]">
-              <ion-label class="label-num">Cantidad de {{equipment}}</ion-label>
-              <div class="cantidad">
-                <ion-icon class="decremento" name="remove-circle-outline" (click)="decrement(2)"></ion-icon>
-                <ion-label> {{currentNumber2}}</ion-label>
-                <ion-icon class="aumento" name="add-circle-outline" (click)="increment(2)"></ion-icon>
-              </div>
-            </div>
-          </div>
-        </ion-list>
-        <div class="botones">
-          <button type="submit" class="btn btn-success rounded-pill border-0">Solicitar Servicio</button>  
-      </div>
-      </form>
-    </div>
-    <!--<div class="mapa">
-      <ion-label>Elegir ubicación</ion-label>
-      <button ion-button color="secondary" (click)="addDirection(0)">Abrir mapa</button>
-       
-    </div>-->
-    
-  </div>
-  
-
+          <button class="green-button"><span class="medium14">Solicitar servicio</span></button>
+        </ion-grid>
+      </ion-grid>
+    </form>
+  </ion-grid>
 </ion-content>

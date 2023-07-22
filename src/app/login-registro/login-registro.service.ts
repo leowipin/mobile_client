@@ -34,7 +34,7 @@ import { LeaderStaffData } from "src/app/interfaces/client/leaderStaff";
 })
 export class ClienteWAService {
   /*Url del servidor */
-  DJANGO_DOMAIN_NAME:string = 'http://127.0.0.1:8000/'; //https://seproamerica2022.pythonanywhere.com/
+  DJANGO_DOMAIN_NAME:string = 'https://seproamerica2022.pythonanywhere.com/'; //https://seproamerica2022.pythonanywhere.com/
   //DJANGO_TEST_DOMAIN_NAME:string = 'http://127.0.0.1:8000/'
   PAYMENTEZ_PROD_URL:string = "https://ccapi.paymentez.com/v2/"
   PAYMENTEZ_DEV_URL:string =  "https://ccapi-stg.paymentez.com/v2/";

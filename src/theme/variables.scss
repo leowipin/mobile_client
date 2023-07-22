@@ -39,6 +39,11 @@
   src: url('/assets/fonts/LEMONMILK-BoldItalic.otf');
 }
 
+@font-face {
+  font-family: 'LemonMilkLight';
+  src: url('/assets/fonts/LEMONMILK-Light.otf');
+}
+
 :root {
   /** primary **/
   --ion-color-primary: #3880ff;

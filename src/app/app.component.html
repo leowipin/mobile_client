@@ -1,39 +1,37 @@
 <ion-app>
   <ion-split-pane contentId="main-content">
-    <ion-menu contentId="main-content" >
-      <ion-header>
-        <ion-toolbar class="logo" >
-          <div class="imagen">
-            <ion-img  src="assets/img/logosepro.png"></ion-img>
-          </div>
-        </ion-toolbar>
-      </ion-header>
+    <ion-menu contentId="main-content">
       <ion-content scroll-y=true>
+        <div class="logo" >
+          <div class="imagen">
+            <ion-img class="img-sep"  src="assets/img/logosepro.png"></ion-img>
+          </div>
+        </div>
         <ion-menu-toggle auto-hide="false" text-center *ngIf="photo">
           <div class="container">
             <div class="outer"
               [ngStyle]="{'background-image': 'url(' + photo + ')'}">
              </div>
           </div>
-          <p ion-text header-subtitle>{{nombreur}} {{apellidour}}</p>
+          <p class="regular16">{{nombreur}} {{apellidour}}</p>
         </ion-menu-toggle>
         
         <div class="front">
           <ion-list class="opciones" lines="none">
             <ion-menu-toggle auto-hide="false">
               
-              <div class="linea">
+              <div class="linea" hidden="true">
                 <ion-img center src="assets/img/lineablanca.png"></ion-img>
               </div>
 
               <ion-item class="opcion" [routerLink]="'/tabs/historialservicios'">
                 <ion-img menuClose src="assets/img/historialicono.png"></ion-img>
-                <ion-label>
+                <ion-label class="light12">
                   Historial de servicios
                 </ion-label>
               </ion-item>
 
-              <div class="linea">
+              <div class="linea" hidden="true">
                 <ion-img center src="assets/img/lineablanca.png"></ion-img>
               </div>
 
@@ -41,70 +39,66 @@
                 
                   <ion-img menuClose src="assets/img/carritoicono.png"></ion-img>
                 
-                <ion-label>
+                <ion-label class="light12">
                   Carrito
                 </ion-label>
               </ion-item>
 
-              <div class="linea">
+              <div class="linea" hidden="true">
                 <ion-img center src="assets/img/lineablanca.png"></ion-img>
               </div>
 
               <ion-item class="opcion"[routerLink]="'/tabs/tarjetas'">
                 <ion-img menuClose src="assets/img/tarjetasicono.png"></ion-img>
-                <ion-label>
+                <ion-label class="light12">
                   Tarjetas
                 </ion-label>
               </ion-item>
 
-              <div class="linea">
+              <div class="linea" hidden="true">
                 <ion-img center src="assets/img/lineablanca.png"></ion-img>
               </div>
 
               <ion-item class="opcion"[routerLink]=""style="--ion-background-color:rgb(107, 107, 107);">
                 <ion-img menuClose src="assets/img/chatsicono.png"></ion-img>
-                <ion-label>
+                <ion-label class="light12">
                   Chats
                 </ion-label>
               </ion-item>
 
-              <div class="linea">
+              <div class="linea" hidden="true">
                 <ion-img center src="assets/img/lineablanca.png"></ion-img>
               </div>
 
               <ion-item class="opcion" (click) = "startScan()" style="--ion-background-color:rgb(107, 107, 107);">
                 <ion-img menuClose src="assets/img/escanearicono.png"></ion-img>
-                <ion-label>
+                <ion-label class="light12">
                   Escanear código QR
                 </ion-label>
               </ion-item>
 
-              <div class="linea">
+              <div class="linea" hidden="true">
                 <ion-img center src="assets/img/lineablanca.png"></ion-img>
               </div>
 
               <ion-item class="opcion">
                 <ion-img menuClose src="assets/img/sucursalesicono.png"></ion-img>
-                <ion-label>
+                <ion-label class="light12">
                   Sucursales
                 </ion-label>
               </ion-item>      
-            
-              
-              
+
             </ion-menu-toggle>
           </ion-list>
-          
-          <div class="cerrarsesion">
-            <ion-item lines="none">
+            <div class="cerrarsesion">
               <ion-img src="assets/img/cerrarsesion.png"></ion-img>
-              <button ion-button (click)="signOut()">CERRAR SESION</button>
-            </ion-item>  
-            
+              <button (click)="signOut()">&nbsp;&nbsp;<span class="regular12 wh">Cerrar sesión.</span></button>
+          
           </div>
+          
         </div>
         <div class="back">
-          <ion-img  src="../../assets/img/appseprovectores-01.png"></ion-img>
+          <ion-img  src="../../assets/img/halcon.png"></ion-img>
         </div>
       </ion-content>
     </ion-menu> 

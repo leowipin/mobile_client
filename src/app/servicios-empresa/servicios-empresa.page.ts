@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ClienteWAService } from '../login-registro/login-registro.service';
 import { AlertController, NavController } from '@ionic/angular';
+import { UserDataService } from '../login-registro/userDataService';
 
 @Component({
   selector: 'app-servicios-empresa',
@@ -11,9 +12,13 @@ export class ServiciosEmpresaPage implements OnInit {
 
   servicesNamesList:any;
   noti:any;
+  photo:string;
 
-  constructor(private clienteWAService: ClienteWAService, private alertController: AlertController, private navCtrl: NavController,) {//
-    
+  constructor(private clienteWAService: ClienteWAService, private alertController: AlertController, 
+    private userDataService: UserDataService,) {
+      this.userDataService.photo$.subscribe(photo => {
+        this.photo = photo;
+      });
    }
 
   ngOnInit() {

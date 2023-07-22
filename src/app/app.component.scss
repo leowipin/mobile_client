@@ -1,6 +1,5 @@
 ion-content {
-    --ion-background-color: #bf1a24;
-    font-family: hp265;
+    --background: linear-gradient(to bottom, rgb(184, 0, 0), black);
 }
 
 p {
@@ -42,20 +41,16 @@ ion-menu-toggle ion-img {
     margin-top: 4%;
 }
 
-.logo {
-    --background: #FFDDDD;
-}
 
-ion-toolbar .logo {
-    width: 35%;
+.img-sep{
     margin-top: 4%;
+    width: 70%;
 }
 
-ion-toolbar .imagen {
-    text-align: center;
-    margin-top: 10%;
-    margin-left: 25%;
-    margin-right: 25%;
+.imagen{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 ion-menu-toggle {
@@ -70,6 +65,11 @@ ion-menu-toggle {
 p {
     color: #ffffff;
 }
+
+.wh{
+    color: white;
+}
+
 .linea ion-img{
     width: 86%;
     margin-left:auto;
@@ -90,10 +90,11 @@ p {
 }
 
 .cerrarsesion {
-    bottom: 4px;
     display: flex;
     text-align: center;
     justify-content: center;
+    margin-top: 2%;
+    color: white;
 }
 
 .cerrarsesion ion-img {
@@ -129,3 +130,20 @@ p {
     display: flex;
     justify-content: center;
   }
+
+  .light12{
+    font-family: 'LemonMilkLight';
+    font-size: 12px;
+}
+
+.regular12{
+    font-family: 'LemonMilkRegular';
+    font-size: 12px;
+}
+
+.regular16{
+    font-family: 'LemonMilkRegular';
+    font-size: 16px;
+}
+
+

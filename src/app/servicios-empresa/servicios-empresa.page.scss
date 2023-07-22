@@ -1,104 +1,122 @@
-ion-content{ 
-    --ion-background-color:#ffffff; 
-    font-family: hp556;
-}
-.front{
-    
+ion-grid.main-grid{
+    //background-color: aquamarine;
+    background-color: #EFEFEF;
     height: 100%;
-    width: 100%;
-    
-  }
-  .back{
-    position: absolute;
-    text-align: buttom;
-    z-index:-10;
-    bottom: 0;
-
-  }
-
-.title{
-    text-align:center;
-    //position:relative;
-    margin-top: 9%;
-  
-}
-.title ion-label{
-    color:#bf1a24;
-    font-size: 6vw;
-    font-family:BebasBold;
+    background-image: url("../../assets/img/halcon.png");
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: contain;
 }
 
-ion-menu-button {
-    margin-left: 20px;
-    min-width: 50px;
-    ion-img{
-        padding: 2px;
-        width: 60px;
-    }
+ion-grid.welcome-grid{
+    height: 30%;
 }
 
-ion-label{
-    font-family: hp556;
-    font-size:small;
-    font-weight:bold;
+ion-grid.service-grid{
+    //background-color: gray;
+    display: flex;
+    align-items: center;
+    //justify-content: center;
+    flex-direction: column;
+    height: 70%;
 }
 
-.tope span {
-    width: 100%;
-    position: absolute;
-    background-color: #FFDDDD;
-    height: 26px;
-    top: 50px;
-    z-index: 1;
-}
-
-.logosepro ion-img {
-    position: absolute;
-    top: 6px;
-    left: auto;
-    z-index: 2;
-}
-
-div.logosepro {
+ion-row.welcome{
+    //background-color: yellow;
+    height: 30%;
     display: flex;
     justify-content: center;
+    align-items: center;
+    
+}
+
+ion-row.picture{
+    position: relative;
+    //background-color: blueviolet;
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+ion-img.frame{
+    position: absolute;
+    bottom: -10px;
+    height: 125%;
+    z-index: 100;
+}
+
+
+ion-img.back-img{
+    
+    height: 100%;
+    mask-image: url(../../assets/img/corona_dentro.png);
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    border: solid;
+}
+
+ion-row.select-s{
+    //background-color: brown;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 12%;
+}
+
+ion-row.service-card {
+    height: 18%;
+    margin-bottom: 4%;
+    width: 91%;
+    border: 0.1px solid rgb(189, 189, 189);
+    background-color: WHITE;
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+}
+
+.service-body{
+    display: flex;
+    //justify-content:space-around;
+    align-items: center;
+    width: 100%;
+}
+
+.service-icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 25%;    
+}
+
+.service-img{
+    //background-image: ;
+    height: 50px;
+    width: 50px;
 }
 
 .service-name{
-    font-family: hp556;
     display: flex;
-    justify-content: center;
-    font-size: 3vw;
-    text-align: center;
-    margin-left: 5%;
-    margin-right: 5%;
-    border-radius: 0 !important; 
-    padding: 0 !important; 
-    margin-top: 0% !important;
-    margin-bottom: 0% !important;
-    color:black;
-
-}
-
-a {
-    text-decoration: none;
-}
-
-.btn-container {
-    display: flex;
-    justify-content: center;
     align-items: center;
-    margin-top: 10px;
+    width: 65%;
+    height: 100%;
+    overflow: hidden;
+    word-wrap: break-word;
+    word-break: break-all;
+    font-size: 0.7rem;
+}
+
+.continue{
+    position: absolute;
+    right: 35px;
+}
+.continue ion-img{
+    width: 45px;
+    height: 45px;
     
 }
-.detail-button{
-    width: 75%;
-}
-.title-service{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10px;
-    font-size: 4vw;
-    color: #262626
+
+ion-img.halcon{
+    position: absolute;
+    bottom: 1px;
 }

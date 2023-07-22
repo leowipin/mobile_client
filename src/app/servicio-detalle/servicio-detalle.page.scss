@@ -1,221 +1,151 @@
-ion-content{ 
-    --ion-background-color:#FFDDDD; 
-    font-family: hp556;
-  }
-  .front{
-  z-index:2;
-  position:absolute;
-  
+ion-grid.main-grid{
+  background-color: #EFEFEF;
   height: 100%;
-  width: 100%;
-  
-  }
-  .back{
-  position: absolute;
-  margin-top: 40%;
-  text-align: buttom;
-  z-index:1;
-  
-  margin-bottom: 0;
-  margin-left: 0;
-  margin-right: 0;
-  }
-  
-  
-  .regresar ion-img{
-    margin-top: 5%;
-    margin-left: 5%;
-    width: 2.3em;
-    height: 2.3em;
-    
-  }
-  
-  .titulo h1{
-    display: flex;
-    margin: 1rem;
-    padding: 0;
-    border: 0 ;
-    text-align: center;
-    font-weight: bold;
-    color:#262626;
-    font-size: 200%;
-    max-width:650px;
-      margin-left: 20%;
-    margin-right: 20%;
-   
-  }
-  .logo ion-img{
-     display:block;
-     margin:auto;
-  }
-  .datos{
-    margin: 1rem;
-    padding: 0.5rem 3.5rem 0.5rem 3.5rem;
-    border: 2px ;
-    
-  }
-  
-  .seleccion ion-item {
-    --ion-background-color: #ffffff;
-    text-align: center;
-    border-radius: 60px;
-    width: 100%;
-    height: 2.3rem;
-    margin: 0%;
-  }
-  
-  .seleccion ion-icon {
-    margin-right: 0%;
-    top: 0.3em;
-    position: absolute;
-    margin-left: 80%;
-    color: black;
-  }
-  
-  .cantidad-container{
-      margin: 0rem;
-      
-      border: 0px ;
-      
-  
-  }
-  //top rigth bottom left
-  
-  .solicitar-servicio{
-      margin: 0rem;
-      padding: 1.5rem 3.5rem 0.5rem 3.5rem;
-      border: 0px ;
-  }
-  
-  .dat ion-label{
-  
-    margin-left: 5%;
-    color:#262626;
-    font-size: 90%;
-    //opacity: 0.50;
-  }
-  ion-datetime {
-    height: auto;
-    width: auto;
-  
-    
-  }
-  
-  ion-modal {
-    --width: 290px;
-    --height: 460px;
-    --border-radius: 8px;
-  }
-  
-  ion-modal ion-datetime {
-    height: 460px;
-  }
-  .seleccion ion-label{
-    text-align: center;
-    margin-bottom: 1.5%;
-    margin-top: 0%;
-  }
-  .horaval{
-    --width: 290px;
-    --height: 200px;
-    font-weight: 500;
-  }
-  
-  
-  .solicitar-servicio button{
-    text-align:center;
-    margin-left: 0rem;
-    width: 15rem;
-    height: 2.8rem;
-    border-radius: 60px ;
-    background-color:#3da631;
-    color:#ffffff;
-    font-size: 120%;
-  }
-  .cancelar-servicio button{
-    text-align:center;
-    margin-left: 0rem;
-    width: 15rem;
-    height: 2.8rem;
-    border-radius: 60px ;
-    background-color:#fc5759;
-    color:#ffffff;
-    font-size: 120%;
-  }
-  
-  .cantidad-container .cantidad .decremento {
-    color:#e70808;
-    font-size: 23px;
-  }
-  .cantidad-container .cantidad .aumento {
-    color:#0a0db3;
-    font-size: 23px;
-  }
-  .cantidad-container .cantidad ion-label{
-    background-color:#ffffff;
-    display: flex;
-    text-align: center;
-    border-radius: 60px ;
-    width: 3rem;
-    height: 1.5rem;
-    padding: 0rem 2.5rem 0rem 1.8rem;
-  }
-  .cantidad-container ion-label{
-    color:#262626;
-  }
-  .cantidad-container .cantidad {
-    
-    display: flex;
-    text-align: center;
-  
-  }
-  .mapa{
-    //margin: 0.5rem;
-    //padding: 0.5rem 3.5rem 0.5rem 3.5rem;
-    //border: 0px;
-    display: flex;
-    justify-content: space-between;
-    margin-top: 5%;
-    //margin-bottom: 1%;
-  }
-  
-  .mapa ion-label{
-    font-family: hp265;
-    font-size:medium;
-    //width:30em;
-  }
-  
-  .botones{
-    text-align: center;
-    margin-top: 5%;
-    margin-bottom: 2%;
-  }
-
-.header-container{
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+  background-image: url("../../assets/img/halcon.png");
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: contain;
 }
 
-.header-container .regresar {
-    position: absolute;
-    margin-right: 85%;
-  }
-
-  .check-candado {
-    margin: 0.5rem;
-    padding: 0.5rem 3.5rem 0.5rem 3.5rem;
-    border: 0px;
-  }
-  .check-candado ion-label {
-    font-size: 90%;
-    text-align: center;
-    margin-left: 10%;
-    color: #bf1a24;
-  }
-
-.checks{
-    margin-top: 4%;
+ion-row.service-name, ion-row.picture{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+ion-row.service-name{
+  height: 30%;
+}
+
+ion-row.picture{
+  position: relative;
+  height: 70%;
+}
+
+ion-grid.service-head{
+  height: 30%;
+}
+
+ion-grid.info-grid, ion-grid.input-data{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+ion-grid.input-data{
+  width: 72%;
+  margin-bottom: 2%;
+  background-color: white;
+  border: 0.1px solid rgb(189, 189, 189);
+  box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+}
+
+ion-row.input, ion-row.map, ion-row.spinner, ion-row.checkb, ion-row.request{
+    height:30px;
+    width:92%;
+    margin-top:3%;
+}
+
+ion-row.input{
+    height:45px;
+}
+
+ion-row.request{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:2%;
+}
+
+ion-datetime {
+    height:auto;
+    width:auto;
+}
+
+ion-modal {
+    --width:290px;
+    --height:460px;
+    --border-radius:8px;
+}
+
+ion-modal ion-datetime {
+    height:460px;
+}
+
+#open-modal, #open-modal7, #open-modal8, #open-modal9 {
+    display:flex;
+    justify-content:center;
+    flex-direction:column;
+    width:100%;
+}
+
+#open-date-input, #open-date-input7, #open-date-input8, #open-date-input9 {
+    display:flex;
+    justify-content:end;
+    align-items:center;
+    background-color:#EFEFEF;
+    height:100%;
+    border-radius:2px;
+}
+
+.calendar-icon {
+    margin-right:2%;
+    margin-left:30%;
+    font-size:22px;
+    color:#9d9d9d;
+}
+
+.horaval {
+   --width :290px ;
+   --height :200px ;
+   font-weight :500 ;
+}
+
+.map{
+  display: flex;
+  align-items: center;
+}
+
+.spinner{
+  display: flex;
+  align-items: center;
+}
+
+.checkb{
+  display: flex;
+  align-items: center;
+}
+
+.map-btn{
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.map-img{
+  width: 45px;
+}
+
+.aumento{
+  color:#0a0db3;
+  font-size: 23px;
+}
+
+.decremento{
+  color:#e70808;
+  font-size: 23px;
+}
+.cantidad{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cnumber{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.green-button{
+  margin-top: 2%;
+  margin-bottom: 2%;
+}

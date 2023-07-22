@@ -1,0 +1,15 @@
+ion-tab-bar {
+  --background: linear-gradient(to right, rgb(184, 0, 0), black);
+  
+}
+
+.container-tab{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.icon {
+  width: 50px;
+}
