@@ -1,138 +1,109 @@
-.negrita {
-    font-family: hp556;
-}
-
-.imagen {
-    width: 5rem;
-    height: 5rem;
-    border-radius: 50%;
-    margin: auto;
-    margin-top: 5%;
-    margin-bottom: 0;
-    left: 0;
-    right: 0;
-}
-
-.titulo {
-    font-family: hp556;
-    position: relative;
-    margin-top: 4rem;
-    margin-left: 15%;
-    margin-right: 15%;
-}
-
-.titulo ion-label {
-    font-size: 2vm;
-    text-align: center;
-    border: 3px solid #bf1a24;
-    display: block;
-    border-radius: 60px;
-    font-size: 120%;
-    color: #bf1a24
-}
-
-.datos {
-    margin-top: 5%;
-    margin-left: 18%;
-    bottom: 10;
-    margin-right: 18%;
-}
-
-.datos ion-item {
-    padding: 0px !important;
-    margin: 0px !important;
-}
-
-.datos {
-    padding-top: 0px !important;
-    padding-bottom: 0px !important;
-}
-
-.botones {
-    margin-top: 5%;
-    margin-left: 20%;
-    bottom: 10;
-    margin-right: 20%;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10%;
-}
-
-.confirmar-servicio button {
-    font-family: hp556;
-}
-
-.cancelar-servicio button {
-    font-family: hp556;
-}
-
-.ruta {
-    display: flex;
-    text-align: center;
-    justify-content: space-between;
-    margin-left: 30%;
-    margin-right: 50%;
-    background-color: #ffffff;
-}
-
-.metodo-pago {
-    text-align: center;
-    top: 50%;
-    margin-left: 20%;
-    bottom: 0;
-    margin-right: 20%;
-    margin-top: 1rem;
-    background-color: #ffffff;
-}
-
-.botonruta {
-    display: block;
-    text-align: center;
-    bottom: -60%;
-}
-
-.botonruta ion-img {
-    text-align: center;
-    width: 7em;
-    height: 7em;
-}
-
-.metodo-pago ion-select {
-    background-color: #FFDDDD;
-    border-radius: 60px;
-}
-
-ion-buttons{
-    margin-left: 20px;
-    margin-top: 14px;
-    max-width: 40px;
-    ion-img{
-        padding: 2px;
-        width: 60px;
-    }
-}
-
-.tope span {
-    width: 100%;
-    position: absolute;
-    background-color: #FFDDDD;
-    height: 26px;
-    top: 62px;
-    z-index: 1;
-}
-
-.logosepro ion-img {
-    position: absolute;
-    top: 18px;
-    left: auto;
-    z-index: 2;
-}
-
-div.logosepro {
+ion-grid.main-grid {
+    height: 100%;
+  }
+  
+  ion-row.detail-name, ion-row.picture {
     display: flex;
     justify-content: center;
-}
+    align-items: center;
+  }
 
-.ver-ruta{
-    font-family: hp265;
-}
+  ion-row.detail-name {
+    height: 30%;
+  }
+  
+  ion-row.picture {
+    position: relative;
+    height: 70%;
+  }
+  
+  ion-grid.detail-head {
+    height: 30%;
+  }
+
+  .bold14{
+    font-size: 1rem;
+  }
+
+  ion-grid.detail-grid{
+    width: 86%;
+  }
+
+  ion-grid.detail-name-grid{
+    background-color: white;
+    border: 0.1px solid rgb(189, 189, 189);
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  ion-grid.detail-data-grid{
+    background-color: white;
+    border: 0.1px solid rgb(189, 189, 189);
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+    margin-top: 4%;
+    margin-bottom: 4%;
+  }
+
+  ion-grid.amount-grid{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 2%;
+  }
+
+  ion-grid.data-grid{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .map-btn{
+    background-color :transparent ;
+    box-shadow :none ;
+ }
+
+ .map-img{
+    width :55px ;
+ }
+
+ .subline{
+    padding: 4px 40px 4px 40px;
+    border-bottom-style: solid;
+    border-color: rgb(184, 0, 0);
+ }
+
+ .secu{
+    padding-top: 6px;
+    padding-bottom: 4px;
+ }
+
+ .amount-cont{
+    margin-top: 8px;
+    padding: 3px 12px;
+    background-color: rgb(184, 0, 0);
+    color: white;
+    border-radius: 2px;
+ }
+
+ ion-row.dat{
+    margin-top: 1%;
+ }
+
+ ion-row.dat-btng{
+    margin-top: 2%;
+ }
+
+ ion-row.dat-btnr{
+    margin-top: 3%;
+ }
+
+ ion-row.subt{
+    margin-top: 1%;
+    margin-top: 4px;
+ }
+

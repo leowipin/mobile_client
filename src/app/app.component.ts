@@ -113,7 +113,7 @@ export class AppComponent {
     this.getProfilePicture();
     const token = localStorage.getItem('token');
     if (token) {
-      this.navCtrl.navigateRoot('tabs');
+      this.navCtrl.navigateRoot('tabs');//tabs/inicio/servicio-detalle/36/servicio-solicitud
     } else{
       this.navCtrl.navigateRoot('login')
     }

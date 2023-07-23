@@ -1,56 +1,51 @@
-ion-grid.main-grid{
-  background-color: #EFEFEF;
+ion-grid.main-grid {
   height: 100%;
-  background-image: url("../../assets/img/halcon.png");
-  background-repeat: no-repeat;
-  background-position: bottom;
-  background-size: contain;
 }
 
-ion-row.service-name, ion-row.picture{
+ion-row.service-name, ion-row.picture {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-ion-row.service-name{
+ion-row.service-name {
   height: 30%;
 }
 
-ion-row.picture{
+ion-row.picture {
   position: relative;
   height: 70%;
 }
 
-ion-grid.service-head{
+ion-grid.service-head {
   height: 30%;
 }
 
-ion-grid.info-grid, ion-grid.input-data{
+ion-grid.info-grid, ion-grid.input-data {
   display: flex;
   align-items: center;
   flex-direction: column;
 }
 
-ion-grid.input-data{
-  width: 72%;
+ion-grid.input-data {
+  width: 80%;
   margin-bottom: 2%;
   background-color: white;
   border: 0.1px solid rgb(189, 189, 189);
   box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
 }
 
-ion-row.input, ion-row.map, ion-row.spinner, ion-row.checkb, ion-row.request{
+ion-row.input, ion-row.map, ion-row.spinner, ion-row.checkb, ion-row.request {
     height:30px;
     width:92%;
-    margin-top:3%;
+    margin-top:5%;
 }
 
-ion-row.input{
+ion-row.input {
     height:45px;
 }
 
-ion-row.request{
+ion-row.request {
     display:flex;
     align-items:center;
     justify-content:center;
@@ -101,51 +96,43 @@ ion-modal ion-datetime {
    font-weight :500 ;
 }
 
-.map{
-  display: flex;
-  align-items: center;
-}
-
-.spinner{
-  display: flex;
-  align-items: center;
-}
-
+.map,
+.spinner,
 .checkb{
-  display: flex;
-  align-items: center;
+   display:flex ;
+   align-items:center ;
 }
-
 .map-btn{
-  background-color: transparent;
-  box-shadow: none;
+   background-color :transparent ;
+   box-shadow :none ;
 }
-
 .map-img{
-  width: 45px;
+   width :45px ;
 }
-
 .aumento{
-  color:#0a0db3;
-  font-size: 23px;
+   color :#0a0db3 ;
+   font-size :25px ;
 }
-
 .decremento{
-  color:#e70808;
-  font-size: 23px;
+   color :#e70808 ;
+   font-size :25px ;
 }
-.cantidad{
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.cantidad,
+.cnumber{
+   display:flex ;
+   align-items:center ;
+   justify-content:center ;
 }
 .cnumber{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+   flex-direction :column ;
 }
 .green-button{
-  margin-top: 2%;
+   margin-top :5% ;
+   margin-bottom :4% ;
+}
+.hyf{
   margin-bottom: 2%;
+}
+.bold14{
+  font-size: 1rem;
 }

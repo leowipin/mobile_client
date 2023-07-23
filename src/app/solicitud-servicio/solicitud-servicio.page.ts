@@ -21,7 +21,7 @@ declare var google: any;
   styleUrls: ['./solicitud-servicio.page.scss'],
 })
 export class SolicitudServicioPage implements OnInit {
-  value: string;
+  value: string="tarjeta";
   datosRecibidos: any;
   fechaInicio: any;
   fechaFinalizacion: any;
@@ -74,7 +74,7 @@ export class SolicitudServicioPage implements OnInit {
       let hours = Math.floor(params.duration);
       let minutes = Math.floor((params.duration - hours) * 60);
       let seconds = Math.round(((params.duration - hours) * 60 - minutes) * 60);
-      this.formattedDuration = `${hours} horas con ${minutes} minutos y ${seconds} segundos`;
+      this.formattedDuration = `${hours} horas y ${minutes} minutos`;
       
       if(params.requiresDestination){
         this.datosRecibidos.endDate = null
@@ -94,7 +94,7 @@ export class SolicitudServicioPage implements OnInit {
   }
 
   sendOrder(){
-    if(this.value !== undefined) {
+    if(true) {
       this.navCtrl.navigateForward(`/tabs/inicio/servicio-detalle/${this.datosRecibidos.serviceID}/servicio-solicitud/estado-solicitud`);
       let orderData: OrderData = {
         service: this.datosRecibidos.serviceID,
@@ -154,13 +154,13 @@ export class SolicitudServicioPage implements OnInit {
             console.log(error.error[keyError])
           }
         });
-    }else{
+    }/*else{
       this.alertController.create({
         header: 'Método de pago',
         message: 'Seleccione el método de pago',
         buttons: ['Aceptar']
       }).then(alert=> alert.present())
-    }
+    }*/
   }
   
   async dibujarRuta() {

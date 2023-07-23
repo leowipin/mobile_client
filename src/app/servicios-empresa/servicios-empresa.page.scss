@@ -1,11 +1,6 @@
+
 ion-grid.main-grid{
-    //background-color: aquamarine;
-    background-color: #EFEFEF;
     height: 100%;
-    background-image: url("../../assets/img/halcon.png");
-    background-repeat: no-repeat;
-    background-position: bottom;
-    background-size: contain;
 }
 
 ion-grid.welcome-grid{
@@ -31,31 +26,36 @@ ion-row.welcome{
 }
 
 ion-row.picture{
-    position: relative;
     //background-color: blueviolet;
     height: 70%;
     display: flex;
     justify-content: center;
     align-items: center;
+    
 }
 
 ion-img.frame{
-    position: absolute;
     bottom: -10px;
+    width: 25vh;
     height: 125%;
     z-index: 100;
+    position: absolute;
 }
 
 
 ion-img.back-img{
-    
-    height: 100%;
+    width: 13.3vh;
+    height: 99%;
+    margin-top: 3%;
+    margin-left: 2%;
     mask-image: url(../../assets/img/corona_dentro.png);
-    mask-size: contain;
-    mask-repeat: no-repeat;
-    mask-position: center;
-    border: solid;
+    mask-size: 100% 100%;
+    background-position: center;
+    background-size: 100% 100%;
+   
 }
+
+
 
 ion-row.select-s{
     //background-color: brown;
@@ -119,4 +119,12 @@ ion-row.service-card {
 ion-img.halcon{
     position: absolute;
     bottom: 1px;
+}
+.cont-imgs{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 150px;
+    position: relative;
 }

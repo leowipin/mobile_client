@@ -1,27 +1,31 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <div class="header">
+      <ion-img class="logosepro" src="assets/img/logosepro.png"> </ion-img>
+      <div class="line"></div>
+    </div>
+  </ion-toolbar>
+</ion-header>
 <ion-content>
 <ion-grid class="main">
-  <ion-row class="header">
-    <span></span>
-    <ion-img style="width: 160px;" src="assets/img/logosepro.png"></ion-img>
-  </ion-row>
   <ion-grid class="content">
+    <ion-row class="bold16">Solicitud</ion-row>
     <ion-row class="img-status">
-      <ion-img src="assets/img/img-status.png"></ion-img>
+      <ion-img src="assets/img/solicitudes.png"></ion-img>
     </ion-row>
-    <ion-row class="title">
-      <ion-label>SOLICITUD</ion-label>
-      <ion-label><b>ESTADO: PENDIENTE</b></ion-label>
-    </ion-row>
+    
+      <ion-grid class="req">
+        <ion-row class="medium12 subline">Estado</ion-row>
+        <ion-row class="medium12 secu">Pendiente</ion-row>
+      </ion-grid>
+    
     <ion-row class="detail">
-      <ion-label> Estamos procesando su
-        solicitud, en unos minutos le
-        enviaremos la confirmación
-        para su servicio. puede revisarla el servicio-detalle
-        de la solicitud en el carrito de compras.
-      </ion-label>
-    </ion-row>
-    <ion-row class="cart-button">
-      <button class="btn btn-success rounded-pill border-0" [routerLink]="'/tabs/inicio'">Regresar al menú principal</button> 
+      <div class="regular12"> 
+        Estamos procesando su solicitud y le enviaremos la confirmación en breve. 
+        Revise la información del servicio en el carrito de compras. Una vez aceptada, 
+        tiene 2 horas para pagar o su solicitud será eliminada.
+      </div>
+      <button class="green-button" [routerLink]="'/tabs/inicio'"><span class="medium12">Volver al menú principal</span></button>
     </ion-row>
   </ion-grid>
 </ion-grid>

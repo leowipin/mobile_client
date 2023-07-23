@@ -1,7 +1,7 @@
 /* Estilos generales para ion-grid e ion-row */
 ion-grid.main {
-    height: 90%;
-    margin: 1.2rem 0;
+    height: 98%;
+    margin-top: 2%;
 }
 
 ion-row {
@@ -27,12 +27,11 @@ ion-row.header span {
 }
 
 ion-grid.content {
-    height: 90%;
-    margin-top: 1.2rem;
+    height: 100%;
 }
 
 ion-row.img-status {
-    height: 35%;
+    height: 28%;
 }
 
 ion-row.img-status ion-img {
@@ -45,9 +44,26 @@ ion-row.title {
 }
 
 ion-row.detail {
-    height: 35%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border: 0.1px solid rgb(189, 189, 189);
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
     margin-right: 2rem;
     margin-left: 2rem;
+    padding: 4% 6%;
+}
+
+ion-grid.req{
+    background-color: white;
+    border: 0.1px solid rgb(189, 189, 189);
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+    margin-top: 5%;
+    margin-bottom: 6%;
+    margin-right: 2rem;
+    margin-left: 2rem;
+    padding: 2% 3%;
 }
 
 ion-row.cart-button {
@@ -70,3 +86,24 @@ ion-row.detail ion-label {
 ion-row.cart-button button {
     font-family: hp556;
 }
+
+ion-row.title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.green-button{
+    margin-top: 4%;
+}
+
+.subline{
+    padding: 4px 40px 4px 40px;
+    border-bottom-style: solid;
+    border-color: rgb(184, 0, 0);
+ }
+
+ .secu{
+    padding-top: 6px;
+    padding-bottom: 4px;
+ }

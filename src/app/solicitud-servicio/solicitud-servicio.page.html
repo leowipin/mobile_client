@@ -1,140 +1,58 @@
-<ion-content>
-  <div>
-    <ion-buttons slot="start">
-        <ion-img src="assets/img/retroceder.png" [routerLink]="['/tabs/inicio/servicio-detalle', datosRecibidos.serviceID]"></ion-img>
-    </ion-buttons>
-    <div class="tope">
-      <span>
-      </span>
-      <div class="logosepro">
-        <ion-img style="width: 160px; height: 150spx;" src="assets/img/logosepro.png"></ion-img>
-      </div>
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <div class="header">
+      <ion-img class="back-arrow" src="assets/img/icono-para-atras.png" [routerLink]="['/tabs/inicio/servicio-detalle', datosRecibidos.serviceID]"> </ion-img>
+      <ion-img class="logosepro" src="assets/img/logosepro.png"> </ion-img>
+      <div class="line"></div>
     </div>
-  </div>
-
-  
-  <div class="titulo">
-    <ion-label>Solicitud de servicio</ion-label>
-  </div>
-  <div class="imagen">   
-    <div class="logo">
-      <ion-img  src="assets/img/perfilcliente.png"></ion-img>
-    </div>
-  </div>
-  <div class="datos">
-    
-    <div class="datosPedido">
-      
-          <ion-label class="negrita ">Servicio:</ion-label>
-          <ion-label> {{datosRecibidos.serviceName}}</ion-label>
-        
-          <ion-label class="negrita "> <br/>Fecha de inicio:</ion-label>
-          <ion-label> {{datosRecibidos.startDate}}</ion-label>
-
-          <ion-label class="negrita "> <br/>Hora de inicio: </ion-label>
-          <ion-label> {{datosRecibidos.startTime}}</ion-label>
-
-          <ng-container  *ngIf="!datosRecibidos.requiresDestination">
-            <ion-label class="negrita "> <br/>Fecha de Finalización: </ion-label>
-            <ion-label> {{datosRecibidos.endDate}}</ion-label>
-          </ng-container>
-          
-          <ng-container  *ngIf="!datosRecibidos.requiresDestination">
-            <ion-label class="negrita "> <br/>Hora de Finalización: </ion-label>
-            <ion-label> {{datosRecibidos.endTime}}</ion-label>
-          </ng-container>
-
-          <ng-container  *ngIf="!datosRecibidos.requiresDestination">
-            <ion-label class="negrita "> <br/>Duración: </ion-label>
-            <ion-label> {{formattedDuration}} </ion-label>
-          </ng-container>
-
-          <!--<ion-label class="negrita "> <br/>Lugar origen: </ion-label>
-          <ion-label> {{datosRecibidos.dirOrigin}}</ion-label>
-
-          <ng-container  *ngIf="datosRecibidos.requiresDestination">
-            <ion-label class="negrita "> <br/>Lugar destino: </ion-label>
-            <ion-label> {{datosRecibidos.dirDestination}}</ion-label>
-          </ng-container>-->
-
-          <ng-container *ngFor="let staff of datosRecibidos.staff; let i = index">
-            <ng-container *ngIf="datosRecibidos.staffIsOptional[i] && datosRecibidos.staffSelected[i]">
-              <ion-label class="negrita"> <br/> {{staff}}:</ion-label>
-              <ion-label> si</ion-label>
-            </ng-container>
-            <ng-container *ngIf="datosRecibidos.staffIsOptional[i] && !datosRecibidos.staffSelected[i]">
-              <ion-label class="negrita"> <br/> {{staff}}:</ion-label>
-              <ion-label> no</ion-label>
-            </ng-container>
-          </ng-container>
-
-          <ng-container *ngFor="let staff of datosRecibidos.staff; let i = index">
-            <ng-container *ngIf="datosRecibidos.staffNumberOptional[i]">
-              <ion-label class="negrita"> <br/> cantidad de {{staff}}:</ion-label>
-              <ion-label> {{datosRecibidos.staffNumberRequired[i]}} </ion-label>
-            </ng-container>
-          </ng-container>
-
-          <ng-container *ngFor="let equipment of datosRecibidos.equipment; let i = index">
-            <ng-container *ngIf="datosRecibidos.equipmentIsOptional[i] && datosRecibidos.equipmentSelected[i]">
-              <ion-label class="negrita"> <br/> {{equipment}}:</ion-label>
-              <ion-label> si</ion-label>
-            </ng-container>
-            <ng-container *ngIf="datosRecibidos.equipmentIsOptional[i] && !datosRecibidos.equipmentSelected[i]">
-              <ion-label class="negrita"> <br/> {{equipment}}:</ion-label>
-              <ion-label> no</ion-label>
-            </ng-container>
-          </ng-container>
-
-          <ng-container *ngFor="let equipment of datosRecibidos.equipment; let i = index">
-            <ng-container *ngIf="datosRecibidos.equipmentNumberOptional[i]">
-              <ion-label class="negrita"> <br/> cantidad de {{equipment}}:</ion-label>
-              <ion-label> {{datosRecibidos.equipmentNumberRequired[i]}} </ion-label>
-            </ng-container>
-          </ng-container>
-
-          
-          <ng-container *ngIf="total === 'pendiente'">
-            <ion-label class="negrita "> <br/>Total: </ion-label>
-            <ion-label> {{total}} </ion-label>
-          </ng-container>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="main-c">
+  <ion-grid class="main-grid">
+    <ion-grid class="detail-head">
+      <ion-row class="detail-name bold14">Solicitud de servicio</ion-row>
+      <ion-row class="picture">
+        <ion-img style="width: 100px; height: 100px;" [src]="'assets/img/' + datosRecibidos.serviceName + ' red.png'" *ngIf="datosRecibidos"></ion-img>
+      </ion-row>
+    </ion-grid>
+    <ion-grid class="detail-grid">
+      <ion-grid class="detail-name-grid">
+        <ion-row class="medium12 subline">Servicio</ion-row>
+        <ion-row class="medium12 secu">{{datosRecibidos.serviceName}}</ion-row>
+      </ion-grid>
+      <ion-grid class="detail-data-grid">
+        <ion-grid class="amount-grid">
+          <ion-row class="medium12 subline">Datos del servicio</ion-row>
+          <ion-row class="medium12 amount-cont" *ngIf="total === 'pendiente'">Total: <span class="regular12">&nbsp;{{total}}</span></ion-row>
           <ng-container *ngIf="total !== 'pendiente'">
-            <ion-label class="negrita "> <br/>Subtotal: </ion-label>
-            <ion-label> {{subtotal}} dólares </ion-label>
-            <ion-label class="negrita "> <br/>IVA: </ion-label>
-            <ion-label> {{iva}} dólares </ion-label>
-            <ion-label class="negrita "> <br/>Total: </ion-label>
-            <ion-label> {{total}} dólares </ion-label>
+            <ion-row class="medium12 subt">Subtotal: <span class="regular12">{{subtotal}} dólares</span></ion-row>
+            <ion-row class="medium12 dat">IVA: <span class="regular12">&nbsp;{{iva}} dólares</span></ion-row>
+            <ion-row class="medium12 amount-cont">Total: <span class="regular12">&nbsp;{{total}} dólares</span></ion-row>
           </ng-container>
-
-          <ng-container *ngIf="datosRecibidos.requiresDestination">
-            <br/>
-            <button class="btn btn-primary rounded-pill border-0 ver-ruta" (click)="dibujarRuta()">Ver ruta</button> 
+        </ion-grid>
+        <ion-grid class="data-grid">
+          <ion-row class="medium12 dat">Fecha de inicio: <span class="regular12">&nbsp;{{datosRecibidos.startDate}}</span></ion-row>
+          <ion-row class="medium12 dat">Hora de inicio: <span class="regular12">&nbsp;{{datosRecibidos.startTime}}</span></ion-row>
+          <ion-row class="medium12 dat" *ngIf="!datosRecibidos.requiresDestination">Fecha de finalización <span class="regular12">&nbsp;{{datosRecibidos.endDate}}</span></ion-row>
+          <ion-row class="medium12 dat" *ngIf="!datosRecibidos.requiresDestination">Hora de finalización: <span class="regular12">&nbsp;{{datosRecibidos.endTime}}</span></ion-row>
+          <ion-row class="medium12 dat" *ngIf="!datosRecibidos.requiresDestination">Duración: <span class="regular12">&nbsp;{{formattedDuration}}</span></ion-row>
+          <ng-container *ngFor="let staff of datosRecibidos.staff; let i = index">
+            <ion-row class="medium12 dat" *ngIf="datosRecibidos.staffIsOptional[i] && datosRecibidos.staffSelected[i]">{{staff}}: <span class="regular12">&nbsp;si</span></ion-row>
+            <ion-row class="medium12 dat" *ngIf="datosRecibidos.staffIsOptional[i] && !datosRecibidos.staffSelected[i]">{{staff}}: <span class="regular12">&nbsp;no</span></ion-row>
           </ng-container>
-          <ng-container *ngIf="!datosRecibidos.requiresDestination">
-            <br/>
-            <button class="btn btn-primary rounded-pill border-0 ver-ruta" (click)="verUbicacion()">Ver ubicación</button> 
+          <ng-container *ngFor="let staff of datosRecibidos.staff; let i = index">
+            <ion-row class="medium12 dat" *ngIf="datosRecibidos.staffNumberOptional[i]">Cantidad de {{staff}}: <span class="regular12">&nbsp;{{datosRecibidos.staffNumberRequired[i]}}</span></ion-row>
           </ng-container>
-      
-    </div>
-  </div>
-  
-  <div class="metodo-pago">
-    <ion-label > Elegir metodo de pago</ion-label>
-    <ion-select [(ngModel)]="value" okText="Aceptar" cancelText="Cancelar">
-      <ion-select-option value="tarjeta">TARJETA</ion-select-option>
-    </ion-select>
-    
-  </div>
-  <div class="botones">
-    <div class="cancelar-servicio">
-      <button class="btn btn-danger rounded-pill border-0" [routerLink]="['/servicios-empresa/servicio-detalle', datosRecibidos.serviceID]">Cancelar</button>
-    </div>
-    <div class="confirmar-servicio">
-      <button class="btn btn-success rounded-pill border-0" (click)="sendOrder()">Confirmar</button> 
-    </div>
-    
-  </div>
-  
-
+          <ng-container *ngFor="let equipment of datosRecibidos.equipment; let i = index">
+            <ion-row class="medium12 dat" *ngIf="datosRecibidos.equipmentIsOptional[i] && datosRecibidos.equipmentSelected[i]">{{equipment}}: <span class="regular12">&nbsp;si</span></ion-row>
+            <ion-row class="medium12 dat" *ngIf="datosRecibidos.equipmentIsOptional[i] && !datosRecibidos.equipmentSelected[i]">{{equipment}}: <span class="regular12">&nbsp;no</span></ion-row>
+          </ng-container>
+          <ion-row class="medium12 dat" *ngIf="!datosRecibidos.requiresDestination"><button type="button" (click)="verUbicacion()" class="map-btn"><ion-img src="assets/img/mapa.png" class="map-img"></ion-img></button></ion-row>
+          <ion-row class="medium12 dat" *ngIf="datosRecibidos.requiresDestination"><button type="button" (click)="dibujarRuta()" class="map-btn"><ion-img src="assets/img/mapa.png" class="map-img"></ion-img></button></ion-row>
+          <ion-row class="dat-btng"><button class="green-button"><span class="medium12" (click)="sendOrder()">Confirmar</span></button></ion-row>
+          <ion-row class="dat-btnr"><button class="red-button"><span class="medium12" [routerLink]="['/tabs/inicio/servicio-detalle', datosRecibidos.serviceID]">Cancelar</span></button></ion-row>
+        </ion-grid>
+      </ion-grid>
+    </ion-grid>
+  </ion-grid>
 </ion-content>

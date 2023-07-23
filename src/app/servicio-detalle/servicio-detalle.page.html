@@ -7,7 +7,7 @@
     </div>
   </ion-toolbar>
 </ion-header>
-<ion-content>
+<ion-content class="main-c">
   <ion-grid class="main-grid">
     <ion-grid class="service-head">
       <ion-row class="service-name bold14" *ngIf="serviceData">{{serviceData.name}}</ion-row>
@@ -22,21 +22,21 @@
 
           <ion-row class="input">
             <div id="open-modal">
-              <ion-label class="regular12">Fecha de Inicio</ion-label>
+              <ion-label class="regular12 hyf">Fecha de Inicio</ion-label>
               <div button="true" id="open-date-input">
                 <ion-label class="light12">{{dateValue | date: 'dd/MM/yyyy'}}</ion-label>
                 <ion-icon name="calendar-clear-outline" class="calendar-icon"></ion-icon>
                 <ion-modal trigger="open-modal">
                   <ion-popover trigger="open-date-input" show-backdrop="false">
                   <ng-template>
-                    <ion-content >
+                    <div >
                       <ion-datetime formControlName="fechaInicio" [max]="maxFecha" [min]="minFecha" displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY" #popoverDatetime
                       presentation="date"
                       (ionChange)="dateValue =popoverDatetime.value">   
                       <div slot="title">     
                       </div>            
                       </ion-datetime>
-                    </ion-content>
+                    </div>
                   </ng-template>
                 </ion-popover>
                 </ion-modal>
@@ -46,7 +46,7 @@
 
           <ion-row class="input">
             <div id="open-modal7" >
-              <ion-label class="regular12">Hora de inicio</ion-label>
+              <ion-label class="regular12 hyf">Hora de inicio</ion-label>
               <div button="true" id="open-date-input7" >
                 <ion-label class="light12">{{dateValue7 | date: 'hh:mma'}}</ion-label>
                 <ion-icon name="time-outline" class="calendar-icon"></ion-icon>
@@ -65,21 +65,21 @@
 
           <ion-row class="input" *ngIf="!requires_origin_and_destination">
             <div id="open-modal8">
-              <ion-label class="regular12">Fecha de finalización</ion-label>
+              <ion-label class="regular12 hyf">Fecha de finalización</ion-label>
               <div button="true" id="open-date-input8" >
                 <ion-label class="light12">{{dateValue8 | date: 'dd/MM/yyyy'}}</ion-label>
                 <ion-icon name="calendar-clear-outline"  class="calendar-icon"></ion-icon>
                 <ion-modal trigger="open-modal8">
                   <ion-popover trigger="open-date-input8" show-backdrop="false">
                   <ng-template>
-                    <ion-content >
+                    <div >
                       <ion-datetime formControlName="fechaFinalizacion" [max]="maxFecha" [min]="minFecha" displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY" #popoverDatetime
                       presentation="date"
                       (ionChange)="dateValue8 =popoverDatetime.value">   
                         <div slot="title">     
                         </div>
                       </ion-datetime>
-                    </ion-content>
+                    </div>
                   </ng-template>
                 </ion-popover>
                 </ion-modal>
@@ -89,7 +89,7 @@
 
           <ion-row class="input" *ngIf="!requires_origin_and_destination">
             <div id="open-modal9">
-              <ion-label class="regular12">Hora de finalización</ion-label>
+              <ion-label class="regular12 hyf">Hora de finalización</ion-label>
               <div button="true" id="open-date-input9" >
                 <ion-label class="light12">{{dateValue9 | date: 'hh:mma'}}</ion-label>
                 <ion-icon name="time-outline" class="calendar-icon"></ion-icon>
@@ -111,7 +111,7 @@
               <button type="button" (click)="addDirection(0)" [disabled]="blockOrigen" class="map-btn"><ion-img src="assets/img/mapa.png" class="map-img"></ion-img></button>
           </ion-row>
           <ion-row class="map regular12" *ngIf="serviceData.requires_origin_and_destination">
-              <ion-label>Ubicación destino&nbsp;&nbsp;&nbsp;</ion-label>
+              <ion-label>Ubicación destino&nbsp;&nbsp;</ion-label>
               <button type="button" (click)="addDirection(1)" [disabled]="blockDestino" class="map-btn"><ion-img src="assets/img/mapa.png" class="map-img"></ion-img></button>
           </ion-row>
           <ion-row class="map regular12" *ngIf="!serviceData.requires_origin_and_destination;">
@@ -129,7 +129,7 @@
               <ion-label class="label-num regular12">Cantidad de {{staff}}&nbsp;&nbsp;&nbsp;</ion-label>
               <div class="cantidad">
                 <ion-icon class="decremento" name="remove-circle-outline" (click)="decrement(1)"></ion-icon>
-                <ion-label class="cnumber">&nbsp;{{currentNumber}}&nbsp;</ion-label>
+                <ion-label class="cnumber">&nbsp;&nbsp;{{currentNumber}}&nbsp;&nbsp;</ion-label>
                 <ion-icon class="aumento" name="add-circle-outline" (click)="increment(1)"></ion-icon>
               </div>
             </ion-row>
@@ -141,7 +141,7 @@
             </ion-row>
           </ng-container>
 
-          <button class="green-button"><span class="medium14">Solicitar servicio</span></button>
+          <button class="green-button"><span class="medium12">Solicitar servicio</span></button>
         </ion-grid>
       </ion-grid>
     </form>

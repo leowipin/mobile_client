@@ -11,15 +11,15 @@
 </ion-header>
 
 <ion-content>
-  <!--<ion-img src="assets/img/halcon.png" class="halcon"></ion-img>-->
   <ion-grid class="main-grid">
-    
     <ion-grid class="welcome-grid">
       <ion-row class="welcome bold14">¡Bienvenido!</ion-row>
       <ion-row class="picture">
-        <ion-img src="assets/img/para_foto.png" class="frame"></ion-img>
-        <!--<ion-img src="assets/img/backcliente.png" class="back-img" *ngIf="!photo"></ion-img>-->
-        <ion-img [src]="photo" class="back-img" *ngIf="photo"></ion-img>
+        <div class="cont-imgs">
+          <ion-img src="assets/img/para_foto.png" class="frame"></ion-img>
+          <ion-img class="back-img" [ngStyle]="{'background-image': 'url(' + photo + ')'}"> *ngIf="photo"></ion-img>
+        </div>
+        
       </ion-row>
     </ion-grid>
     
