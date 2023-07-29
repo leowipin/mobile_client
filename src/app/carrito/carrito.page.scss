@@ -1,16 +1,9 @@
 /* Estilos generales para ion-grid e ion-row */
 
 ion-grid.main {
-    height: 90%;
-    margin: 1.2rem 0;
+    height: 100%;
 }
 
-ion-row {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
 
 /* Estilos específicos para cada clase de ion-row */
 ion-row.header {
@@ -28,8 +21,11 @@ ion-row.header span {
 }
 
 ion-grid.content {
-    height: 90%;
-    margin-top: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    //align-items: center;
+    height: 100%;
+    width: 80%;
 }
 
 ion-row.header ion-menu-button {
@@ -46,10 +42,12 @@ ion-grid.content .order-row{
     margin-bottom: 1.3rem;
 }
 
-ion-row.title ion-label {
-    color:#bf1a24;
-    font-size: 2rem;
-    font-family:BebasBold;
+ion-row.title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 6%;
+    margin-top: 3%;
 }
 
 ion-row .order-pill {
@@ -57,43 +55,40 @@ ion-row .order-pill {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background-color: #F2A9B0;
+    background-color: white;
+    border: 0.1px solid rgb(189, 189, 189);
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+    border-radius: 2px;
     border: none;
-    border-radius: 50px;
-    color: white;
-    height: 4.5rem;
+    height: 6rem;
     text-align: center;
     text-decoration: none;
-    font-size: 16px;
-    width: 80%;
+    width: 100%;
     position: relative;
 }
 
 ion-row .order-pill .order-name{
     color:#262626;
-    font-size: 1.3rem;
-    font-family:hp556;
+    margin-top: 3px;
 }
 
 ion-row .order-pill .order-status{
-    font-size: 0.9rem;
-    font-family:hp990;
+    margin-top: 5px;
+    padding: 2px 4px;
 }
 
 ion-row .order-pill .order-date{
+    font-size: 0.6rem;
     position: absolute;
-    color:white;
-    font-size: 0.7rem;
-    font-family:hp556;
-    left: 15px;
+    left: 7px;
+    top: 7px;
 }
 
 ion-row .order-pill .details{
+    font-size: 0.6rem;
     position: absolute;
-    color:white;
-    font-size: 0.7rem;
-    font-family:hp556;
-    right: 15px;
+    right: 7px;
+    top: 7px;
 }
 
 ion-row .empty-cart{
@@ -101,4 +96,10 @@ ion-row .empty-cart{
     font-size: 1.2rem;
     font-family:hp556;
 }
+
+.subline{
+    padding: 4px 40px 4px 40px;
+    border-bottom-style: solid;
+    border-color: rgb(184, 0, 0);
+ }
 

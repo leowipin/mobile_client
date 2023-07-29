@@ -88,6 +88,10 @@ export class EditarperfilPage implements OnInit {
         });
         this.email = response.email;
         this.photo = response.url_img;
+        if(response.url_img==null){
+          this.photo = 'assets/img/backcliente.png'
+        }
+        console.log(response)
         },
       error: (error) => {
         this.alertController.create({
@@ -113,6 +117,11 @@ export class EditarperfilPage implements OnInit {
         url_img: this.photo
       }
       const token = localStorage.getItem('token');
+      console.log(data)
+      if(data.url_img == 'assets/img/backcliente.png'){
+        data.url_img = null;
+      }
+      console.log(data)
       const response = await this.clienteWAService.modifyClientData(token, data).toPromise();
       if(response.message.includes('True')){
         this.userDataService.updatePhoto(this.photo)
@@ -393,7 +402,7 @@ export class EditarperfilPage implements OnInit {
     this.clienteWAService.deleteProfilePic(token).subscribe({
       next: (response) => {
         this.presentAlert("Eliminar imagen", "La imagen de perfil ha sido eliminada correctamente.")
-        this.photo = 'assets/img/perfilcliente.png';
+        this.photo = 'assets/img/backcliente.png';
         this.userDataService.updatePhoto('assets/img/backcliente.png')
       },
       error: (error) => {

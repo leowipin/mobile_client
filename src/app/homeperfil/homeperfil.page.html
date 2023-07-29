@@ -1,75 +1,61 @@
-<ion-content>
-
-  <div>
-    <ion-buttons slot="start">
-      <ion-menu-button>
-        <ion-img src="assets/img/menuHamburguesa.png"></ion-img>
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <div class="header">
+      <ion-menu-button class="menu-btn">
+        <ion-icon name="menu-outline" class="red-icon"></ion-icon>
       </ion-menu-button>
-    </ion-buttons>
-    <div class="tope">
-      <span>
-      </span>
-      <div class="logosepro">
-        <ion-img style="width: 160px; height: 150spx;" src="assets/img/logosepro.png"></ion-img>
-      </div>
+      <ion-img class="logosepro" src="assets/img/logosepro.png"> </ion-img>
+      <div class="line"></div>
     </div>
-  </div>
+  </ion-toolbar>
+</ion-header>
 
-
-
-  <div class="datosperfilhome">
-    <ion-grid class= "gridperfil">
-      <ion-row>
-        <ion-col>
-          <div class="container" *ngIf="photo">
-            <div class="outer"
-              [ngStyle]="{'background-image': 'url(' + photo + ')'}">
-             </div>
-          </div>
-        </ion-col>
-        <ion-col class = "coldatosuser">
-          <ion-row>
-             <ion-label class="bienvenido">
-            BIENVENIDO {{nombreur}}
-          </ion-label>
-          </ion-row>
-          <ion-row>
-            <ion-label class = "user">
-             
-          </ion-label>
-          </ion-row>
-        </ion-col>
+<ion-content>
+  <ion-grid class="main-grid">
+    <ion-grid class="welcome-grid">
+      <ion-row class="welcome bold14">¡Bienvenido!</ion-row>
+      <ion-row class="picture">
+        <div class="cont-imgs">
+          <ion-img src="assets/img/para_foto.png" class="frame"></ion-img>
+          <ion-img class="back-img" [ngStyle]="{'background-image': 'url(' + photo + ')'}"> *ngIf="photo"></ion-img>
+        </div>
       </ion-row>
     </ion-grid>
-
-
-
-    <ion-list class="opcionesperfil" lines=full>
-      <ion-item button class="ingresoperfil" (click)="perfil()">
-        <ion-icon name="person-sharp"></ion-icon>
-        <ion-label>PERFIL</ion-label>
-      </ion-item>
-      <ion-item class="tarjetas" (click)="goToNoti()">
-        <ion-icon name="card"></ion-icon>
-        <ion-label>NOTIFICACIONES</ion-label>
-      </ion-item>
-      <ion-item class="politicasprivacidad">
-       
-        <ion-img src="assets/img/iconopoliticas.png"></ion-img> 
-     
-        <ion-label>POLÍTICAS DE PRIVACIDAD</ion-label>
-      
-      
-      
-      
-    </ion-item>
-   </ion-list>
     
-    
-  </div>
-
-
- 
-
+    <ion-grid class="option-grid">
+      <ion-row class="select-s bold14">
+        {{nombreur}}
+      </ion-row>
+      <ion-row class="option-card" (click)="perfil()">
+        <div class="option-body">
+          <div class="option-icon">
+            <ion-img src="assets/img/icono_1.png"></ion-img>
+          </div>
+          <div class="option-name bold14">
+            Perfil
+          </div>
+        </div>
+      </ion-row>
+      <ion-row class="option-card" (click)="goToNoti()">
+        <div class="option-body">
+          <div class="option-icon">
+            <ion-img src="assets/img/icono_2.png"></ion-img>
+          </div>
+          <div class="option-name bold14">
+            Notificaciones
+          </div>
+        </div>
+      </ion-row>
+      <ion-row class="option-card">
+        <div class="option-body">
+          <div class="option-icon">
+            <ion-img src="assets/img/icono_3.png"></ion-img>
+          </div>
+          <div class="option-name bold14">
+            Políticas de privacidad
+          </div>
+        </div>
+      </ion-row>
+    </ion-grid>
+  </ion-grid>
 </ion-content>
-

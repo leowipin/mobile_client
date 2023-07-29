@@ -9,8 +9,8 @@ const routes: Routes = [
         component: HistorialserviciosPage
   },
   {
-    path: 'pedido-carrito',
-    loadChildren: () => import('../pedido-carrito/pedido-carrito.module').then( m => m.PedidoCarritoPageModule)
+    path: 'pedido-historial',
+    loadChildren: () => import('../pedido-historial/pedido-historial.module').then( m => m.PedidoHistorialPageModule)
   },
 ];
 

@@ -58,6 +58,17 @@
     color: white;
 }
 
+.white-button {
+    border-radius: 5px;
+    padding: 5px 12px;
+    background-color: white;
+    color: black;
+    border: 0.1px rgb(189, 189, 189);
+    background-color: WHITE;
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+    width: 90%;
+}
+
 //fonts
 
 .light12 {
@@ -102,6 +113,10 @@
 .regular12{
     font-family: 'LemonMilkRegular';
     font-size: 12px;
+}
+.regular14{
+    font-family: 'LemonMilkRegular';
+    font-size: 14px;
 }
 
 //header

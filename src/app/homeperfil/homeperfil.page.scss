@@ -1,123 +1,127 @@
-.datosperfilhome {
-    margin-top: 40%;
-    .gridperfil {
-        justify-content: stretch;
-
-        .coldatosuser {
-            margin-right: 5%;
-        }
-        .logo {
-            margin: auto;
-            width: 60%;
-        }
-        ion-row {
-            justify-content: center;
-        }
-
-        .bienvenido {
-            color: #bf1a24;
-            font-weight: bold;
-            font-family: "BebasBold";
-            font-size: x-large;
-        }
-        .user {
-            font-family: "BebasBold";
-            font-size: x-large;
-            font-weight: lighter;
-            justify-content: center;
-        }
-    }
+ion-grid.main-grid{
+    height: 100%;
 }
 
-.opcionesperfil {
-    margin-left: 10%;
-    margin-right: 10%;
-    margin-top: 5%;
-    ion-item {
-        justify-content: space-between;
-
-        ion-icon {
-            margin-right: 10%;
-            color: black;
-        }
-
-        ion-label {
-            font-family: "BebasBold";
-            font-size: x-large;
-        }
-    }
+ion-grid.welcome-grid{
+    height: 30%;
 }
 
-ion-content {
-    --background: none;
-    background-image: url("../../assets/img/rayasbottom.png");
-    background-position: bottom;
-    background-repeat: no-repeat;
-    //background-image: url("../../assets/img/aguilarojafondo.png");
-    //background-position: center;
-    background-size: 100%;
-    margin-bottom: 50%;
+ion-grid.option-grid{
+    //background-color: gray;
+    display: flex;
+    align-items: center;
+    //justify-content: center;
+    flex-direction: column;
+    height: 70%;
 }
 
-ion-menu-button {
-    margin-left: 20px;
-    margin-top: 10px;
-    min-width: 50px;
-    ion-img {
-        padding: 2px;
-        width: 60px;
-    }
-}
-
-.tope span {
-    width: 100%;
-    position: absolute;
-    background-color: #FFDDDD;
-    height: 26px;
-    top: 62px;
-    z-index: 1;
-}
-
-.logosepro ion-img {
-    position: absolute;
-    top: 18px;
-    left: auto;
-    z-index: 2;
-}
-
-div.logosepro {
+ion-row.welcome{
+    //background-color: yellow;
+    height: 30%;
     display: flex;
     justify-content: center;
+    align-items: center;
+    
+}
+
+ion-row.picture{
+    //background-color: blueviolet;
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+ion-img.frame{
+    bottom: -10px;
+    width: 25vh;
+    height: 125%;
+    z-index: 100;
+    position: absolute;
 }
 
 
-.politicasprivacidad {
-      
-    ion-label{
-        margin-left: 8%;
-    }
-    ion-img{
-      
-      width: 1.8em;
-      height: 1.8em;
-      text-align: center;
-      
-    }
-
-}
-.outer {
-    width: 80% !important;
-    height: 70% !important;
-
-    margin: auto;
-    border-radius: 100%;
-    position: relative;
+ion-img.back-img{
+    width: 13.3vh;
+    height: 99%;
+    margin-top: 3%;
+    margin-left: 2%;
+    mask-image: url(../../assets/img/corona_dentro.png);
+    mask-size: 100% 100%;
+    background-position: center;
     background-size: 100% 100%;
-  }
+   
+}
 
-  .container {
+
+
+ion-row.select-s{
+    //background-color: brown;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 12%;
+    margin-bottom: 2%;
+}
+
+ion-row.option-card {
+    height: 21%;
+    margin-bottom: 4%;
+    width: 81%;
+    border: 0.1px solid rgb(189, 189, 189);
+    background-color: WHITE;
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+}
+
+.option-body{
+    display: flex;
+    //justify-content:space-around;
+    align-items: center;
+    width: 100%;
+}
+
+.option-icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 20%;
+    margin-left: 4%;    
+}
+
+.option-img{
+    //background-image: ;
+    height: 50px;
+    width: 50px;
+}
+
+.option-name{
+    display: flex;
+    align-items: center;
+    width: 65%;
+    height: 100%;
+    overflow: hidden;
+    word-wrap: break-word;
+    word-break: break-all;
+    font-size: 0.7rem;
+}
+
+.continue{
+    position: absolute;
+    right: 35px;
+}
+.continue ion-img{
+    width: 45px;
+    height: 45px;
+    
+}
+
+.cont-imgs{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
     width: 150px;
-    height: 150px;
-    margin: 0 auto;
-
-  }
+    position: relative;
+}

@@ -1,236 +1,121 @@
-.datos{
-    margin: 1rem;
-    padding: 0.5rem 3rem 0.5rem 3rem;
-    border: 2px ;
-    margin-top: 0;
-    justify-items:center;
-    justify-content: space-between;
-    color:black;
-    ion-label{
-        font-family: hp556;
-        font-size: small;
-        font-weight: bold;
-        ;
-    }
+ion-grid.main-grid {
+  height: 100%;
 }
 
-ion-content{
-    --ion-background-color: white;
-
+ion-grid.detail-head {
+  height: 30%;
 }
 
-div h4{
-    font-weight: bold;
-    color:#912020;
-    text-align: center;
-    margin-top: 15%;
+ion-row.detail-name, ion-row.picture {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+ion-row.detail-name {
+  height: 30%;
+}
 
-.botones button{
-    text-align:center;
-    width: 10rem;
-    height: 2.3rem;
-    border-radius: 60px ;
-    //background-color:#3887bd;
-    color:#ffffff;
-    //margin-right: 5%;
-    justify-content: space-between;
-  }
+ion-row.pictureGuard{
+  height: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+.cont-imgs{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 150px;
+  position: relative;
+}
 
+ion-img.back-img{
+  width: 13.3vh;
+  height: 99%;
+  margin-top: 3%;
+  margin-left: 2%;
+  mask-image: url(../../assets/img/corona_dentro.png);
+  mask-size: 100% 100%;
+  background-position: center;
+  background-size: 100% 100%;
+}
 
-.datos ion-item{
-    border-radius: 60px ;
+ion-img.frame{
+  bottom: -10px;
+  width: 25vh;
+  height: 125%;
+  z-index: 100;
+  position: absolute;
+}
+
+ion-grid.info-grid, ion-grid.input-data {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 2%;
+}
+
+ion-grid.input-data {
+  width: 80%;
+  margin-bottom: 2%;
+  background-color: white;
+  border: 0.1px solid rgb(189, 189, 189);
+  box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+}
+
+ion-row.input, ion-row.map, ion-row.spinner, ion-row.checkb, ion-row.request {
+  height:30px;
+  width:92%;
+  margin-top:5%;
+}
+
+ion-row.input {
+  height:70px;
+}
+
+.input ion-item{
+  border-radius: 2px ;
     --border-color: #3a75af;
-      --ion-background-color: #e1e6eb;
-  
+      --ion-background-color: #e1e1e1;
+      width: 100%;
 }
 
-.seleccion ion-icon {
-    margin-right: 0%;
-    top: 0.2em;
-    position: absolute;
-    margin-left: 80%;
-    color: black;
-  }
-
-
-.logo{
-    position: relative;
-   margin:auto;
-    
+.email-input{
+  width: 100%;
 }
 
-.datos2 ion-chip{
-    width: 95%;
-}
-
-.datos{
-    //margin-top: 7rem;
-    .itemdatos{
-        margin-top: 5%;
-    }
+.lbl{
+  margin-bottom: 1%;
 }
 
 .error{
-    font-size: x-small;
+  font-family:'LemonMilkLightItalic';
+  font-size: 0.7rem;
 }
 
-.titulo{
-    h4{
-        color: #bf1a24;
-        font-weight: bold;
-        font-family: 'BebasBold';
-        font-size: x-large;
-    }
+ion-row.dat-btng{
+  margin-top: 3%;
 }
 
-ion-chip{
-    border-color: black;
+ion-row.dat-btnw{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 2%;
 }
 
-.botones {
-    margin-top: 15%;
-    justify-content: space-between;
-    text-align:center;
-    margin: auto;
-    margin-top: 10%;
-
-    .guardar{
-        width:6rem;
-    }
-    .cancelar{
-        background-color: #fc5759;
-        width: 6rem;
-    }
+ion-row.dat-btnr{
+  margin-top: 2%;
 }
 
-ion-input{
-    font-family: hp265;
-    font-weight: lighter;
-}   
-
-ion-datetime{
-    font-family: hp265;
-    font-weight: lighter;
-}   
-
-
-ion-datetime {
-    height: auto;
-    width: auto;
-  
-    
-  }
-  
-  ion-modal {
-    --width: 290px;
-    --height: 460px;
-    --border-radius: 8px;
-  }
-  
-  ion-modal ion-datetime {
-    height: 460px;
-  }
-  ion-buttons {
-    //position: fixed;
-    margin-left: 20px;
-    margin-top: 14px;
-    max-width: 40px;
-    ion-img {
-        padding: 2px;
-        width: 60px;
-        opacity: 0.6;
-    }
+ion-img.edit{
+  position: absolute;
+  width: 40px;
+  right: 9px;
+  bottom: -5px;
+  z-index: 100;
 }
-
-.tope span {
-    width: 100%;
-    position: absolute;
-    background-color: #FFDDDD;
-    height: 26px;
-    top: 62px;
-    z-index: 1;
-}
-
-
-
-.logosepro ion-img {
-    position: absolute;
-    top: 18px;
-    left: auto;
-    z-index: 2;
-}
-
-div.logosepro {
-    display: flex;
-    justify-content: center;
-}
-
-/*
-.botones{
-    position: relative;
-    text-align:center;
-    margin-left: 20%;
-    margin-right: 20%;
-    display: flex;
-    justify-content: space-between;
-    
-}*/
-
-.my-custom-class {
-    --background: #e5e5e5;
-  }
-
-
-  /*SCSS para foto*/
-
-  .container {
-    width: 150px;
-    height: 150px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-  }
-  .profile-pic {
-    width: 150px;
-    height: 150px;
-  }
-  .outer {
-    width: 80% !important;
-    height: 70% !important;
-
-    margin: auto;
-    border-radius: 100%;
-    position: relative;
-    background-size: 100% 100%;
-  }
-  .inner {
-    background-color: #075E54;
-    width: 45px;
-    height: 45px;
-    border-radius: 100%;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .camera-icon {
-    height: 30px;
-    width: 30px;
-    color: white;
-  }
-  .datos .email-input ion-item{
-    --border-color: #3a75af;
-      --ion-background-color: #9e9e9e;
-  }
-  .change-email{
-    color: #3887bd;
-    text-decoration: underline;
-  }
-  .continue{
-    background-color:#198754;
-  }

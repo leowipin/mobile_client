@@ -49,7 +49,7 @@ export class HistorialserviciosPage implements OnInit {
       isPaidProcess: false
     };
     console.log(queryParams)
-    this.navCtrl.navigateForward(['/tabs/historialservicios/pedido-carrito'], { queryParams: queryParams });
+    this.navCtrl.navigateForward(['/tabs/historialservicios/pedido-historial'], { queryParams: queryParams });
   }
 
   

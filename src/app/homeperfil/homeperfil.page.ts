@@ -15,7 +15,7 @@ export class HomeperfilPage implements OnInit {
   nombreur: any;
   apellidour: any;
   uid:any;
-  photo:any = "assets/img/perfilcliente.png";
+  photo:any = "assets/img/backcliente.png";
 
   constructor(private route: ActivatedRoute, private navCtrl: NavController, public alertController: AlertController, 
     private userDataService: UserDataService, private storage: AngularFireStorage){
@@ -41,7 +41,7 @@ export class HomeperfilPage implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       if(params['photo']=="assets/img/backcliente.png"){
-        this.photo = "assets/img/perfilcliente.png"
+        this.photo = "assets/img/backcliente.png"
       } else{
         console.log("ELSE")
         this.photo = params['photo'];
@@ -82,7 +82,7 @@ export class HomeperfilPage implements OnInit {
       this.photo = await fileRef.getDownloadURL().toPromise();
       console.log(this.photo)
     } catch (error) {
-      this.photo = "assets/img/perfilcliente.png";
+      this.photo = "assets/img/backcliente.png";
     }
   }
 

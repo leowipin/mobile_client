@@ -7,25 +7,18 @@ import { ModalController } from '@ionic/angular';
 import { TrackServicioComponent } from '../track-servicio/track-servicio.component';
 import { UbicacionService } from '../ubicacion/ubicacion.service';
 import { NavController } from '@ionic/angular';
-import { Router } from '@angular/router';
-import { Renderer2, Injector, Inject} from '@angular/core';
+import { Renderer2} from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { UbicacionComponent } from 'src/app/ubicacion/ubicacion.component';
-import { CardData } from '../interfaces/client/cardData';
-import { BillingData } from '../interfaces/client/billingData';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-//import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 declare var google: any;
 
-
 @Component({
-  selector: 'app-pedido-carrito',
-  templateUrl: './pedido-carrito.page.html',
-  styleUrls: ['./pedido-carrito.page.scss'],
+  selector: 'app-pedido-historial',
+  templateUrl: './pedido-historial.page.html',
+  styleUrls: ['./pedido-historial.page.scss'],
 })
-export class PedidoCarritoPage implements OnInit {
+export class PedidoHistorialPage implements OnInit {
 
   orderData:OrderData;
   orderName:string;
@@ -72,7 +65,7 @@ export class PedidoCarritoPage implements OnInit {
     lat: -2.1676746,
     lng: -79.8956897
   };
-  constructor(private route: ActivatedRoute, private clienteWAService: ClienteWAService, private alertController: AlertController, private modalController: ModalController, private ubicacionService: UbicacionService, private renderer: Renderer2, private navCtrl: NavController, private router: Router, private modalService: NgbModal, private injector: Injector) { 
+  constructor(private route: ActivatedRoute, private clienteWAService: ClienteWAService, private alertController: AlertController, private modalController: ModalController, private ubicacionService: UbicacionService, private renderer: Renderer2, private navCtrl: NavController,) { 
 
   }
 
@@ -131,7 +124,7 @@ export class PedidoCarritoPage implements OnInit {
     let hours = Math.floor(this.orderData.duration);
     let minutes = Math.floor((this.orderData.duration - hours) * 60);
     let seconds = Math.round(((this.orderData.duration - hours) * 60 - minutes) * 60);
-    this.formattedDuration = `${hours} horas ${minutes} min ${seconds} seg`;
+    this.formattedDuration = `${hours} horas ${minutes} min`;
   }
 
   getOrder(){
@@ -254,143 +247,6 @@ getBillingData(token:string, order:string){
   });
 }
 
-paid(){
-  this.alertController.create({
-    header: "Pago Servicio",
-    message: "¿Está seguro que desea realizar el pago del servicio?",
-    buttons: [
-      {
-        text: 'No',
-        role: 'cancel'
-      },
-      {
-        text: 'Sí',
-        handler: () => {
-          this.paidOrder()
-        }
-      }
-    ]
-  }).then(alert => alert.present())
-}
-
-paidOrder(){
-  this.isPaidBtnDisabled = true
-  const token = localStorage.getItem('token');
-  const base64Url = token.split('.')[1];
-  const base64 = base64Url.replace('-', '+').replace('_', '/');
-  const payload = JSON.parse(atob(base64));
-  const uid = payload.user_id.toString()
-  const email = payload.user_email
-  let datos = {
-    "card": {
-    "token": this.token
-    },
-    "user": {
-    "id": uid,
-    "email": email
-    },
-    "order":{
-      "amount":parseFloat(this.total),
-      "description":"servicio de seproamerica",
-      "dev_reference":`${uid}-${this.orderId}`,
-      "vat":parseFloat(this.iva)
-    }
-  }
-  
-  this.clienteWAService.pagar(datos).subscribe({
-    next: (response) => {
-      let bData: BillingData = {
-        first_name: this.first_name,
-        last_name:this.last_name,
-        dni:this.dni,
-        email:this.email,
-        phone_number:this.phone_number,
-        address:this.address,
-        pedido:this.orderId,
-        card_num:this.card_num,
-        transaction_id:response.transaction.id
-      }
-      if (response.transaction.status == 'success') {
-        
-        this.clienteWAService.sendBillingData(token, bData).subscribe({
-          next: (response) => {
-          },error: (error) => {
-          }
-        });
-        this.clienteWAService.changeOrderStatus(token, 'pagado', this.orderId).subscribe({
-          next: (response) => {
-          },
-          error: (error) => {
-            this.alertController.create({
-              header: 'Pago Servicio',
-              message: 'El pago se ha realizado con éxito, pero nuestros servidores aún no se han actualizado. Por favor, contáctenos para obtener más información y asistencia. ¡Gracias por su comprensión!',
-              buttons: [{
-                text: 'Aceptar',
-                handler: () => {
-                  this.navCtrl.navigateRoot(['/tabs/carrito']);
-                }
-              }]
-            }).then(alert => alert.present());
-          }
-        });
-        this.alertController.create({
-          header: 'Pago servicio',
-          message: '¡Transacción realizada exitosamente!',
-          buttons: [{
-            text: 'Aceptar',
-            handler: () => {
-              this.navCtrl.navigateRoot(['/tabs/historialservicios']);
-            }
-          }]
-        }).then(alert => alert.present());
-      } else if(response.transaction.status == 'pending'){
-        this.openModal(uid, response.transaction.id, "BY_OTP", token, bData, this.orderId) //bootstrap modal
-      } else {
-        this.alertController.create({
-          header: 'Pago Servicio',
-          message: 'Hubo un error. La transacción NO se ha realizado',
-          buttons: [{
-            text: 'Aceptar',
-            handler: () => {
-              this.navCtrl.navigateRoot(['/tabs/carrito']);
-            }
-          }]
-        }).then(alert => alert.present());
-      }
-    },
-    error: (error) => {
-      this.alertController.create({
-        header: 'Pago Servicio',
-        message: 'Hubo un error. La transacción NO se ha realizado',
-        buttons: [{
-          text: 'Aceptar',
-          handler: () => {
-            this.navCtrl.navigateRoot(['/tabs/carrito']);
-          }
-        }]
-      }).then(alert => alert.present());
-    }
-  });
-    
-  
-}
-
-openModal(userid: string, transactionid: string, type: string, token:string, bData:BillingData, orderId:any) { //bootstrap modal
-  const modalRef = this.modalService.open(MyModalComponent, {
-    injector: Injector.create({
-      providers: [
-        { provide: 'userid', useValue: userid },
-        { provide: 'transactionid', useValue: transactionid },
-        { provide: 'type', useValue: type },
-        { provide: 'token', useValue: token },
-        { provide: 'bData', useValue: bData },
-        { provide: 'orderId', useValue: orderId },
-      ],
-      parent: this.injector
-    })
-  });
-  this.isPaidBtnDisabled = false;
-}
 refund(){
   this.alertController.create({
     header: "Reembolso Servicio",
@@ -509,13 +365,6 @@ async goBackToOrder(){
   await alert.present();
 }
 
-async abrirModal() {
-  const modal = await this.modalController.create({
-    component: MyModalComponent
-  });
-  return await modal.present();
-}
-
 async dibujarRuta() {
 
   const modalAdd = await this.modalController.create({
@@ -570,143 +419,9 @@ findPlaces(salida: any, llegada: any) {
     })
     .catch((e) => window.alert("Geocoder failed due to: " + e));
 }
+
+
+
+
+
 }
-
-@Component({ //bootstrap modal
-  selector: 'my-modal',
-  template: `
-  <div class="modal-header">
-    <h4 class="modal-title">Código OTP</h4>
-    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="activeModal.close('Close click')"></button>
-  </div>
-  <div class="modal-body">
-    <p>Ingrese el código OTP que ha recibido de su banco para continuar con el proceso.</p>
-    <input type="text" class="form-control" [(ngModel)]="otpCode" placeholder="Código OTP">
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-danger" (click)="activeModal.close('Close click')">Cerrar</button>
-    <button type="button" class="btn btn-primary" (click)="sendOtp()" [disabled]="isButtonDisabled()">Enviar</button>
-  </div>
-`,
-  styleUrls: ['mymodal.scss']
-})
-export class MyModalComponent{
-
-  otpCode:string
-
-
-  constructor(private clienteWAService: ClienteWAService, public activeModal: NgbActiveModal, private alertController: AlertController, private navCtrl: NavController,
-    @Inject('userid') public userid: string,
-    @Inject('transactionid') public transactionid: string,
-    @Inject('type') public type: string,
-    @Inject('token') public token: string,
-    @Inject('bData') public bData: BillingData,
-    @Inject('orderId') public orderId: any,) {
-  }
-
-
-  ngOnInit() {
-
-  }
-
-  sendOtp(){
-    this.clienteWAService.dinersVerify(this.userid, this.transactionid, this.type, this.otpCode).subscribe({
-      next: (response) => {
-        let alertMessage = this.getAlertMessage(response.status);
-        if(response.status === 1){
-          this.clienteWAService.sendBillingData(this.token, this.bData).subscribe({
-            next: (response) => {
-            },error: (error) => {
-            }
-          });
-          this.clienteWAService.changeOrderStatus(this.token, 'pagado', this.orderId).subscribe({
-            next: (response) => {
-              this.alertController.create({
-                header:"Pago servicio",
-                message: alertMessage,
-                buttons: [
-                  {
-                    text: 'Aceptar',
-                    handler: () => {
-                      this.navCtrl.navigateRoot('/tabs/historialservicios');
-                    }
-                  }
-                ]
-              }).then(alert => alert.present())
-            },
-            error: (error) => {
-              this.alertController.create({
-                header:"Pago servicio",
-                message: 'El pago se ha realizado con éxito, pero nuestros servidores aún no se han actualizado. Por favor, contáctenos para obtener más información y asistencia. ¡Gracias por su comprensión!',
-                buttons: [
-                  {
-                    text: 'Aceptar',
-                    handler: () => {
-                      this.navCtrl.navigateRoot('/tabs/carrito');
-                    }
-                  }
-                ]
-              }).then(alert => alert.present())
-            }
-          });
-        } else {
-          this.alertController.create({
-            header:"Pago servicio",
-            message: alertMessage,
-            buttons: [
-              {
-                text: 'Aceptar',
-                handler: () => {
-                  this.navCtrl.navigateRoot('/tabs/carrito');
-                }
-              }
-            ]
-          }).then(alert => alert.present())
-        }
-        
-      },error: (error) => {
-        this.alertController.create({
-          header: "Pago servicio",
-          message: 'Hubo un error. La transacción NO se ha realizado',
-          buttons: [{
-            text: 'Aceptar',
-            handler: () => {
-              this.navCtrl.navigateRoot(['/tabs/carrito']);
-            }
-          }]
-        }).then(alert => alert.present());
-      }
-    });
-    this.activeModal.close('Close click');
-  }
-
-  isButtonDisabled(): boolean {
-    if(this.otpCode == undefined){
-      return true
-    } else{
-      return this.otpCode.length < 6;
-    }
-    
-  }
-
-  getAlertMessage(status: number): string {
-    switch (status) {
-      case 0:
-        return 'Transacción pendiente.';
-      case 1:
-        return '¡Transacción realizada exitosamente!';
-      case 2:
-        return 'Transacción cancelada.';
-      case 4:
-        return 'Transacción rechazada.';
-      case 5:
-        return 'Transacción expirada.';
-      default:
-        return 'Estado de transacción desconocido.';
-    }
-  }
-
-  
-  
-}
-

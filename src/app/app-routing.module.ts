@@ -119,6 +119,10 @@ const routes: Routes = [
     path: 'header',
     loadChildren: () => import('./header/header.module').then( m => m.HeaderPageModule)
   },
+  {
+    path: 'pedido-historial',
+    loadChildren: () => import('./pedido-historial/pedido-historial.module').then( m => m.PedidoHistorialPageModule)
+  },
 
 
 

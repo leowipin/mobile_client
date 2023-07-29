@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <div class="header">
-      <ion-img class="back-arrow" src="assets/img/icono-para-atras.png" routerLink="/tabs/carrito"> </ion-img>
+      <ion-img class="back-arrow" src="assets/img/icono-para-atras.png" routerLink="/tabs/historialservicios"> </ion-img>
       <ion-img class="logosepro" src="assets/img/logosepro.png"> </ion-img>
       <div class="line"></div>
     </div>
@@ -56,8 +56,8 @@
           </ng-container>
           <ion-row class="medium12 dat" *ngIf="!requires_origin_and_destination"><button type="button" (click)="verUbicacion()" class="map-btn"><ion-img src="assets/img/mapa.png" class="map-img"></ion-img></button></ion-row>
           <ion-row class="medium12 dat" *ngIf="requires_origin_and_destination"><button type="button" (click)="dibujarRuta()" class="map-btn"><ion-img src="assets/img/mapa.png" class="map-img"></ion-img></button></ion-row>
-          <ion-row class="dat-btng" *ngIf="isNotPendiente"><button class="green-button" (click)="goToBillingData()"><span class="medium12">Realizar pago</span></button></ion-row>
-          <ion-row class="dat-btnr"><button class="red-button" (click)="deleteOrder()"><span class="medium12">Eliminar</span></button></ion-row>
+          <ion-row class="dat-btng"><button class="red-button" *ngIf="status=='pagado'" (click)="refund()"><span class="medium12">Reembolsar</span></button></ion-row>
+          <ion-row class="dat-btnr"><button class="red-button" *ngIf="status=='reembolsado'|| status=='finalizado'" (click)="deleteOrder()"><span class="medium12">Eliminar</span></button></ion-row>
         </ion-grid>
       </ion-grid>
     </ion-grid>

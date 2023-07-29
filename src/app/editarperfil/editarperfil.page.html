@@ -1,223 +1,250 @@
-
-<ion-content [fullscreen]="true">
-  <div class="header">
-    <ion-buttons slot="start">
-        <ion-img src="assets/img/retroceder.png" (click)="presentAlertEditar()" *ngIf="isProfileInformation"></ion-img>
-        <ion-img src="assets/img/retroceder.png" (click)="backToOrder()" *ngIf="!isProfileInformation"></ion-img>
-    </ion-buttons>
-    <div class="tope">
-      <span>
-      </span>
-      <div class="logosepro">
-        <ion-img style="width: 160px; height: 150spx;" src="assets/img/logosepro.png"></ion-img>
-      </div>
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <div class="header">
+      <ion-img class="back-arrow" src="assets/img/icono-para-atras.png" (click)="presentAlertEditar()" *ngIf="isProfileInformation"></ion-img>
+      <ion-img class="back-arrow" src="assets/img/icono-para-atras.png" (click)="backToOrder()" *ngIf="!isProfileInformation"> </ion-img>
+      <ion-img class="logosepro" src="assets/img/logosepro.png"> </ion-img>
+      <div class="line"></div>
     </div>
-  </div>
+  </ion-toolbar>
+</ion-header>
 
-  <div class="titulo">
-    <h4 *ngIf="isProfileInformation">PERFIL</h4>
-    <h4 *ngIf="!isProfileInformation">DATOS DE FACTURACIÓN</h4>
-  </div>
-
-  <div class="container" *ngIf="isProfileInformation">
-    <div class="outer"
-      [ngStyle]="{'background-image': photo ? 'url(' + photo + ')' : 'url(assets/img/perfilcliente.png)'}">
-        <div class="inner" (click)="openOptionSelection()">
-           <ion-icon name="camera" class="camera-icon"></ion-icon>
+<ion-content class="main-c">
+  <ion-grid class="main-grid">
+    <ion-grid class="detail-head">
+      <ion-row class="detail-name bold14">Editar perfil</ion-row>
+      <ion-row class="pictureGuard">
+        <div class="cont-imgs">
+          <ion-img src="assets/img/para_foto.png" class="frame"></ion-img>
+          <ion-img class="back-img" [ngStyle]="{'background-image': 'url(' + photo + ')'}"> *ngIf="photo"></ion-img>
+          <ion-img src="assets/img/editar_foto.png" class="edit" (click)="openOptionSelection()"></ion-img>
         </div>
-     </div>
-  </div>
-
-
-	
-  <div class="datosinput">
+      </ion-row>
+    </ion-grid>
     <form [formGroup]="ionicForm" validate>
-      <ion-list class="datos">
-        <div class="itemdatos">
-          <ion-label >Nombres</ion-label>
-          <ion-item lines="full">    
-            <ion-input formControlName="name" type="text" required></ion-input>
-          </ion-item>
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.required">
-            Es necesario al menos un nombre.
-          </span>
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.minlength">
-            Su nombre debe tener al menos 2 caracteres.
-          </span>
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.pattern">
-            Ingrese un nombre válido.
-          </span>
-        </div>
-
-        <div class="itemdatos">
-          <ion-label>Apellidos</ion-label>
-          <ion-item lines="full">
-            <ion-input formControlName="lastname" type="text" required></ion-input>
-          </ion-item>
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.lastname.errors?.required">
-            Es necesario al menos un apellido.
-          </span>
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.lastname.errors?.minlength">
-            Su apellido debe tener al menos 2 caracteres.
-          </span>
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.lastname.errors?.pattern">
-            Ingrese un apellido válido.
-          </span>
-        </div>
-        
-        <div class="itemdatos">
-          <ion-label>Cédula de identidad</ion-label>
-        <ion-item lines="full">
-          
-          <ion-input  formControlName="cedula" type="tel" maxlength="10" required ></ion-input>
-        </ion-item>
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.cedula.errors?.required">
-          Es necesario ingresar su cédula de identidad.
-        </span>
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.cedula.errors?.pattern">
-          Ingrese una cedula valida.
-        </span>
-
-        </div>
-        
-        <div class="itemdatos">
-          <ion-label>Número de celular</ion-label>
-          <ion-item lines="full">
-            
-            <ion-input formControlName="mobile" type="tel" minlength="10" maxlength="10" required inputmode="numeric" ></ion-input>
-          </ion-item>
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.mobile.errors?.required">
-            Es necesario un número de celular.
-          </span>
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.mobile.errors?.pattern">
-            Ingrese un número de celular valido.
-          </span>
-        </div>
-        
-        <div class="itemdatos" *ngIf="isProfileInformation">
-          <ion-label>Fecha de nacimiento</ion-label>
-          <ion-item lines="full">
-            <ion-input formControlName="bday" type="text" placeholder="AAAA-MM-DD" required></ion-input>
-          </ion-item>
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.bday.errors?.required">
-            Ingrese su fecha de nacimiento
-          </span>
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.bday.errors?.pattern">
-            Ingrese una fecha válida
-          </span>
-        </div>
-        
-        <div class="itemdatos">
-          <ion-label>Dirección</ion-label>
-          <ion-item lines="full">
-            
-            <ion-input formControlName="direccion" type="text" required></ion-input>
-          </ion-item>
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.direccion.errors?.required">
-            Es necesario que indique su dirección.
-          </span>
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.direccion.errors?.minlength">
-            Su nombre debe tener al menos 2 caracteres. 
-          </span> 
-        </div>
-
-        <div class="itemdatos" *ngIf="isProfileInformation">
-          <ion-label >Género</ion-label>
-        <ion-item lines="full">
-          <ion-select formControlName="gender">
-            <ion-select-option value="masculino">masculino</ion-select-option>
-            <ion-select-option value="femenino">femenino</ion-select-option>
-            <ion-select-option value="indefinido">indefinido</ion-select-option>
-          </ion-select>
-        </ion-item>
-        <span class="error ion-padding" *ngIf="isSubmitted && errorControl.gender.errors?.required">
-          This field is required.
-        </span>
-        </div>
-        
-        <!--<div class="itemdatos" >
-          <ion-label >Correo electrónico</ion-label>
-          <div class="email-input" >
-            <ion-item lines="full">
-              <div>{{email}}</div>
+      <ion-grid class="info-grid">
+        <ion-grid class="input-data">
+          <ion-row class="input">
+              <ion-label class="regular12 lbl">Nombre</ion-label>
+              <ion-item lines="full">    
+                <ion-input formControlName="name" type="text" class="light12" required></ion-input>
+              </ion-item>
+              <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.required">
+                Es necesario al menos un nombre.
+              </span>
+              <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.minlength">
+                Su nombre debe tener al menos 2 caracteres.
+              </span>
+              <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.pattern">
+                Ingrese un nombre válido.
+              </span>
+          </ion-row>
+          <ion-row class="input">
+            <ion-label class="regular12 lbl">Apellido</ion-label>
+            <ion-item lines="full">    
+              <ion-input formControlName="lastname" type="text" class="light12" required></ion-input>
             </ion-item>
-          </div>
-        </div>-->
-
-        <div *ngIf="isProfileInformation" class="itemdatos">
-          <ion-label>Correo electrónico</ion-label>
-          <div class="email-input">
-            <ion-item lines="full">
-              <div>{{email}}</div>
+            <span class="error ion-padding" *ngIf="isSubmitted && errorControl.lastname.errors?.required">
+              Es necesario al menos un apellido.
+            </span>
+            <span class="error ion-padding" *ngIf="isSubmitted && errorControl.lastname.errors?.minlength">
+              Su apellido debe tener al menos 2 caracteres.
+            </span>
+            <span class="error ion-padding" *ngIf="isSubmitted && errorControl.lastname.errors?.pattern">
+              Ingrese un apellido válido.
+            </span>
+          </ion-row>
+          <ion-row class="input">
+            <ion-label class="regular12 lbl">Cédula de identidad</ion-label>
+            <ion-item lines="full">    
+              <ion-input formControlName="cedula" type="tel" class="light12" maxlength="10" required></ion-input>
             </ion-item>
-          </div>
-        </div>
-        
-        <div *ngIf="!isProfileInformation" class="itemdatos">
-          <ion-label>Correo electrónico</ion-label>
-          <ion-item lines="full">
-            <ion-input formControlName="email" type="email" required></ion-input>
-          </ion-item>
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.required">
-            Es necesario ingresar un correo válido.
-          </span>
-          <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.pattern">
-            Ingrese un correo válido.
-          </span>
-        </div>
+            <span class="error ion-padding" *ngIf="isSubmitted && errorControl.cedula.errors?.required">
+              Es necesario ingresar su cédula de identidad.
+            </span>
+            <span class="error ion-padding" *ngIf="isSubmitted && errorControl.cedula.errors?.pattern">
+              Ingrese una cedula valida.
+            </span>
+          </ion-row>
+          <ion-row class="input">
+            <ion-label class="regular12 lbl">Número de celular</ion-label>
+            <ion-item lines="full">    
+              <ion-input formControlName="mobile" type="tel" class="light12" minlength="10" maxlength="10" required inputmode="numeric" ></ion-input>
+            </ion-item>
+            <span class="error ion-padding" *ngIf="isSubmitted && errorControl.mobile.errors?.required">
+              Es necesario un número de celular.
+            </span>
+            <span class="error ion-padding" *ngIf="isSubmitted && errorControl.mobile.errors?.pattern">
+              Ingrese un número de celular valido.
+            </span>
+          </ion-row>
+          <ion-row class="input" *ngIf="isProfileInformation">
+            <ion-label class="regular12 lbl">Fecha de nacimiento</ion-label>
+            <ion-item lines="full">    
+              <ion-input formControlName="bday" type="text" class="light12" placeholder="AAAA-MM-DD" required></ion-input>
+            </ion-item>
+            <span class="error ion-padding" *ngIf="isSubmitted && errorControl.bday.errors?.required">
+              Ingrese su fecha de nacimiento
+            </span>
+            <span class="error ion-padding" *ngIf="isSubmitted && errorControl.bday.errors?.pattern">
+              Ingrese una fecha válida
+            </span>
+          </ion-row>
+          <ion-row class="input">
+            <ion-label class="regular12 lbl">Dirección</ion-label>
+            <ion-item lines="full">    
+              <ion-input formControlName="direccion" type="text" class="light12" required></ion-input>
+            </ion-item>
+            <span class="error ion-padding" *ngIf="isSubmitted && errorControl.direccion.errors?.required">
+              Es necesario que indique su dirección.
+            </span>
+            <span class="error ion-padding" *ngIf="isSubmitted && errorControl.direccion.errors?.minlength">
+              Su nombre debe tener al menos 2 caracteres. 
+            </span>
+          </ion-row>
+          <ion-row class="input">
+            <ion-label class="regular12 lbl">Género</ion-label>
+            <ion-item lines="full">
+              <ion-select formControlName="gender" class="light12">
+                <ion-select-option value="masculino" class="light12">masculino</ion-select-option>
+                <ion-select-option value="femenino" class="light12">femenino</ion-select-option>
+                <ion-select-option value="indefinido" class="light12">indefinido</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <span class="error ion-padding" *ngIf="isSubmitted && errorControl.gender.errors?.required">
+              Este campo es requerido.
+            </span>
+          </ion-row>
 
-        <div class="itemdatos" *ngIf="isProfileInformation">
-            <ion-label>
-              <button type="button" class="btn btn-primary btn-light rounded-pill border-0" style="font-size: 14px;" (click)="changeEmailModal()">
-                Cambiar correo electrónico
-              </button>
-            </ion-label>
-        </div>
+          <ion-row class="input">
+            <ion-label class="regular12 lbl">Correo eléctronico</ion-label>
+            <div class="email-input">
+              <ion-item lines="full">
+                <div class="light12">{{email}}</div>
+              </ion-item>
+            </div>
+          </ion-row>
 
-        <div class="itemdatos" *ngIf="isProfileInformation">
-          <ion-label>
-            <button type="button" class="btn btn-primary btn-light rounded-pill border-0" style="font-size: 14px;" (click)="changePasswordModal()">
-              Cambiar contraseña
-            </button>
-          </ion-label>
-        </div>
+          <ion-row class="input" *ngIf="!isProfileInformation">
+            <ion-label class="regular12 lbl">Correo eléctronico</ion-label>
+            <ion-item lines="full">
+              <ion-input formControlName="email" type="email" class="light12" required></ion-input>
+            </ion-item>
+            <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.required">
+              Es necesario ingresar un correo válido.
+            </span>
+            <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.pattern">
+              Ingrese un correo válido.
+            </span>
+          </ion-row>
 
-        <div class="itemdatos" *ngIf="isProfileInformation">
-          <ion-label> 
-            <button type="button" class="btn btn-danger rounded-pill border-0" style="font-size: 14px;" (click)="deleteAccountModal()">
-              Eliminar cuenta
-            </button>
-          </ion-label>
-        </div>
-        
-        <ion-row *ngIf="isProfileInformation">
-          <div class="botones">
-          <ion-col> 
-            <ion-label>
-              <button class="btn btn-success rounded-pill border-0 guardar" (click)="submitForm('guardar')">
-                Guardar
-              </button>
-            </ion-label>
-          </ion-col>
-          </div>
-        </ion-row>
+          <ion-row class="dat-btnw"><button class="white-button" *ngIf="isProfileInformation" (click)="changeEmailModal()"><span class="medium12">Cambiar correo electrónico</span></button></ion-row>
+          <ion-row class="dat-btnw"><button class="white-button" *ngIf="isProfileInformation" (click)="changePasswordModal()"><span class="medium12">Cambiar contraseña</span></button></ion-row>
+          <ion-row class="dat-btng"><button class="red-button" *ngIf="isProfileInformation" (click)="deleteAccountModal()" disabled><span class="medium12">Eliminar cuenta</span></button></ion-row>
+          <ion-row class="dat-btnr"><button class="green-button" *ngIf="isProfileInformation" (click)="submitForm('guardar')"><span class="medium12">Guardar</span></button></ion-row>
+          <ion-row class="dat-btnr"><button class="green-button" *ngIf="!isProfileInformation" (click)="submitForm('continuar')"><span class="medium12">Continuar</span></button></ion-row>
 
-        <ion-row *ngIf="!isProfileInformation">
-          <div class="botones">
-          <ion-col> 
-            <ion-label>
-              <button type="submit" class="btn btn-succes rounded-pill border-0 continue" (click)="submitForm('continuar')">
-                Continuar
-              </button>
-            </ion-label>
-          </ion-col>
-          </div>
-        </ion-row>
 
-    </ion-list>
+          <!--<ion-row class="input">
+            <div id="open-modal7" >
+              <ion-label class="regular12 hyf">Hora de inicio</ion-label>
+              <div button="true" id="open-date-input7" >
+                <ion-label class="light12">{{dateValue7 | date: 'hh:mma'}}</ion-label>
+                <ion-icon name="time-outline" class="calendar-icon"></ion-icon>
+                <ion-modal class="horaval" trigger="open-modal7"> 
+                  <ion-popover trigger="open-date-input7" show-backdrop="false">
+                  <ng-template>
+                      <ion-datetime hour-cycle="h23" formControlName="horaInicio" displayFormat="hh:mma" presentation="time" #popoverDatetime
+                      (ionChange)="dateValue7 =popoverDatetime.value"> 
+                      </ion-datetime>
+                  </ng-template>
+                </ion-popover>
+                </ion-modal>
+              </div>
+            </div>
+          </ion-row>
+
+          <ion-row class="input" *ngIf="!requires_origin_and_destination">
+            <div id="open-modal8">
+              <ion-label class="regular12 hyf">Fecha de finalización</ion-label>
+              <div button="true" id="open-date-input8" >
+                <ion-label class="light12">{{dateValue8 | date: 'dd/MM/yyyy'}}</ion-label>
+                <ion-icon name="calendar-clear-outline"  class="calendar-icon"></ion-icon>
+                <ion-modal trigger="open-modal8">
+                  <ion-popover trigger="open-date-input8" show-backdrop="false">
+                  <ng-template>
+                    <div >
+                      <ion-datetime formControlName="fechaFinalizacion" [max]="maxFecha" [min]="minFecha" displayFormat="DD/MM/YYYY" pickerFormat="DD MM YYYY" #popoverDatetime
+                      presentation="date"
+                      (ionChange)="dateValue8 =popoverDatetime.value">   
+                        <div slot="title">     
+                        </div>
+                      </ion-datetime>
+                    </div>
+                  </ng-template>
+                </ion-popover>
+                </ion-modal>
+              </div>
+            </div>
+          </ion-row>
+
+          <ion-row class="input" *ngIf="!requires_origin_and_destination">
+            <div id="open-modal9">
+              <ion-label class="regular12 hyf">Hora de finalización</ion-label>
+              <div button="true" id="open-date-input9" >
+                <ion-label class="light12">{{dateValue9 | date: 'hh:mma'}}</ion-label>
+                <ion-icon name="time-outline" class="calendar-icon"></ion-icon>
+                <ion-modal class="horaval" trigger="open-modal9"> 
+                  <ion-popover trigger="open-date-input9" show-backdrop="false">
+                  <ng-template>
+                      <ion-datetime hour-cycle="h23" formControlName="horaFinalizacion" displayFormat="hh:mma" presentation="time" #popoverDatetime
+                      (ionChange)="dateValue9 =popoverDatetime.value"> 
+                      </ion-datetime>
+                  </ng-template>
+                </ion-popover>
+                </ion-modal>
+              </div>
+            </div>
+          </ion-row>
+
+          <ion-row class="map regular12" *ngIf="serviceData.requires_origin_and_destination;">
+              <ion-label>Ubicación origen&nbsp;&nbsp;&nbsp;</ion-label>
+              <button type="button" (click)="addDirection(0)" [disabled]="blockOrigen" class="map-btn"><ion-img src="assets/img/mapa.png" class="map-img"></ion-img></button>
+          </ion-row>
+          <ion-row class="map regular12" *ngIf="serviceData.requires_origin_and_destination">
+              <ion-label>Ubicación destino&nbsp;&nbsp;</ion-label>
+              <button type="button" (click)="addDirection(1)" [disabled]="blockDestino" class="map-btn"><ion-img src="assets/img/mapa.png" class="map-img"></ion-img></button>
+          </ion-row>
+          <ion-row class="map regular12" *ngIf="!serviceData.requires_origin_and_destination;">
+              <ion-label>Elegir ubicación&nbsp;&nbsp;&nbsp;</ion-label>
+              <button type="button" (click)="addDirection(0)" [disabled]="blockOrigen" class="map-btn"><ion-img src="assets/img/mapa.png" class="map-img"></ion-img></button>
+          </ion-row>
+          <ng-container *ngFor="let staff of serviceData.staff; let i = index">
+            <ion-row class="checkb" *ngIf="serviceData.staff_is_optional[i]">
+              <ion-checkbox (ionChange)="updateIncludeStaff($event)"></ion-checkbox>
+              <ion-label class="light12">&nbsp;&nbsp;Incluir {{staff}}</ion-label>
+            </ion-row>
+          </ng-container>
+          <ng-container *ngFor="let staff of serviceData.staff; let i = index">
+            <ion-row class="spinner" *ngIf="serviceData.staff_number_is_optional[i]">
+              <ion-label class="label-num regular12">Cantidad de {{staff}}&nbsp;&nbsp;&nbsp;</ion-label>
+              <div class="cantidad">
+                <ion-icon class="decremento" name="remove-circle-outline" (click)="decrement(1)"></ion-icon>
+                <ion-label class="cnumber">&nbsp;&nbsp;{{currentNumber}}&nbsp;&nbsp;</ion-label>
+                <ion-icon class="aumento" name="add-circle-outline" (click)="increment(1)"></ion-icon>
+              </div>
+            </ion-row>
+          </ng-container>
+          <ng-container *ngFor="let equipment of serviceData.equipment let i = index">
+            <ion-row *ngIf="serviceData.equipment_is_optional[i]" class="checkb">
+              <ion-checkbox (ionChange)="updateIncludeEquipment($event)"></ion-checkbox>
+              <ion-label class="light12">&nbsp;&nbsp;Incluir {{equipment}}</ion-label>
+            </ion-row>
+          </ng-container>
+
+          <button class="green-button"><span class="medium12">Solicitar servicio</span></button>-->
+        </ion-grid>
+      </ion-grid>
     </form>
-  </div>
-
-  <script src= "app/scripts/validarcedula.js"></script>
+  </ion-grid>
 </ion-content>
-
