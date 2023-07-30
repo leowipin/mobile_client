@@ -40,6 +40,7 @@ export class PedidoDetallePage implements OnInit {
   isHistoryOrder:boolean;
   status:string;
   transaction_id:string;
+  isNotPendiente:boolean;
 
   first_name:string;
   last_name:string;
@@ -53,6 +54,7 @@ export class PedidoDetallePage implements OnInit {
   card_num:string;
   type:string;
   expiry_month:string;
+  photo:string;
 
   isPaidBtnDisabled:boolean = false;
   modalElement: ElementRef;
@@ -101,13 +103,20 @@ export class PedidoDetallePage implements OnInit {
         this.status = "no status"
         this.getOrder();
       } else{
+
         this.getOrder();
       }
-      if(this.isHistoryOrder){
+      if(this.isNotPendiente){
+        console.log(this.isNotPendiente)
         const token = localStorage.getItem('token');
         this.clienteWAService.getLeaderStaff(token, this.orderId).subscribe({
           next: (response) => {
             this.leaderData = response
+            if(response.url_img == null){
+              this.photo = 'assets/img/backcliente.png';
+            } else{
+              this.photo = response.url_img
+            }
           },error: (error) => {
           }
         });
@@ -132,7 +141,7 @@ export class PedidoDetallePage implements OnInit {
       this.isPaidProcess = this.isPaidProcess || params['isPaidProcess'] === 'true';
       this.status = this.status || params['status'];
       this.isHistoryOrder = this.isHistoryOrder || params['isHistoryOrder'] === 'true';
-      
+      this.isNotPendiente = params['status'] != 'pendiente'
     });
     if(this.isHistoryOrder){
       this.getBillingData(token, this.orderId)

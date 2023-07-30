@@ -134,7 +134,7 @@ export class NotificacionesPage implements OnInit {
     </ng-container>
   </div>
   <div class="modal-footer justify-content-center" *ngIf="url_img === null">
-    <button type="button" class="btn btn-primary rounded-pill border-0" (click)="goToCart()">Ir a carrito</button>
+    <button type="button" class="green-button" (click)="goToCart()">Ir a carrito</button>
   </div>
 `,
   styleUrls: ['mymodal.scss']
@@ -152,7 +152,7 @@ export class MyModalComponent{
   }
 
   goToCart() {
-    this.navCtrl.navigateRoot(['/carrito']).then(() => {
+    this.navCtrl.navigateRoot(['/tabs/carrito']).then(() => {
       this.activeModal.close();
     });
   }

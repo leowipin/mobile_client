@@ -1,83 +1,26 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <div class="header">
+      <ion-img class="back-arrow" src="assets/img/icono-para-atras.png" [routerLink]="'/tabs/tarjetas'"> </ion-img>
+      <ion-img class="logosepro" src="assets/img/logosepro.png"> </ion-img>
+      <div class="line"></div>
+    </div>
+  </ion-toolbar>
+</ion-header>
 <ion-content>
   <ion-grid class="main">
-    <ion-row class="header">
-      <div>
-        <ion-img src="assets/img/retroceder.png" [routerLink]="'/tabs/tarjetas'"></ion-img>
-      </div>
-      
-      <span></span>
-      <ion-img style="width: 160px;" src="assets/img/logosepro.png"></ion-img>
-    </ion-row>
-    <ion-grid class="content">
-      <ion-row class="title">
-        <ion-label>AGREGAR TARJETA</ion-label>
+    <ion-grid>
+      <ion-row class="head bold16">
+        Agregar tarjeta
       </ion-row>
       <ion-row class="add-card-row">
         <div id='payment_example_div'>
           <div id='tokenize_example'></div>
-          <div id="response"></div>
-          <button id='tokenize_btn' class='btn btn-success rounded-pill border-0 tok_btn'>Guardar tarjeta</button>
-          <button id='retry_btn' class='btn btn-success rounded-pill border-0 tok_btn' display='none'>Volver</button>
+          <div id="response" class="regular 12"></div>
+          <button id='tokenize_btn' class='green-button'><span class="medium12">Guardar tarjeta</span></button>
+          <button id='retry_btn' class='green-button' display='none'><span class="medium12">Volver</span></button>
         </div>
       </ion-row>
-      <!--<ion-row *ngIf="isPending">
-        <form [formGroup]="creditCardForm" (ngSubmit)="onSubmit()">
-          <ion-item>
-            <ion-label position="floating">Código otp</ion-label>
-            <ion-input type="text" formControlName="otpNumber" placeholder="123456" maxlength="6"></ion-input>
-          </ion-item>
-          <div *ngIf="creditCardForm.get('otpNumber').invalid && (creditCardForm.get('otpNumber').dirty || creditCardForm.get('otpNumber').touched)" class="error-message">
-            <span class="error ion-padding" *ngIf="creditCardForm.get('otpNumber').hasError('required')">Ingrese un código otp</span>
-            <span class="error ion-padding" *ngIf="creditCardForm.get('otpNumber').hasError('pattern')">Ingrese un código otp válido</span>
-          </div>
-          <div class="add-btn-div">
-            <button class="btn btn-success rounded-pill border-0 add-card" type="submit" [disabled]="!creditCardForm.valid">Enviar</button>
-          </div>
-        </form>
-      </ion-row>-->
     </ion-grid>
   </ion-grid>
 </ion-content>
-
-  <!--<ion-row class="add-card-row">
-        <form [formGroup]="creditCardForm" (ngSubmit)="onSubmit()">
-          <ion-item>
-            <ion-label position="floating">Número de tarjeta</ion-label>
-            <ion-input type="text" formControlName="number" placeholder="1234567890123456" maxlength="19"></ion-input>
-          </ion-item>
-          <div *ngIf="creditCardForm.get('number').invalid && (creditCardForm.get('number').dirty || creditCardForm.get('number').touched)" class="error-message">
-            <span class="error ion-padding" *ngIf="creditCardForm.get('number').hasError('required')">Ingrese un número de tarjeta</span>
-            <span class="error ion-padding" *ngIf="creditCardForm.get('number').hasError('pattern')">Ingrese un número de tarjeta válido</span>
-          </div>
-        
-          <ion-item>
-            <ion-label position="floating">Nombre del titular</ion-label>
-            <ion-input type="text" formControlName="holder_name" placeholder="Juan Gonzalez"></ion-input>
-          </ion-item>
-          <div *ngIf="creditCardForm.get('holder_name').invalid && (creditCardForm.get('holder_name').dirty || creditCardForm.get('holder_name').touched)" class="error-message">
-            <span class="error ion-padding" *ngIf="creditCardForm.get('holder_name').hasError('required')">Ingrese el nombre del titular</span>
-            <span class="error ion-padding" *ngIf="creditCardForm.get('holder_name').hasError('pattern')">Ingrese un nombre válido</span>
-          </div>
-        
-          <ion-item>
-            <ion-label position="floating">Fecha de vencimiento (MM/AA)</ion-label>
-            <ion-input type="text" formControlName="expiry" placeholder="MM/AA" maxlength="5"></ion-input>
-          </ion-item>
-          <div *ngIf="creditCardForm.get('expiry').invalid && (creditCardForm.get('expiry').dirty || creditCardForm.get('expiry').touched)" class="error-message">
-            <span class="error ion-padding" *ngIf="creditCardForm.get('expiry').hasError('required')">Ingrese la fecha de vencimiento</span>
-            <span class="error ion-padding" *ngIf="creditCardForm.get('expiry').hasError('pattern')">Ingrese una fecha de vencimiento válida</span>
-          </div>
-          <ion-item>
-            <ion-label position="floating">CVC</ion-label>
-            <ion-input type="text" formControlName="cvc" placeholder="123" maxlength="4"></ion-input>
-          </ion-item>
-          <div *ngIf="creditCardForm.get('cvc').invalid && (creditCardForm.get('cvc').dirty || creditCardForm.get('cvc').touched)" class="error-message">
-            <span class="error ion-padding" *ngIf="creditCardForm.get('cvc').hasError('required')">Ingrese el CVC</span>
-            <span class="error ion-padding" *ngIf="creditCardForm.get('cvc').hasError('pattern')">Ingrese un CVC válido</span>
-          </div>
-        
-          <div class="add-btn-div">
-            <button class="btn btn-success rounded-pill border-0 add-card" type="submit" [disabled]="!creditCardForm.valid">Agregar</button>
-          </div>
-        </form>
-      </ion-row>-->

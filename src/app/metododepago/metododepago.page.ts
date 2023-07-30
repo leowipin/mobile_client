@@ -132,10 +132,10 @@ export class MetododepagoPage implements OnInit {
   async presentAlertConfirm(value) {
     let index = parseInt(value);
     let typeCard = this.getCardName(this.cardsList.cards[index].type);
-    let bin = this.cardsList.cards[index].bin;
+    let number = this.cardsList.cards[index].number;
     const alert = await this.alertController.create({
       header: 'Confirmar eliminación',
-      message: `¿Estás seguro de eliminar la tarjeta ${typeCard} con número ${bin} permanentemente?`,
+      message: `¿Estás seguro de eliminar la tarjeta ${typeCard} con número ***${number} permanentemente?`,
       buttons: [
         {
           text: 'No',

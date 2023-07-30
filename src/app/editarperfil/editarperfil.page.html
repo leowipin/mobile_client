@@ -12,12 +12,13 @@
 <ion-content class="main-c">
   <ion-grid class="main-grid">
     <ion-grid class="detail-head">
-      <ion-row class="detail-name bold14">Editar perfil</ion-row>
+      <ion-row class="detail-name bold14" *ngIf="isProfileInformation">Editar perfil</ion-row>
+      <ion-row class="detail-name bold14" *ngIf="!isProfileInformation">Datos de facturación</ion-row>
       <ion-row class="pictureGuard">
         <div class="cont-imgs">
           <ion-img src="assets/img/para_foto.png" class="frame"></ion-img>
           <ion-img class="back-img" [ngStyle]="{'background-image': 'url(' + photo + ')'}"> *ngIf="photo"></ion-img>
-          <ion-img src="assets/img/editar_foto.png" class="edit" (click)="openOptionSelection()"></ion-img>
+          <ion-img src="assets/img/editar_foto.png" class="edit" (click)="openOptionSelection()" *ngIf="isProfileInformation"></ion-img>
         </div>
       </ion-row>
     </ion-grid>
@@ -102,7 +103,7 @@
               Su nombre debe tener al menos 2 caracteres. 
             </span>
           </ion-row>
-          <ion-row class="input">
+          <ion-row class="input" *ngIf="isProfileInformation">
             <ion-label class="regular12 lbl">Género</ion-label>
             <ion-item lines="full">
               <ion-select formControlName="gender" class="light12">
@@ -116,7 +117,7 @@
             </span>
           </ion-row>
 
-          <ion-row class="input">
+          <ion-row class="input" *ngIf="isProfileInformation">
             <ion-label class="regular12 lbl">Correo eléctronico</ion-label>
             <div class="email-input">
               <ion-item lines="full">

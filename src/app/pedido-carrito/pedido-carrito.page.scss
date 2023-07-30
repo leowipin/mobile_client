@@ -6,6 +6,7 @@ ion-grid.main-grid {
     display: flex;
     justify-content: center;
     align-items: center;
+    
   }
 
   ion-row.detail-name {
@@ -37,6 +38,7 @@ ion-grid.main-grid {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    margin-top: 2%;
   }
 
   ion-grid.detail-data-grid{
@@ -52,7 +54,6 @@ ion-grid.main-grid {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    margin-bottom: 2%;
   }
 
   ion-grid.data-grid{
@@ -96,10 +97,14 @@ ion-grid.main-grid {
 
  ion-row.dat-btng{
     margin-top: 2%;
+    display: flex;
+    justify-content: center;
  }
 
  ion-row.dat-btnr{
     margin-top: 3%;
+    display: flex;
+    justify-content: center;
  }
 
  ion-row.subt{

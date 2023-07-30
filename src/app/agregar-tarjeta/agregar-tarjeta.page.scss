@@ -1,8 +1,7 @@
 /* Estilos generales para ion-grid e ion-row */
 
 ion-grid.main {
-    height: 90%;
-    margin: 1.2rem 0;
+    height: 100%;
 }
 
 ion-row {
@@ -50,11 +49,9 @@ ion-grid.content {
 
 .add-card-row{
     margin-top: 0.7rem;
-    font-family:hp556;
 }
 
 .add-card{
-    font-family:hp556;
     width: 50%;
 }
 
@@ -65,11 +62,11 @@ ion-grid.content {
 }
 
 ion-item ion-label {
-    font-family: hp556;
+    font-family: LemonMilkRegularItalic;
 }
 
 ion-input {
-    font-family: hp265;
+    font-family: LemonMilkRegularItalic;
 }
 
 .error-message {
@@ -129,10 +126,17 @@ ion-input {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family:hp265;
     color: #b01902;
     position: relative;
     top: -25px;
     width: 80%;
   }
-  
+
+  .head{
+    margin-top: 3%;
+    margin-bottom: 3%;
+  }
+
+  .green-button{
+    margin-top: 4%;
+  }

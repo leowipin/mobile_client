@@ -1,10 +1,12 @@
 .modal-title{
-    font-family: hp556;
-    color: #bf1a24;
+    font-family: 'LemonMilkBold';
+    font-size: 14px;
+    color: black;
 }
 
 .modal-footer button{
-    font-family: hp556;
+    font-family: 'LemonMilkMedium';
+    font-size: 12px;
 }
 
 .modal-body{
@@ -15,7 +17,8 @@
 }
 
 .modal-body p{
-    font-family: hp265;
+    font-family: 'LemonMilkLight';
+    font-size: 12px;
 }
 
 .modal-body ion-img{
@@ -23,6 +26,12 @@
     height: 50%;
 }
 
+.green-button {
+    border-radius: 5px;
+    padding: 5px 12px;
+    background-color: rgb(25, 168, 25);
+    color: white;
+}
 
 
 /*.noti-img{

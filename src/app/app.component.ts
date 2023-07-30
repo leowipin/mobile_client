@@ -114,6 +114,7 @@ export class AppComponent {
     const token = localStorage.getItem('token');
     if (token) {
       this.navCtrl.navigateRoot('tabs');//tabs/inicio/servicio-detalle/36/servicio-solicitud
+      ///tabs/carrito/pedido-carrito/editarperfil/tarjetas/pedido-detalle?isPaidProcess=true&name=Transporter&id=73&booleandest=true&first_name=leonardo%20ma&last_name=pincay%20i&dni=0999999999&phone_number=0989138094&address=Ecuador&email=lewipinja@gmail.com&token=14461473346311663224&holder_name=prueba&expiry_year=2024&card_num=1111&type=vi&expiry_month=12
     } else{
       this.navCtrl.navigateRoot('login')
     }

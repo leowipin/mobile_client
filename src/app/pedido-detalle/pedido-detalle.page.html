@@ -1,264 +1,77 @@
-<ion-content>
-  <ion-grid class="main">
-    <ion-row class="header">
-      <div *ngIf="!isPaidProcess">
-        <ion-img src="assets/img/retroceder.png" [routerLink]="'/tabs/carrito'"></ion-img>
-      </div>
-      <div *ngIf="isHistoryOrder">
-        <ion-img src="assets/img/retroceder.png" [routerLink]="'/tabs/historialservicios'"></ion-img>
-      </div>
-      <span></span>
-      <ion-img style="width: 160px;" src="assets/img/logosepro.png"></ion-img>
-    </ion-row>
-    <ion-grid [ngClass]="{'second': !isPaidProcess && !isHistoryOrder, 'card-second': isPaidProcess||isHistoryOrder}" *ngIf="orderData">
-      <div [ngClass]="{'content': !isPaidProcess && !isHistoryOrder, 'card': isPaidProcess||isHistoryOrder}">
-      <ion-row class="row-titulo">
-        <div class="titulo">
-          <ion-label *ngIf="!isPaidProcess && !isHistoryOrder">Solicitud de servicio</ion-label>
-          <ion-label *ngIf="isPaidProcess || isHistoryOrder">Datos del servicio</ion-label>
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <div class="header">
+      <ion-img class="logosepro" src="assets/img/logosepro.png"> </ion-img>
+      <div class="line"></div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="main-c">
+  <ion-grid class="main-grid" *ngIf="orderData">
+    <ion-grid class="detail-head">
+      <ion-row class="detail-name bold14">Solicitud de servicio</ion-row>
+      <ion-row class="pictureGuard">
+        <div class="cont-imgs">
+          <ion-img src="assets/img/para_foto.png" class="frame"></ion-img>
+          <ion-img class="back-img" [ngStyle]="{'background-image': 'url(' + photo + ')'}"> *ngIf="photo"></ion-img>
         </div>
       </ion-row>
-      <ion-row class="img-status" *ngIf="!isPaidProcess && !isHistoryOrder">
-        <ion-img src="assets/img/perfilcliente.png"></ion-img>
-      </ion-row>
-      <ion-row class="datas">
-        <div class="data">
-          <ion-label class="negrita "> <b>Servicio:&nbsp;</b> </ion-label>
-          <ion-label>{{orderName}}</ion-label>
-        </div>
-        <div class="data">
-          <ion-label class="negrita "><b>Fecha de inicio:&nbsp;</b> </ion-label>
-          <ion-label>{{orderData.start_date}}</ion-label>
-        </div>
-        <div class="data">
-          <ion-label class="negrita "><b>Hora de inicio:&nbsp;</b> </ion-label>
-          <ion-label>{{orderData.start_time}}</ion-label>
-        </div>
-        <ng-container  *ngIf="!requires_origin_and_destination">
-          <div class="data">
-            <ion-label class="negrita "><b>Fecha de Finalización:&nbsp;</b> </ion-label>
-            <ion-label>{{orderData.end_date}}</ion-label>
-          </div>
-        </ng-container>
-        <ng-container  *ngIf="!requires_origin_and_destination">
-          <div class="data">
-            <ion-label class="negrita "><b>Hora de Finalización:&nbsp;</b> </ion-label>
-            <ion-label>{{orderData.end_time}}</ion-label>
-          </div>
-        </ng-container>
-        <ng-container  *ngIf="!requires_origin_and_destination">
-          <div class="data">
-            <ion-label class="negrita "><b>Duración:&nbsp;</b> </ion-label>
-            <ion-label>{{formattedDuration}}</ion-label>
-          </div>
-        </ng-container>
-
-        <ng-container *ngFor="let staff of orderData.staff; let i = index">
-          <ng-container *ngIf="orderData.staff_is_optional[i] && orderData.staff_selected[i]">
-            <div class="data">
-              <ion-label class="negrita "><b>{{staff}}:&nbsp;</b> </ion-label>
-              <ion-label>si</ion-label>
-            </div>
-          </ng-container>
-          <ng-container *ngIf="orderData.staff_is_optional[i] && !orderData.staff_selected[i]">
-            <div class="data">
-              <ion-label class="negrita "><b>{{staff}}:&nbsp;</b> </ion-label>
-              <ion-label>no</ion-label>
-            </div>
-          </ng-container>
-        </ng-container>
-
-        <ng-container *ngFor="let staff of orderData.staff; let i = index">
-          <ng-container *ngIf="orderData.staff_number_is_optional[i]">
-            <div class="data">
-              <ion-label class="negrita "><b>cantidad de {{staff}}:&nbsp;</b> </ion-label>
-              <ion-label>{{orderData.staff_number[i]}}</ion-label>
-            </div>
-          </ng-container>
-        </ng-container>
-
-        <ng-container *ngFor="let equipment of orderData.equipment; let i = index">
-          <ng-container *ngIf="orderData.equipment_is_optional[i] && orderData.equipment_selected[i]">
-            <div class="data">
-              <ion-label class="negrita "><b>{{equipment}}:&nbsp;</b> </ion-label>
-              <ion-label>si</ion-label>
-            </div>
-          </ng-container>
-          <ng-container *ngIf="orderData.equipment_is_optional[i] && !orderData.equipment_selected[i]">
-            <div class="data">
-              <ion-label class="negrita "><b>{{equipment}}:&nbsp;</b> </ion-label>
-              <ion-label>no</ion-label>
-            </div>
-          </ng-container>
-        </ng-container>
-
-        <ng-container *ngFor="let equipment of orderData.equipment; let i = index">
-          <ng-container *ngIf="orderData.equipment_number_is_optional[i]">
-            <div class="data">
-              <ion-label class="negrita "><b>cantidad de {{equipment}}:&nbsp;</b> </ion-label>
-              <ion-label>{{orderData.equipment_number[i]}}</ion-label>
-            </div>
-          </ng-container>
-        </ng-container>
-          <ng-container *ngIf="total === 'pendiente'">
-            <div class="data">
-              <ion-label class="negrita "> <b>Total:&nbsp;</b> </ion-label>
-              <ion-label> {{total}} </ion-label>
-            </div>
-          </ng-container>
-          <ng-container *ngIf="total !== 'pendiente'">
-            <div class="data">
-              <ion-label class="negrita "> <b>Subtotal:&nbsp;</b> </ion-label>
-              <ion-label> {{subtotal}} dólares </ion-label>
-            </div>
-            <div class="data">
-              <ion-label class="negrita "> <b>IVA:&nbsp;</b> </ion-label>
-              <ion-label> {{iva}} dólares </ion-label>
-            </div>
-            <div class="data">
-              <ion-label class="negrita "> <b>Total:&nbsp;</b> </ion-label>
-              <ion-label> {{total}} dólares </ion-label>
-            </div>            
-          </ng-container>
-        <div class="data" *ngIf="requires_origin_and_destination">
-          <br/>
-          <button class="btn btn-primary rounded-pill border-0 ver-ruta" (click)="dibujarRuta()">Ver ruta</button> 
-        </div>
-        <div class="data" *ngIf="!requires_origin_and_destination">
-          <br/>
-          <button class="btn btn-primary rounded-pill border-0 ver-ruta" (click)="verUbicacion()">Ver ubicación</button> 
-        </div>
-      </ion-row>
-      <ion-row class="row-buttons" *ngIf="!isPaidProcess && !isHistoryOrder">
-        <div class="buttons">
-          <button class="btn btn-danger rounded-pill border-0" (click)="deleteOrder()">Eliminar</button>
-          <button class="btn btn-success rounded-pill border-0" [disabled]="orderData.status !== 'aceptado'" (click)="goToBillingData()">Realizar pago</button>
-        </div>
-      </ion-row>
-      </div>
     </ion-grid>
-    <ng-container *ngIf="first_name">
-      <ion-grid class="card-second" *ngIf="isPaidProcess || isHistoryOrder">
-        <div class="card">
-          <ion-row class="row-titulo">
-            <div class="titulo">
-              <ion-label>Datos de facturación</ion-label>
-            </div>
-          </ion-row>
-          <ion-row class="datas">
-            <div class="data">
-              <ion-label class="negrita "> <b>Nombre:&nbsp;</b> </ion-label>
-              <ion-label>{{first_name}}</ion-label>
-            </div>
-            <div class="data">
-              <ion-label class="negrita "><b>Apellido:&nbsp;</b> </ion-label>
-              <ion-label>{{last_name}}</ion-label>
-            </div>
-            <div class="data">
-              <ion-label class="negrita "><b>Cédula:&nbsp;</b> </ion-label>
-              <ion-label>{{dni}}</ion-label>
-            </div>
-            <ng-container >
-              <div class="data">
-                <ion-label class="negrita "><b>Teléfono&nbsp;</b> </ion-label>
-                <ion-label>{{phone_number}}</ion-label>
-              </div>
-            </ng-container>
-            <ng-container >
-              <div class="data">
-                <ion-label class="negrita "><b>Dirección:&nbsp;</b> </ion-label>
-                <ion-label>{{address}}</ion-label>
-              </div>
-            </ng-container>
-            <ng-container >
-              <div class="data">
-                <ion-label class="negrita "><b>Correo:&nbsp;</b> </ion-label>
-                <ion-label>{{email}}</ion-label>
-              </div>
-            </ng-container>
-          </ion-row>
-        </div>
+    <ion-grid class="detail-grid">
+      <ion-grid class="detail-name-grid">
+        <ion-row class="medium12 subline">{{leaderData.first_name}} {{leaderData.last_name}}</ion-row>
+        <ion-row class="medium12 secu">{{orderName}}</ion-row>
       </ion-grid>
-    </ng-container>
-    <ng-container *ngIf="holder_name">
-      <ion-grid class="card-second" *ngIf="isPaidProcess || isHistoryOrder">
-        <div class="card">
-          <ion-row class="row-titulo">
-            <div class="titulo">
-              <ion-label>Tarjeta a usar</ion-label>
-            </div>
-          </ion-row>
-            <div #carddiv class="card-selected">
-              <div class="card-body">
-                <div class="logo">
-                  <ion-img [src]="'assets/img/' + type + (type === 'cs' || type === 'up' ? '.png' : '.svg')" alt="Card logo"></ion-img>
-                </div>
-                <div class="card-content">
-                  <ion-label><b>{{ holder_name }}</b></ion-label>
-                  <ion-label><b>***{{ card_num }}</b></ion-label>
-                  <ion-label class="expiry">Expira {{expiry_month}}/{{expiry_year}}</ion-label>
-                </div>
-              </div>
-            </div>
-        </div>
+      <ion-grid class="detail-data-grid">
+        <ion-grid class="amount-grid">
+          <ion-row class="medium12 subline">Datos del servicio</ion-row>
+          <ion-row class="medium12 amount-cont" *ngIf="total === 'pendiente'">Total: <span class="regular12">&nbsp;{{total}}</span></ion-row>
+          <ng-container *ngIf="total !== 'pendiente'">
+            <ion-row class="medium12 subt">Subtotal: <span class="regular12">&nbsp;{{subtotal}} dólares</span></ion-row>
+            <ion-row class="medium12 dat">IVA: <span class="regular12">&nbsp;{{iva}} dólares</span></ion-row>
+            <ion-row class="medium12 amount-cont">Total: <span class="regular12">&nbsp;{{total}} dólares</span></ion-row>
+          </ng-container>
+        </ion-grid>
+        <ion-grid class="data-grid">
+          <ion-row class="medium12 dat">Fecha de inicio: <span class="regular12">&nbsp;{{orderData.start_date}}</span></ion-row>
+          <ion-row class="medium12 dat">Hora de inicio: <span class="regular12">&nbsp;{{orderData.start_time}}</span></ion-row>
+          <ion-row class="medium12 dat" *ngIf="!requires_origin_and_destination">Fecha de finalización <span class="regular12">&nbsp;{{orderData.end_date}}</span></ion-row>
+          <ion-row class="medium12 dat" *ngIf="!requires_origin_and_destination">Hora de finalización: <span class="regular12">&nbsp;{{orderData.end_time}}</span></ion-row>
+          <ion-row class="medium12 dat" *ngIf="!requires_origin_and_destination">Duración: <span class="regular12">&nbsp;{{formattedDuration}}</span></ion-row>
+          <ng-container *ngFor="let staff of orderData.staff; let i = index">
+            <ion-row class="medium12 dat" *ngIf="orderData.staff_is_optional[i] && orderData.staff_selected[i]">{{staff}}: <span class="regular12">&nbsp;si</span></ion-row>
+            <ion-row class="medium12 dat" *ngIf="orderData.staff_is_optional[i] && !orderData.staff_selected[i]">{{staff}}: <span class="regular12">&nbsp;no</span></ion-row>
+          </ng-container>
+          <ng-container *ngFor="let staff of orderData.staff; let i = index">
+            <ion-row class="medium12 dat" *ngIf="orderData.staff_number_is_optional[i]">Cantidad de {{staff}}: <span class="regular12">&nbsp;{{orderData.staff_number[i]}}</span></ion-row>
+          </ng-container>
+          <ng-container *ngFor="let equipment of orderData.equipment; let i = index">
+            <ion-row class="medium12 dat" *ngIf="orderData.equipment_is_optional[i] && orderData.equipment_selected[i]">{{equipment}}: <span class="regular12">&nbsp;si</span></ion-row>
+            <ion-row class="medium12 dat" *ngIf="orderData.equipment_is_optional[i] && !orderData.equipment_selected[i]">{{equipment}}: <span class="regular12">&nbsp;no</span></ion-row>
+          </ng-container>
+          <ion-row class="medium12 dat" *ngIf="!requires_origin_and_destination"><button type="button" (click)="verUbicacion()" class="map-btn"><ion-img src="assets/img/mapa.png" class="map-img"></ion-img></button></ion-row>
+          <ion-row class="medium12 dat" *ngIf="requires_origin_and_destination"><button type="button" (click)="dibujarRuta()" class="map-btn"><ion-img src="assets/img/mapa.png" class="map-img"></ion-img></button></ion-row>
+        </ion-grid>
+        <ion-grid class="amount-grid">
+          <ion-row class="medium12 subline">Datos de facturación</ion-row>
+          <ion-row class="medium12 subt">Nombre: <span class="regular12">&nbsp;{{first_name}}</span></ion-row>
+          <ion-row class="medium12 dat">Apellido: <span class="regular12">&nbsp;{{last_name}}</span></ion-row>
+          <ion-row class="medium12 dat">Correo: <span class="regular12">&nbsp;{{email}}</span></ion-row>
+          <ion-row class="medium12 dat">Cédula: <span class="regular12">&nbsp;{{dni}}</span></ion-row>
+          <ion-row class="medium12 dat">Dirección: <span class="regular12">&nbsp;{{address}}</span></ion-row>
+          <ion-row class="medium12 dat">Teléfono: <span class="regular12">&nbsp;{{phone_number}}</span></ion-row>
+        </ion-grid>
+        <ion-grid class="amount-grid">
+          <ion-row class="medium12 subline">Datos del empleado líder</ion-row>
+          <ion-row class="medium12 subt">Nombre: <span class="regular12">&nbsp;{{leaderData.first_name}}</span></ion-row>
+          <ion-row class="medium12 dat">Apellido: <span class="regular12">&nbsp;{{leaderData.last_name}}</span></ion-row>
+          <ion-row class="medium12 dat">Correo: <span class="regular12">&nbsp;{{leaderData.email}}</span></ion-row>
+          <ion-row class="medium12 dat">Cédula: <span class="regular12">&nbsp;{{leaderData.dni}}</span></ion-row>
+          <ion-row class="medium12 dat">Teléfono: <span class="regular12">&nbsp;{{leaderData.phone_number}}</span></ion-row>
+        </ion-grid>
+        <ion-row class="dat-btng"><button class="red-button" (click)="goBackToOrder()"><span class="medium12">Cancelar</span></button></ion-row>
+        <ion-row class="dat-btnr"><button class="green-button" (click)="paid()"><span class="medium12">Pagar</span></button></ion-row>
       </ion-grid>
-    </ng-container>
-    <ng-container *ngIf="isHistoryOrder">
-      <ion-grid class="card-second" *ngIf="leaderData">
-        <div class="card">
-          <ion-row class="row-titulo">
-            <div class="titulo">
-              <ion-label>Datos del empleado líder</ion-label>
-            </div>
-          </ion-row>
-          <ion-row class="datas">
-            <div class="img-div">
-              <div class="container" *ngIf="leaderData.url_img == null">
-                <div class="outer"
-                  [ngStyle]="{'background-image': 'url(' + 'assets/img/perfilcliente.png' + ')'}">
-                 </div>
-              </div>
-              <div class="container" *ngIf="leaderData.url_img != null">
-                <div class="outer"
-                  [ngStyle]="{'background-image': 'url(' + leaderData.url_img + ')'}">
-                 </div>
-              </div>
-            </div>
-            <div class="data">
-              <ion-label class="negrita "> <b>Nombre:&nbsp;</b> </ion-label>
-              <ion-label>{{leaderData.first_name}}</ion-label>
-            </div>
-            <div class="data">
-              <ion-label class="negrita "><b>Apellido:&nbsp;</b> </ion-label>
-              <ion-label>{{leaderData.last_name}}</ion-label>
-            </div>
-            <div class="data">
-              <ion-label class="negrita "><b>Correo:&nbsp;</b> </ion-label>
-              <ion-label>{{leaderData.email}}</ion-label>
-            </div>
-            <div class="data">
-              <ion-label class="negrita "><b>Cédula&nbsp;</b> </ion-label>
-              <ion-label>{{leaderData.dni}}</ion-label>
-            </div>
-            <div class="data">
-              <ion-label class="negrita "><b>Teléfono:&nbsp;</b> </ion-label>
-              <ion-label>{{leaderData.phone_number}}</ion-label>
-            </div>
-          </ion-row>
-        </div>
-      </ion-grid>
-    </ng-container>
-    <ion-row class="row-buttons" *ngIf="isPaidProcess">
-      <div class="buttons-card">
-        <button class="btn btn-danger rounded-pill border-0" (click)="goBackToOrder()">Cancelar</button>
-        <button class="btn btn-success rounded-pill border-0" (click)="paid()" [disabled]="isPaidBtnDisabled">Pagar</button>
-      </div>
-    </ion-row>
-    <ion-row class="row-buttons" *ngIf="isHistoryOrder">
-      <div class="buttons-card">
-        <button class="btn btn-danger rounded-pill border-0" *ngIf="status=='reembolsado'|| status=='finalizado'" (click)="deleteOrder()">Eliminar</button>
-        <button class="btn btn-danger rounded-pill border-0" *ngIf="status=='pagado'" (click)="refund()">Reembolsar</button>
-      </div>
-    </ion-row>
+    </ion-grid>
   </ion-grid>
-  </ion-content>
+</ion-content>
