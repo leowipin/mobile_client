@@ -1,0 +1,46 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <div class="header">
+      <ion-img class="back-arrow" src="assets/img/icono-para-atras.png" routerLink="/tabs/chat"> </ion-img>
+      <ion-img class="logosepro" src="assets/img/logosepro.png"> </ion-img>
+      <div class="line"></div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row class="head bold16">
+    <div class="logo">
+      <ion-img class="admin-icon" src="assets/img/admin-chat.png"></ion-img> <!--ngIf de rol para colocar la img correspondiente-->
+    </div>
+    {{rol}}
+  </ion-row>
+  <ion-grid class="main-grid"*ngIf="messages">
+    
+    <ion-grid class="messages-grid">
+      <!---->
+      <ng-container *ngFor="let message of messages let i = index">
+        <ion-row class="date" *ngIf="i === 0 || message.fecha_envio !== messages[i-1].fecha_envio">
+          <div class="date-div">{{ message.fecha_envio }}</div>
+        </ion-row>
+        <ion-row *ngIf="message.remitente === 'cliente'" class="my-message">
+          <div class="card" style="background-color: rgb(202, 252, 199);">
+            <ion-label class="light12">{{ message.contenido }}</ion-label>
+            <ion-label class="light12 time">{{ message.hora_envio }}</ion-label>
+          </div>
+        </ion-row>
+        <ion-row *ngIf="message.remitente !== 'cliente'" class="other-message">
+          <div class="card">
+            <ion-label class="light12">{{ message.contenido }}</ion-label>
+            <ion-label class="light12 time">{{ message.hora_envio }}</ion-label>
+          </div>
+        </ion-row>
+      </ng-container>
+      <!---->
+    </ion-grid>
+      <ion-row class="type-message" (click)="onInputFocus()">
+        <ion-input style="width: 100%; height: 100%;" placeholder="Mensaje" [(ngModel)]="msg"></ion-input>
+        <ion-icon id="send-button" name="send" (click)="sendMessage(msg)"></ion-icon>
+      </ion-row>
+  </ion-grid>
+</ion-content>

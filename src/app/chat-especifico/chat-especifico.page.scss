@@ -1,0 +1,148 @@
+ion-content{
+    position: relative;
+    z-index: 900;
+}
+
+ion-grid.main-grid{
+    position: relative;
+    width: 92%;
+}
+
+ion-row.head{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: sticky;
+    top: 0px;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    border-bottom: 1px solid rgb(142, 142, 142);
+    z-index: 100;
+    background-color: #E1E1E1;
+}
+
+ion-grid.messages-grid{
+    width: 100%;
+    //visibility: hidden;
+}
+
+ion-grid.messages-grid > :first-child {
+    margin-top: 2%;
+}
+
+ion-grid.messages-grid > :last-child {
+    margin-bottom: 2%;
+}
+
+
+ion-row.other-message, ion-row.my-message{
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+ion-row.date{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 2%;
+}
+
+.date-div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 8px;
+    background-color: white;
+    font-family: 'LemonMilkRegular';
+    font-size: 10px;
+    color: #a7a7a7;
+    border-radius: 10px;
+    border: 0.1px solid rgb(142, 142, 142);
+}
+
+.other-message{
+    justify-content: flex-start;
+}
+
+.my-message{
+    justify-content: flex-end;
+}
+
+.card{
+    display: flex;
+    justify-content: center;
+    max-width: 75%;
+    //border: solid 2px;
+    align-items: flex-end;
+    padding: 5px 8px;
+    margin-bottom: 2%;
+}
+
+.my-msg ion-label{
+    margin-right: 7px;
+}
+
+.other-msg ion-label{
+    margin-left: 7px;
+}
+
+ion-label.time{
+    font-size: 10px;
+    color: #a7a7a7;
+}
+
+ion-row.type-message{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 30px;
+    background-color: white;
+    position: sticky;
+    bottom: 7px;
+    border-radius: 5px;
+    //z-index: 100;
+}
+
+.logo{
+    width: 18px;
+    height: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 4%;
+    margin-right: 4%;
+}
+
+.type-message ion-icon{
+    margin-right: 2%;
+}
+
+ion-input {
+    font-family: 'LemonMilkLight';
+    font-size: 12px;
+}
+
+
+ion-input::placeholder {
+    font-family: 'LemonMilkLight';
+    font-size: 12px;
+}
+
+.cont-text{
+    width: 90%; 
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.date{
+    width: 100;
+}
+
+#send-button{
+    color: #a7a7a7;
+}
+

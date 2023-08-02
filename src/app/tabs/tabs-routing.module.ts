@@ -39,6 +39,10 @@ const routes: Routes = [
           import('../metododepago/metododepago.module').then((m) => m.MetododepagoPageModule),
       },
       {
+        path: 'chat',
+        loadChildren: () => import('../chat/chat.module').then( m => m.ChatPageModule)
+      },
+      {
         path: '',
         redirectTo: 'inicio',
         pathMatch: 'full',

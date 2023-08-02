@@ -123,6 +123,14 @@ const routes: Routes = [
     path: 'pedido-historial',
     loadChildren: () => import('./pedido-historial/pedido-historial.module').then( m => m.PedidoHistorialPageModule)
   },
+  {
+    path: 'chat',
+    loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule)
+  },
+  {
+    path: 'chat-especifico',
+    loadChildren: () => import('./chat-especifico/chat-especifico.module').then( m => m.ChatEspecificoPageModule)
+  },
 
 
 

@@ -1,0 +1,38 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <div class="header">
+      <ion-menu-button class="menu-btn">
+        <ion-icon name="menu-outline" class="red-icon"></ion-icon>
+      </ion-menu-button>
+      <ion-img class="logosepro" src="assets/img/logosepro.png"> </ion-img>
+      <div class="line"></div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="main-grid">
+    <ion-row class="head bold16">Chats</ion-row>
+    <ng-container *ngIf="adminChat">
+        <ion-row class="chat-row" >
+          <div class="card" (click)="goToChat('administrador')">
+            <div class="card-body2">
+              <div class="logo">
+                <ion-img class="admin-icon" src="assets/img/admin-chat.png"></ion-img>
+              </div>
+              <div class="card-content">
+                <div class="title-cont">
+                  <ion-label class="medium12">Administrador</ion-label>
+                  <ion-label *ngIf="isToday" class="date-sended light12">{{formattedTime}}</ion-label>
+                  <ion-label *ngIf="!isToday" class="date-sended light12">{{formattedDate}}</ion-label>
+                </div>
+                <div class="message-cont">
+                  <ion-label class="message-body regular12">{{adminChat.ultimo_mensaje}}</ion-label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ion-row>
+    </ng-container>
+  </ion-grid>
+</ion-content>

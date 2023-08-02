@@ -170,3 +170,19 @@ ion-content{
     background-size: contain;
   }
 
+//css de nuevo mensaje de chat, debe estar definido aqui
+ion-label.time{
+    font-size: 10px;
+    color: #a7a7a7;;
+}
+ion-row.other-message, ion-row.my-message{
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+.other-message{
+    justify-content: flex-start;
+}
+.my-message{
+    justify-content: flex-end;
+}

@@ -211,6 +211,13 @@ export class ClienteWAService {
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     return this.http.get<LeaderStaffData>(endpoint, { headers: headers })
   }
+
+  sendMessage(token:string, message:string): Observable<MessageResponse>{
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+'messaging/sendMessage/';
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+    return this.http.post<MessageResponse>(endpoint, {message:message}, { headers: headers })
+  }
+
   /*getSpecificNotification(token:string, id:string): Observable<SpecificNotification>{
     const endpoint:string = this.DJANGO_DOMAIN_NAME+`notifications/getSpecificClientNoti/?id=${id}`;
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
