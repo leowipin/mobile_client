@@ -261,6 +261,8 @@ export class AppComponent {
 
   signOut() {
     localStorage.removeItem('token');
+    localStorage.removeItem('guest');
+    localStorage.removeItem('firebase_token');
     location.reload();
   }
 

@@ -11,7 +11,11 @@ const routes: Routes = [
   {
     path: 'editarperfil',
     loadChildren: () => import('../editarperfil/editarperfil.module').then( m => m.EditarperfilPageModule)
-  }
+  },
+  {
+    path: 'politicas',
+    loadChildren: () => import('../politicas/politicas.module').then( m => m.PoliticasPageModule)
+  },
 ];
 
 @NgModule({

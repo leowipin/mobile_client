@@ -5,6 +5,8 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { RegisterModel } from '../modelos/register.model';
 import { ClienteWAService } from '../login-registro/login-registro.service';
 import { SignUp } from '../interfaces/client/signup';
+import * as moment from 'moment';
+
 @Component({
   selector: 'app-registrar',
   templateUrl: './registrar.page.html',
@@ -40,11 +42,13 @@ export class RegistrarPage implements OnInit {
       name: ['', [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
       lastname: ['', [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
       email: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')]],
-      //bday: ['', [Validators.required, Validators.pattern('(?:19[0-9]{2}|20[01][0-9]|2020)[-](?:0[1-9]|1[012])[-](?:0[1-9]|[12][0-9]|3[01])')]],
+      bday: ['', [Validators.required, Validators.pattern('(?:19[0-9]{2}|20[01][0-9]|2020)[-](?:0[1-9]|1[012])[-](?:0[1-9]|[12][0-9]|3[01])')]],
       //f2_edudetail: ['', [Validators.required]],
       mobile: ['', [Validators.required,Validators.pattern('^[0-9]{10}$')]],
       cedula: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
       password:['', [Validators.required, Validators.minLength(4)]],
+      //address: ['', [Validators.required, Validators.minLength(10)]]
+
     }
     );
 
@@ -65,17 +69,20 @@ export class RegistrarPage implements OnInit {
   }
 
   submitForm() {
-   /* var today = moment(new Date());
-    var test = moment(new Date(this.ionicForm.value.bday)).format("YYYY-MM-DD");
-    var resul = test.toString();
-    var difference = today.diff(test, "y") < 18;*/
+    let today = moment(new Date());
+    let test = moment(new Date(this.ionicForm.value.bday)).format("YYYY-MM-DD");
+    let difference = today.diff(test, "y") < 18;
 
     if (!this.condiciones) {
       this.presentTerms();
+    } else if (difference) {
+        this.presentUnderAge();
+        return false;
     } else if (!this.ionicForm.valid) {
-      this.presentFields();
-      return false;
-    } else {
+        this.presentFields();
+        return false;
+    } 
+    else {
       this.signUp() 
     }
   }
@@ -86,7 +93,7 @@ export class RegistrarPage implements OnInit {
       message: 'Para hacer uso de nuestra aplicación y de nuestros servicios debes ser mayor de 18 años',
       buttons: [
         {
-          text: 'ACEPTAR',
+          text: 'Aceptar',
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
@@ -192,6 +199,7 @@ signUp(){
       console.log(response)
       console.log(response.message)
       this.alertController.create({
+        header: 'Verificación',
         message: response.message,
         buttons: ['Aceptar']
       }).then(alert=> alert.present())

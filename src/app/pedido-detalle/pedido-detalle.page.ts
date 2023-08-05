@@ -55,6 +55,7 @@ export class PedidoDetallePage implements OnInit {
   type:string;
   expiry_month:string;
   photo:string;
+  buttonDisabled:boolean;
 
   isPaidBtnDisabled:boolean = false;
   modalElement: ElementRef;
@@ -272,7 +273,7 @@ paid(){
 }
 
 paidOrder(){
-  this.isPaidBtnDisabled = true
+  this.buttonDisabled = true
   const token = localStorage.getItem('token');
   const base64Url = token.split('.')[1];
   const base64 = base64Url.replace('-', '+').replace('_', '/');
@@ -325,6 +326,7 @@ paidOrder(){
               buttons: [{
                 text: 'Aceptar',
                 handler: () => {
+                  this.buttonDisabled = false;
                   this.navCtrl.navigateRoot(['/tabs/carrito']);
                 }
               }]
@@ -337,6 +339,7 @@ paidOrder(){
           buttons: [{
             text: 'Aceptar',
             handler: () => {
+              this.buttonDisabled = false;
               this.navCtrl.navigateRoot(['/tabs/historialservicios']);
             }
           }]
@@ -350,6 +353,7 @@ paidOrder(){
           buttons: [{
             text: 'Aceptar',
             handler: () => {
+              this.buttonDisabled = false;
               this.navCtrl.navigateRoot(['/tabs/carrito']);
             }
           }]
@@ -363,6 +367,7 @@ paidOrder(){
         buttons: [{
           text: 'Aceptar',
           handler: () => {
+            this.buttonDisabled = false;
             this.navCtrl.navigateRoot(['/tabs/carrito']);
           }
         }]
@@ -387,7 +392,7 @@ openModal(userid: string, transactionid: string, type: string, token:string, bDa
       parent: this.injector
     })
   });
-  this.isPaidBtnDisabled = false;
+  this.buttonDisabled = false;
 }
 refund(){
   this.alertController.create({

@@ -1,145 +1,137 @@
-<ion-content no-scroll padding class="background">
-  <div class="tope">
-    <div class="back-icon">
-      <ion-img class="img-back" src="assets/img/retroceder.png" (click)="redirigirSignin()"></ion-img>
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <div class="header">
+      <ion-img class="back-arrow" src="assets/img/icono-para-atras.png" routerLink="/login"> </ion-img>
+      <ion-img class="logosepro" src="assets/img/logosepro.png"> </ion-img>
+      <div class="line"></div>
     </div>
-    <div class="logosepro">
-      <ion-img style="width: 150px; height: 150px;" src="assets/img/logosepro.png" class="img-logo"></ion-img>
-    </div>
-  </div>
+  </ion-toolbar>
+</ion-header>
 
-  <div class="container">
-    <!--<ion-img src="../../assets/img/app sepro vectores-07.png" style="max-width:100%;"></ion-img>-->
-    <div class="rectangle"></div>
-    <ion-text class="centered">REGISTRO</ion-text>
-  </div>
-
-  <div class="datosinput item-background-color">
-    <form [formGroup]="ionicForm" (ngSubmit)="submitForm()" validate>
-      <ion-list class="datos">
-        <div class="itemdatos">
-          <ion-label>Nombre</ion-label>
-          <ion-item lines="full">
-            <ion-input formControlName="name" type="text"></ion-input>
-          </ion-item>
-          <div *ngIf="ionicForm.get('name').invalid && (ionicForm.get('name').dirty || ionicForm.get('name').touched)" class="error-message">
-            <span class="error ion-padding" *ngIf="ionicForm.get('name').hasError('required')">Ingrese un nombre</span>
-          </div>
-        </div>
-
-        <div class="itemdatos">
-          <ion-label>Apellido</ion-label>
-          <ion-item lines="full">
-            <ion-input formControlName="lastname" type="text"></ion-input>
-          </ion-item>
-          <!--<span class="error ion-padding" *ngIf=" errorControl.lastname.errors?.required">
-            Es necesario al menos un apellido.
-          </span>-->
-          <div *ngIf="ionicForm.get('lastname').invalid && (ionicForm.get('lastname').dirty || ionicForm.get('lastname').touched)" class="error-message">
-            <span class="error ion-padding" *ngIf="ionicForm.get('lastname').hasError('required')">Ingrese un apellido</span>
-          </div>
-        </div>
-
-        <div class="itemdatos">
-          <ion-label>Correo electrónico</ion-label>
-          <ion-item lines="full">
-
-            <ion-input formControlName="email" type="text"></ion-input>
-          </ion-item>
-          <div *ngIf="ionicForm.get('email').invalid && (ionicForm.get('email').dirty || ionicForm.get('email').touched)" class="error-message">
-            <span class="error ion-padding" *ngIf="ionicForm.get('email').hasError('required')">Ingrese un correo electrónico</span>
-            <span class="error ion-padding" *ngIf="ionicForm.get('email').hasError('pattern')">Ingrese un correo eletrónico válido</span>
-          </div>
-        </div>
-
-       <!-- <div class="itemdatos">
-          <ion-item>
-            <ion-label>Género</ion-label>
-            <ion-select formControlName="f2_edudetail" placeholder="Escoja uno">
-              <ion-select-option value="F">Femenino</ion-select-option>
-              <ion-select-option value="M">Masculino</ion-select-option>
-            </ion-select>
-          </ion-item>
-        </div>-->
-
-        <div class="itemdatos">
-          <ion-label>Teléfono móvil</ion-label>
-          <ion-item lines="full">
-
-            <ion-input formControlName="mobile"  type="tel " maxlength="10"></ion-input>
-          </ion-item>
-          <div *ngIf="ionicForm.get('mobile').invalid && (ionicForm.get('mobile').dirty || ionicForm.get('mobile').touched)" class="error-message">
-            <span class="error ion-padding" *ngIf="ionicForm.get('mobile').hasError('required')">Ingrese un numero teléfono</span>
-            <span class="error ion-padding" *ngIf="ionicForm.get('mobile').hasError('pattern')">Ingrese un número de teléfono válido </span>
-          </div>
-
-        </div>
-
+<ion-content>
+  <ion-grid class="main-grid">
+    <ion-row class="bold16 head">Registrar</ion-row>
+    
+      <ion-grid class="info-grid">
         
-        <div class="itemdatos">
-          <ion-label>Cédula de identidad</ion-label>
-          <ion-item lines="full">
-            
-            <ion-input  formControlName="cedula" type="text" maxlength="10" required ></ion-input>
-          </ion-item>
-          <div *ngIf="ionicForm.get('cedula').invalid && (ionicForm.get('cedula').dirty || ionicForm.get('cedula').touched)" class="error-message">
-            <span class="error ion-padding" *ngIf="ionicForm.get('cedula').hasError('required')">Ingrese un numero de cédula</span>
-            <span class="error ion-padding" *ngIf="ionicForm.get('cedula').hasError('pattern')">Ingrese un número de cédula válido </span>
-          </div>
-        </div>
+        <ion-grid class="input-data">
+          <form [formGroup]="ionicForm" (ngSubmit)="submitForm()" validate>
+          <ion-row class="input">
+              <ion-label class="regular12 lbl">Nombre</ion-label>
+              <ion-item lines="full">    
+                <ion-input formControlName="name" type="text" class="light12" required></ion-input>
+              </ion-item>
+              <div *ngIf="ionicForm.get('name').invalid && (ionicForm.get('name').dirty || ionicForm.get('name').touched)" class="error-message">
+                <span class="error ion-padding" *ngIf="ionicForm.get('name').hasError('required')">Ingrese un nombre</span>
+                <span class="error ion-padding" *ngIf="ionicForm.get('name').hasError('pattern')">Ingrese un nombre válido</span>
+              </div>
+          </ion-row>
 
-       <!-- <div class="itemdatos">
-          <ion-label>Fecha de nacimiento</ion-label>
-          <ion-item lines="full">
-            <ion-input formControlName="bday" type="text" placeholder="AAAA-MM-DD"></ion-input>
-          </ion-item>
-          <span class="error ion-padding" *ngIf=" errorControl.bday.errors?.required">
-            Ingrese su fecha de nacimiento
-          </span>
-          <span class="error ion-padding" *ngIf=" errorControl.bday.errors?.pattern">
-            Ingrese una fecha válida
-          </span>
-        </div>-->
-
-        <div class="itemdatos">
-          <ion-label >Contraseña</ion-label>
-          <ion-item lines="full">
-            <div class="eye-wrapper">
-              <button class="btn-eye" type="button" (click)="togglePasswordClick()">
-                <ion-icon [hidden]="showPassword" name="eye-off-outline"></ion-icon>
-                <ion-icon [hidden]="!showPassword" name="eye-outline"></ion-icon>
-              </button>
+          <ion-row class="input">
+            <ion-label class="regular12 lbl">Apellido</ion-label>
+            <ion-item lines="full">    
+              <ion-input formControlName="lastname" type="text" class="light12" required></ion-input>
+            </ion-item>
+            <div *ngIf="ionicForm.get('lastname').invalid && (ionicForm.get('lastname').dirty || ionicForm.get('lastname').touched)" class="error-message">
+              <span class="error ion-padding" *ngIf="ionicForm.get('lastname').hasError('required')">Ingrese un apellido</span>
+              <span class="error ion-padding" *ngIf="ionicForm.get('lastname').hasError('pattern')">Ingrese un apellido válido</span>
             </div>
-            <ion-input type="{{showPassword ? 'text' : 'password'}}" formControlName="password"
-            required> </ion-input>
-            
-          </ion-item>
-          <div *ngIf="ionicForm.get('password').invalid && (ionicForm.get('password').dirty || ionicForm.get('password').touched)" class="error-message">
-            <span class="error ion-padding" *ngIf="ionicForm.get('password').hasError('required')">Ingrese una contraseña</span>
-            <span class="error ion-padding" *ngIf="ionicForm.get('password').hasError('minlength')">La contraseña debe contener mínimo 4 caracteres</span>
-          </div>
-        </div>
+          </ion-row>
+          
+          <ion-row class="input">
+            <ion-label class="regular12 lbl">Cédula de identidad</ion-label>
+            <ion-item lines="full">    
+              <ion-input formControlName="cedula" type="tel" class="light12" maxlength="10" required></ion-input>
+            </ion-item>
+            <div *ngIf="ionicForm.get('cedula').invalid && (ionicForm.get('cedula').dirty || ionicForm.get('cedula').touched)" class="error-message">
+              <span class="error ion-padding" *ngIf="ionicForm.get('cedula').hasError('required')">Ingrese una cédula</span>
+              <span class="error ion-padding" *ngIf="ionicForm.get('cedula').hasError('pattern')">Ingrese una cédula válida </span>
+            </div>
+          </ion-row>
+          
+          <ion-row class="input">
+            <ion-label class="regular12 lbl">Número de celular</ion-label>
+            <ion-item lines="full">    
+              <ion-input formControlName="mobile" type="tel" class="light12" minlength="10" maxlength="10" required inputmode="numeric" ></ion-input>
+            </ion-item>
+            <div *ngIf="ionicForm.get('mobile').invalid && (ionicForm.get('mobile').dirty || ionicForm.get('mobile').touched)" class="error-message">
+              <span class="error ion-padding" *ngIf="ionicForm.get('mobile').hasError('required')">Ingrese un número de teléfono</span>
+              <span class="error ion-padding" *ngIf="ionicForm.get('mobile').hasError('pattern')">Ingrese un teléfono válido </span>
+            </div>
+          </ion-row>
 
-        <ion-row>
-          <div class="botones">
-            <ion-col>
+          <ion-row class="input">
+            <ion-label class="regular12 lbl">Fecha de nacimiento</ion-label>
+            <ion-item lines="full">    
+              <ion-input formControlName="bday" type="text" class="light12" placeholder="AAAA-MM-DD" required></ion-input>
+            </ion-item>
+            <div *ngIf="ionicForm.get('bday').invalid && (ionicForm.get('bday').dirty || ionicForm.get('bday').touched)" class="error-message">
+              <span class="error ion-padding" *ngIf="ionicForm.get('bday').hasError('required')">Ingrese su fecha de nacimiento</span>
+              <span class="error ion-padding" *ngIf="ionicForm.get('bday').hasError('pattern')">Ingrese una fecha válida</span>
+            </div>
+          </ion-row>
 
-              <button ion-button class="guardar">Registrarse</button>
-            </ion-col>
+          <!--<ion-row class="input">
+            <ion-label class="regular12 lbl">Dirección</ion-label>
+            <ion-item lines="full">    
+              <ion-input formControlName="direccion" type="text" class="light12" required></ion-input>
+            </ion-item>
+            <div *ngIf="ionicForm.get('bday').invalid && (ionicForm.get('bday').dirty || ionicForm.get('bday').touched)" class="error-message">
+              <span class="error ion-padding" *ngIf="ionicForm.get('bday').hasError('required')">Ingrese su fecha de nacimiento</span>
+              <span class="error ion-padding" *ngIf="ionicForm.get('bday').hasError('pattern')">Ingrese una fecha válida</span>
+            </div>
+          </ion-row>-->
+
+          <ion-row class="input">
+            <ion-label class="regular12 lbl">Correo eléctronico</ion-label>
+            <ion-item lines="full">
+              <ion-input formControlName="email" type="email" class="light12" required></ion-input>
+            </ion-item>
+            <div *ngIf="ionicForm.get('email').invalid && (ionicForm.get('email').dirty || ionicForm.get('email').touched)" class="error-message">
+              <span class="error ion-padding" *ngIf="ionicForm.get('email').hasError('required')">Ingrese un correo</span>
+              <span class="error ion-padding" *ngIf="ionicForm.get('email').hasError('pattern')">Ingrese un correo válido</span>
+            </div>
+          </ion-row>
+
+          <ion-row class="input">
+            <ion-label class="regular12 lbl">Contraseña</ion-label>
+            <ion-item lines="full">
+              <div class="eye-wrapper">
+                <button class="btn-eye" type="button" (click)="togglePasswordClick()">
+                  <ion-icon [hidden]="showPassword" name="eye-off-outline"></ion-icon>
+                  <ion-icon [hidden]="!showPassword" name="eye-outline"></ion-icon>
+                </button>
+              </div>
+              <ion-input type="{{showPassword ? 'text' : 'password'}}" formControlName="password"
+              required> </ion-input>
+            </ion-item>
+            <div *ngIf="ionicForm.get('password').invalid && (ionicForm.get('password').dirty || ionicForm.get('password').touched)" class="error-message">
+              <span class="error ion-padding" *ngIf="ionicForm.get('password').hasError('required')">Ingrese una contraseña</span>
+              <span class="error ion-padding" *ngIf="ionicForm.get('password').hasError('pattern')">La constraseña debe tener más de 4 caracteres</span>
+            </div>
+          </ion-row>
+          
+          <ion-row class="dat-btng"><button class="green-button"><span class="medium12">Registrarse</span></button></ion-row>
+        </form>
+        <ion-row class="row-terms">
+          <div class="container-terminos">
+              <ion-label class="regular12 terms">Acepto las <span class="medium12">políticas de privacidad</span></ion-label>
+              <ion-checkbox (click)="onClick()" [(ngModel)]="condiciones" color="primary" slot="start" item-right>
+              </ion-checkbox>
           </div>
         </ion-row>
-
-
-      </ion-list>
-    </form>
-    <ion-row>
-      <div class="container-terminos">
-        <ion-item>
-          <ion-label class="terminos">He leído y acepto las <span>políticas de privacidad</span></ion-label>
-          <ion-checkbox (click)="onClick()" [(ngModel)]="condiciones" color="primary" slot="start" item-right>
-          </ion-checkbox>
-        </ion-item>
-      </div>
-    </ion-row>
-  </div>
+        </ion-grid>
+      
+      
+      </ion-grid>
+      <!--<ion-row>
+        <div class="container-terminos">
+          <ion-item>
+            <ion-label class="terminos">He leído y acepto las <span>políticas de privacidad</span></ion-label>
+            <ion-checkbox (click)="onClick()" [(ngModel)]="condiciones" color="primary" slot="start" item-right>
+            </ion-checkbox>
+          </ion-item>
+        </div>
+      </ion-row>-->
+  </ion-grid>
 </ion-content>

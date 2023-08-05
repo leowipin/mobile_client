@@ -29,6 +29,7 @@ export class CarritoPage implements OnInit {
       },
       error: (error) => {
         this.alertController.create({
+          header: 'Carrito',
           message: "Error al cargar el carrito",
           buttons: ['Aceptar']
         }).then(alert=> alert.present())

@@ -131,6 +131,10 @@ const routes: Routes = [
     path: 'chat-especifico',
     loadChildren: () => import('./chat-especifico/chat-especifico.module').then( m => m.ChatEspecificoPageModule)
   },
+  {
+    path: 'politicas',
+    loadChildren: () => import('./politicas/politicas.module').then( m => m.PoliticasPageModule)
+  },
 
 
 

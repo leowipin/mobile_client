@@ -26,6 +26,10 @@ import { Notifications } from "src/app/interfaces/client/notification";
 import { RequestOrderNotification } from "src/app/interfaces/client/requestOrder";
 import { MessageOrderResponse } from "src/app/interfaces/response/messageOrder";
 import { LeaderStaffData } from "src/app/interfaces/client/leaderStaff";
+import { catchError} from 'rxjs/operators';
+import { throwError } from 'rxjs';
+import { AlertController, NavController } from "@ionic/angular";
+
 
 
 
@@ -40,7 +44,7 @@ export class ClienteWAService {
   PAYMENTEZ_DEV_URL:string =  "https://ccapi-stg.paymentez.com/v2/";
   paymentez = environment.paymentez
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private navCtrl: NavController, private alertController: AlertController,) { }
 
   signin(data: SignIn): Observable<SignInResponse>{
     const endpoint:string = this.DJANGO_DOMAIN_NAME+'users/clientSignin/';
@@ -48,7 +52,11 @@ export class ClienteWAService {
       tap(response => {
         localStorage.setItem('token', response.token);
         localStorage.setItem('firebase_token', response.firebase_token);
-        //location.reload();
+        if(data.email == 'invitado@seproamerica.ec'){
+          localStorage.setItem('guest', 'true');
+        } else{
+          localStorage.setItem('guest', 'false');
+        }
       }),
     );
   }
@@ -75,10 +83,24 @@ export class ClienteWAService {
   }
 
   getClientData(token:string): Observable<ClientData>{
-    const endpoint:string = this.DJANGO_DOMAIN_NAME+'users/client/';
-    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
-    return this.http.get<ClientData>(endpoint, { headers: headers })
-  }
+    if(localStorage.getItem('guest')=='true'){
+      localStorage.removeItem('token');
+      localStorage.removeItem('guest');
+      localStorage.removeItem('firebase_token');
+      this.alertController.create({
+        header: 'Registro',
+        message: 'Regístrate para disfrutar de todas las funciones de la aplicación',
+        buttons: ['Aceptar']
+      }).then(alert=> alert.present())
+      this.navCtrl.navigateRoot('/registrar');
+    } else{
+      const endpoint:string = this.DJANGO_DOMAIN_NAME+'users/client/';
+      const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+      return this.http.get<ClientData>(endpoint, { headers: headers })
+    }
+    
+}
+
 
   modifyClientData(token:string, data:ClientData): Observable<MessageResponse>{
     const endpoint:string = this.DJANGO_DOMAIN_NAME+'users/client/';
@@ -117,15 +139,39 @@ export class ClienteWAService {
   }
 
   createOrder(data:OrderData, token:string): Observable<MessageOrderResponse>{
-    const endpoint:string = this.DJANGO_DOMAIN_NAME+'services/orderClient/';
-    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
-    return this.http.post<MessageOrderResponse>(endpoint, data, { headers: headers })
+    if(localStorage.getItem('guest')=='true'){
+      localStorage.removeItem('token');
+      localStorage.removeItem('guest');
+      localStorage.removeItem('firebase_token');
+      this.alertController.create({
+        header: 'Registro',
+        message: 'Regístrate para disfrutar de todas las funciones de la aplicación',
+        buttons: ['Aceptar']
+      }).then(alert=> alert.present())
+      this.navCtrl.navigateRoot('/registrar');
+    } else{
+      const endpoint:string = this.DJANGO_DOMAIN_NAME+'services/orderClient/';
+      const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+      return this.http.post<MessageOrderResponse>(endpoint, data, { headers: headers })
+    }
   }
 
   getCart(token:string): Observable<Cart>{
+    if(localStorage.getItem('guest')=='true'){
+      localStorage.removeItem('token');
+      localStorage.removeItem('guest');
+      localStorage.removeItem('firebase_token');
+      this.alertController.create({
+        header: 'Registro',
+        message: 'Regístrate para disfrutar de todas las funciones de la aplicación',
+        buttons: ['Aceptar']
+      }).then(alert=> alert.present())
+      this.navCtrl.navigateRoot('/registrar');
+    } else{
     const endpoint:string = this.DJANGO_DOMAIN_NAME+'services/orderClientNames/';
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     return this.http.get<Cart>(endpoint, { headers: headers })
+    }
   }
 
   getOrder(token:string, id:string): Observable<OrderData>{
@@ -177,9 +223,22 @@ export class ClienteWAService {
   }
 
   getNotifications(token:string): Observable<Notifications>{
-    const endpoint:string = this.DJANGO_DOMAIN_NAME+`notifications/clientNoti/`;
-    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
-    return this.http.get<Notifications>(endpoint, { headers: headers })
+    if(localStorage.getItem('guest')=='true'){
+      localStorage.removeItem('token');
+      localStorage.removeItem('guest');
+      localStorage.removeItem('firebase_token');
+      this.alertController.create({
+        header: 'Registro',
+        message: 'Regístrate para disfrutar de todas las funciones de la aplicación',
+        buttons: ['Aceptar']
+      }).then(alert=> alert.present())
+      this.navCtrl.navigateRoot('/registrar');
+    } else {
+      const endpoint:string = this.DJANGO_DOMAIN_NAME+`notifications/clientNoti/`;
+      const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+      return this.http.get<Notifications>(endpoint, { headers: headers })
+    }
+    
   }
   
   deleteNotifications(token:string): Observable<Notifications>{
@@ -216,6 +275,12 @@ export class ClienteWAService {
     const endpoint:string = this.DJANGO_DOMAIN_NAME+'messaging/sendMessage/';
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     return this.http.post<MessageResponse>(endpoint, {message:message}, { headers: headers })
+  }
+
+  getPolicy(token:string): Observable<any>{
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+`users/policy/?id=${1}`;
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+    return this.http.get<any>(endpoint, { headers: headers })
   }
 
   /*getSpecificNotification(token:string, id:string): Observable<SpecificNotification>{
@@ -285,11 +350,23 @@ devolver(tarjeta): Observable<any>{
 }
 
 getTarjetas(id: string): Observable<any>{
+  if(localStorage.getItem('guest')=='true'){
+    localStorage.removeItem('token');
+    localStorage.removeItem('guest');
+    localStorage.removeItem('firebase_token');
+    this.alertController.create({
+      header: 'Registro',
+      message: 'Regístrate para disfrutar de todas las funciones de la aplicación',
+      buttons: ['Aceptar']
+    }).then(alert=> alert.present())
+    this.navCtrl.navigateRoot('/registrar');
+  } else{
     const headers = {
         'Content-Type': 'application/json',
         'Auth-Token': this.getAuthToken(this.paymentez.app_code_server, this.paymentez.app_key_server)
     };
     let parametro= new HttpParams().set('uid', id);
     return this.http.get(this.PAYMENTEZ_DEV_URL + 'card/list', { params: parametro, headers: headers });
+  }
 }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument  } from '@angular/fire/compat/firestore';
-import { NavController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { UserDataService } from '../login-registro/userDataService';
 
 @Component({
@@ -15,10 +15,23 @@ export class ChatPage implements OnInit {
   formattedTime:string;
   isToday:boolean;
 
-  constructor(private db: AngularFirestore, private navCtrl: NavController, private userDataService: UserDataService) { }
+  constructor(private db: AngularFirestore, private navCtrl: NavController, private userDataService: UserDataService, private alertController: AlertController) { }
 
   ngOnInit() {
-    this.initChat();
+    if(localStorage.getItem('guest')=='true'){
+      localStorage.removeItem('token');
+      localStorage.removeItem('guest');
+      localStorage.removeItem('firebase_token');
+      this.alertController.create({
+        header: 'Registro',
+        message: 'Regístrate para disfrutar de todas las funciones de la aplicación',
+        buttons: ['Aceptar']
+      }).then(alert=> alert.present())
+      this.navCtrl.navigateRoot('/registrar');
+    }
+    else{
+      this.initChat();
+    }
   }
 
   initChat(){

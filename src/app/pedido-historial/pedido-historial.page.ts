@@ -51,7 +51,7 @@ export class PedidoHistorialPage implements OnInit {
   expiry_month:string;
   photo:string;
 
-  isPaidBtnDisabled:boolean = false;
+  refundDisabled:boolean = false;
   modalElement: ElementRef;
   apiKey = environment.googleMapsApiKey;
 
@@ -266,6 +266,7 @@ refund(){
   }).then(alert => alert.present())
 }
 refundOrder(){
+  this.refundDisabled = true;
   let card: any = {
     transaction:{
       id:this.transaction_id
@@ -309,6 +310,7 @@ refundOrder(){
           buttons: [{
             text: 'Aceptar',
             handler: () => {
+              this.refundDisabled = false;
               this.navCtrl.navigateRoot(['/tabs/historialservicios']);
             }
           }]

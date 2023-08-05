@@ -33,7 +33,7 @@
           <ion-row class="medium12 amount-cont" *ngIf="total === 'pendiente'">Total: <span class="regular12">&nbsp;{{total}}</span></ion-row>
           <ng-container *ngIf="total !== 'pendiente'">
             <ion-row class="medium12 subt">Subtotal: <span class="regular12">&nbsp;{{subtotal}} dólares</span></ion-row>
-            <ion-row class="medium12 dat">IVA: <span class="regular12">&nbsp;{{iva}} dólares</span></ion-row>
+            <ion-row class="medium12 dat">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IVA: <span class="regular12">&nbsp;{{iva}} dólares</span></ion-row>
             <ion-row class="medium12 amount-cont">Total: <span class="regular12">&nbsp;{{total}} dólares</span></ion-row>
           </ng-container>
         </ion-grid>
@@ -56,14 +56,6 @@
           </ng-container>
           <ion-row class="medium12 dat" *ngIf="!requires_origin_and_destination"><button type="button" (click)="verUbicacion()" class="map-btn"><ion-img src="assets/img/mapa.png" class="map-img"></ion-img></button></ion-row>
           <ion-row class="medium12 dat" *ngIf="requires_origin_and_destination"><button type="button" (click)="dibujarRuta()" class="map-btn"><ion-img src="assets/img/mapa.png" class="map-img"></ion-img></button></ion-row>
-        </ion-grid>
-        <ion-grid class="amount-grid" *ngIf="isNotPendiente">
-          <ion-row class="medium12 subline">Datos del empleado líder</ion-row>
-          <ion-row class="medium12 subt">Nombre: <span class="regular12">&nbsp;{{leaderData.first_name}}</span></ion-row>
-          <ion-row class="medium12 dat">Apellido: <span class="regular12">&nbsp;{{leaderData.last_name}}</span></ion-row>
-          <ion-row class="medium12 dat">Correo: <span class="regular12">&nbsp;{{leaderData.email}}</span></ion-row>
-          <ion-row class="medium12 dat">Cédula: <span class="regular12">&nbsp;{{leaderData.dni}}</span></ion-row>
-          <ion-row class="medium12 dat">Teléfono: <span class="regular12">&nbsp;{{leaderData.phone_number}}</span></ion-row>
         </ion-grid>
         <ion-row class="dat-btng" *ngIf="isNotPendiente"><button class="green-button" (click)="goToBillingData()"><span class="medium12">Realizar pago</span></button></ion-row>
         <ion-row class="dat-btnr"><button class="red-button" (click)="deleteOrder()"><span class="medium12">Eliminar</span></button></ion-row>

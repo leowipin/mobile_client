@@ -33,6 +33,7 @@ export class ServiciosEmpresaPage implements OnInit {
       },
       error: (error) => {
         this.alertController.create({
+          header:'Servicios',
           message: "Error al cargar servicios",
           buttons: ['Aceptar']
         }).then(alert=> alert.present())

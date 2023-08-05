@@ -21,7 +21,6 @@ export class ChatEspecificoPage implements OnInit, OnDestroy {
   msg: string;
   dataLoaded: boolean = false;
 
-  firstScroll: boolean = false;
   scroll: boolean = false;
   disable:boolean = false;
 
@@ -43,13 +42,9 @@ export class ChatEspecificoPage implements OnInit, OnDestroy {
   }
 
   ngAfterViewChecked() {
-    if(this.firstScroll){
-      this.content.scrollToBottom(300);
-    }
     if(this.scroll){
       this.content.scrollToBottom(200);
     }
-    this.firstScroll = false;
     this.scroll = true;
   }
 
@@ -113,7 +108,6 @@ export class ChatEspecificoPage implements OnInit, OnDestroy {
     if(this.disable){
       let inputElement = document.querySelector('ion-input') as HTMLIonInputElement;
       let sendButton = document.querySelector('#send-button') as HTMLElement;
-      console.log("asass")
       // agregar un evento de escucha para el evento input en el ion-input
       inputElement.addEventListener('input', (event) => {
         // cambiar el color del botón de envío en función del contenido del ion-input
@@ -171,7 +165,6 @@ export class ChatEspecificoPage implements OnInit, OnDestroy {
           //allMessages = allMessages.slice(-20);
 
           if(!this.dataLoaded){
-            this.firstScroll = true;
             this.messages = allMessages;
             setTimeout(() => {
               this.dataLoaded = true;

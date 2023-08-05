@@ -28,7 +28,7 @@
           <ion-row class="medium12 amount-cont" *ngIf="total === 'pendiente'">Total: <span class="regular12">&nbsp;{{total}}</span></ion-row>
           <ng-container *ngIf="total !== 'pendiente'">
             <ion-row class="medium12 subt">Subtotal: <span class="regular12">&nbsp;{{subtotal}} dólares</span></ion-row>
-            <ion-row class="medium12 dat">IVA: <span class="regular12">&nbsp;{{iva}} dólares</span></ion-row>
+            <ion-row class="medium12 dat">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IVA: <span class="regular12">&nbsp;{{iva}} dólares</span></ion-row>
             <ion-row class="medium12 amount-cont">Total: <span class="regular12">&nbsp;{{total}} dólares</span></ion-row>
           </ng-container>
         </ion-grid>
@@ -61,16 +61,8 @@
           <ion-row class="medium12 dat">Dirección: <span class="regular12">&nbsp;{{address}}</span></ion-row>
           <ion-row class="medium12 dat">Teléfono: <span class="regular12">&nbsp;{{phone_number}}</span></ion-row>
         </ion-grid>
-        <ion-grid class="amount-grid">
-          <ion-row class="medium12 subline">Datos del empleado líder</ion-row>
-          <ion-row class="medium12 subt">Nombre: <span class="regular12">&nbsp;{{leaderData.first_name}}</span></ion-row>
-          <ion-row class="medium12 dat">Apellido: <span class="regular12">&nbsp;{{leaderData.last_name}}</span></ion-row>
-          <ion-row class="medium12 dat">Correo: <span class="regular12">&nbsp;{{leaderData.email}}</span></ion-row>
-          <ion-row class="medium12 dat">Cédula: <span class="regular12">&nbsp;{{leaderData.dni}}</span></ion-row>
-          <ion-row class="medium12 dat">Teléfono: <span class="regular12">&nbsp;{{leaderData.phone_number}}</span></ion-row>
-        </ion-grid>
         <ion-row class="dat-btng"><button class="red-button" (click)="goBackToOrder()"><span class="medium12">Cancelar</span></button></ion-row>
-        <ion-row class="dat-btnr"><button class="green-button" (click)="paid()"><span class="medium12">Pagar</span></button></ion-row>
+        <ion-row class="dat-btnr"><button class="green-button" (click)="paid()" [disabled]="buttonDisabled"><span class="medium12">Pagar</span></button></ion-row>
       </ion-grid>
     </ion-grid>
   </ion-grid>

@@ -94,11 +94,14 @@ export class EditarperfilPage implements OnInit {
         console.log(response)
         },
       error: (error) => {
-        this.alertController.create({
-          header: 'Error al mostrar datos',
-          message: "Hubo un error al obtener los datos",
-          buttons: ['Aceptar']
-        }).then(alert=> alert.present())
+        const guest = localStorage.getItem('guest');
+        if(guest == 'false'){
+          this.alertController.create({
+            header: 'Error al mostrar datos',
+            message: "Hubo un error al obtener los datos",
+            buttons: ['Aceptar']
+          }).then(alert=> alert.present())
+        }
       }
     });
   }

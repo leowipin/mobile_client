@@ -105,6 +105,7 @@ export class AgregarTarjetaPage implements OnInit {
       } else if (response.card.status === 'rejected') {
         responseElement.innerHTML = 'Hubo un error, tarjeta no agregada';
         responseElement.style.color = '#b01902';
+        console.log("rejected")
       } else if (response.card.status === 'review') {
         responseElement.innerHTML = 'En revisión, tarjeta no agregada';
         responseElement.style.color = '#b01902';

@@ -16,18 +16,22 @@ export class NotificacionesPage implements OnInit {
   id:number;
   notifications:any;
   notification:any;
-  token:string;
 
+  ionViewWillEnter(){
+    
+  }
+  
   ngOnInit() {
-    this.token = localStorage.getItem('token');
+    this.getNotifications();
     this.route.queryParams.subscribe(params => {
       this.id = parseInt(params['id']);
   });
-  this.getNotifications();
+  
   }
 
   getNotifications(){
-    this.clienteWAService.getNotifications(this.token).subscribe({
+    const token = localStorage.getItem('token');
+    this.clienteWAService.getNotifications(token).subscribe({
       next: (response) => {
         this.notifications = response
         if(this.id != undefined){
@@ -69,7 +73,8 @@ export class NotificacionesPage implements OnInit {
   }
   
   deleteNotifications() {
-    this.clienteWAService.deleteNotifications(this.token).subscribe({
+    const token = localStorage.getItem('token');
+    this.clienteWAService.deleteNotifications(token).subscribe({
       next: async (response) => {
         const alert = await this.alertController.create({
           header: 'Eliminar notificaciones',

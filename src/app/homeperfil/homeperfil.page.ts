@@ -25,6 +25,9 @@ export class HomeperfilPage implements OnInit {
     this.userDataService.apellidour$.subscribe(apellidour => {
       this.apellidour = apellidour;
     });
+    this.userDataService.photo$.subscribe(photo => {
+      this.photo = photo;
+    });
     
   }
   perfil(){
@@ -38,15 +41,22 @@ export class HomeperfilPage implements OnInit {
     this.navCtrl.navigateRoot(['/tabs/notificaciones']);
   }
 
+  goToPolicy(){
+    this.navCtrl.navigateRoot(['/tabs/perfil/politicas']);
+  }
+
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
+    /*this.route.queryParams.subscribe(params => {
       if(params['photo']=="assets/img/backcliente.png"){
         this.photo = "assets/img/backcliente.png"
       } else{
         console.log("ELSE")
         this.photo = params['photo'];
+        if(params['photo']==undefined){
+          
+        }
       }
-    });
+    });*/
   }
 
   async presentAlertConfirm() {

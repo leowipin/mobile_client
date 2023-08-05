@@ -75,7 +75,6 @@ export class LoginPage implements OnInit {
   
   redirigirServicios() {
     this.navCtrl.navigateRoot('/tabs/inicio');
-    this.ionicForm.reset();
   }
   
   togglePasswordClick() {
@@ -83,6 +82,27 @@ export class LoginPage implements OnInit {
   }
 
 
+  guestSignIn(){
+    const data: SignIn = {
+      email: 'invitado@seproamerica.ec',
+      password: 'invitado',
+    }
+    this.clienteWAService.signin(data).subscribe({
+      next: (response) => {
+        this.photo = 'assets/img/backcliente.png';
+        this.userDataService.updatePhoto(this.photo);
+        this.redirigirServicios()
+        this.userDataService.updateNombreur('Invitado');
+        },
+      error: (error) => {
+        this.alertController.create({
+          message: "Error al ingresar como invitado",
+          buttons: ['Aceptar']
+        }).then(alert=> alert.present())
+      }
+    });
+
+  }
 
   signIn(): void{
     const data: SignIn = {
