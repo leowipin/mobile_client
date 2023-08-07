@@ -1,12 +1,12 @@
-import { Component, Inject, Injector } from '@angular/core';
+import { AfterViewInit, Component, Inject, Injector } from '@angular/core';
 import { AlertController, ModalController, NavController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner/ngx'
 import { ClienteWAService } from './login-registro/login-registro.service';
 import { UserDataService } from './login-registro/userDataService';
 import { FCM } from '@capacitor-community/fcm';
 import { AngularFirestore, AngularFirestoreDocument  } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 
 import {
   ActionPerformed,
@@ -25,7 +25,7 @@ let listenerAdded = false;
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
   recibido: any;
   nombreur: any;
   apellidour: any;
@@ -34,7 +34,7 @@ export class AppComponent {
   uid:any;
   photo:string;
 
-  constructor(private route: ActivatedRoute, private navCtrl: NavController, private barcodeScanner: BarcodeScanner, 
+  constructor(private route: ActivatedRoute, private navCtrl: NavController, 
     private clienteWAService: ClienteWAService, private userDataService: UserDataService, private db: AngularFirestore, 
     private notificationsService: NotificationsService, private alertController: AlertController, private modalService: NgbModal,
     private injector: Injector, private storage: AngularFireStorage) {
@@ -53,6 +53,10 @@ export class AppComponent {
    }
 
   myDate: String = new Date().toISOString();
+
+  ngAfterViewInit(){
+    //BarcodeScanner.prepare();
+  }
 
   listenForNotifications() { //notificaciones in app SOLO PARA 
     const token = localStorage.getItem('token');
@@ -246,17 +250,6 @@ export class AppComponent {
     const base64 = base64Url.replace('-', '+').replace('_', '/');
     const payload = JSON.parse(atob(base64));
     this.uid = payload.user_id.toString()
-  }
-
-// Idealmente con el QR Generado por el BackEnd 
-// Se redirecciona a la ventana de calificación
-
-  startScan() {
-    this.barcodeScanner.scan().then(barcodeData => {
-      console.log('Barcode data', barcodeData);
-    }).catch(err => {
-      console.log('Error', err);
-    });
   }
 
   signOut() {

@@ -135,6 +135,10 @@ const routes: Routes = [
     path: 'politicas',
     loadChildren: () => import('./politicas/politicas.module').then( m => m.PoliticasPageModule)
   },
+  {
+    path: 'scanner',
+    loadChildren: () => import('./scanner/scanner.module').then( m => m.ScannerPageModule)
+  },
 
 
 

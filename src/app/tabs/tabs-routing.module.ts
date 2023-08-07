@@ -43,6 +43,10 @@ const routes: Routes = [
         loadChildren: () => import('../chat/chat.module').then( m => m.ChatPageModule)
       },
       {
+        path: 'scanner',
+        loadChildren: () => import('../scanner/scanner.module').then( m => m.ScannerPageModule)
+      },
+      {
         path: '',
         redirectTo: 'inicio',
         pathMatch: 'full',
