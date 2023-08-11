@@ -16,7 +16,7 @@
           <div class="field">
             <div class="align-text light-italic12">C O R R E O</div>
             <ion-item class="credentials">
-              <ion-input  class="input-text medium12" formControlName="email" type="email"></ion-input>
+              <ion-input  class="input-text openMedium15" formControlName="email" type="email"></ion-input>
             </ion-item>
             <div *ngIf="ionicForm.get('email').invalid && (ionicForm.get('email').dirty || ionicForm.get('email').touched)" class="error-message">
               <span class="error ion-padding regular12" *ngIf="ionicForm.get('email').hasError('required')">Ingrese un correo electrónico</span>
@@ -32,7 +32,7 @@
                   <ion-icon [hidden]="!showPassword" name="eye-outline"></ion-icon>
                 </button>
               </div>
-              <ion-input class="input-text medium12" type="{{showPassword ? 'text' : 'password'}}" formControlName="password"
+              <ion-input class="input-text openMedium15" type="{{showPassword ? 'text' : 'password'}}" formControlName="password"
               required> </ion-input>
             </ion-item>
             
@@ -51,7 +51,7 @@
     <div id="opciones" class="text-white text-center">
       <br>
       <a (click)="redirigirRegistrar()" class="medium-italic12">Crear cuenta</a><br><br>
-      <a (click)="presentModal()" class="medium-italic12">Olvidé de mi contraseña</a>
+      <a (click)="recoveryPassword()" class="medium-italic12">Olvidé de mi contraseña</a>
 
       <div class="container-omitir">
         <a (click)="guestSignIn()" class="medium-italic12">Omitir Registro</a>

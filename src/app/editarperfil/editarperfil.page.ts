@@ -424,11 +424,12 @@ export class EditarperfilPage implements OnInit {
   }
 
   async changePasswordModal() {
-    const modal = await this.modalController.create({
+    this.navCtrl.navigateForward("/tabs/perfil/editarperfil/cambiar-password")
+    /*const modal = await this.modalController.create({
       component: MyPasswordModalComponent,
       componentProps: { value: 123 }
     });
-    return await modal.present();
+    return await modal.present();*/
   }
 
   async deleteAccountModal() {

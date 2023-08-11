@@ -25,14 +25,14 @@
         </ion-row>
         <ion-row *ngIf="message.remitente === 'cliente'" class="my-message">
           <div class="card" style="background-color: rgb(202, 252, 199);">
-            <ion-label class="light12">{{ message.contenido }}</ion-label>
-            <ion-label class="light12 time">{{ message.hora_envio }}</ion-label>
+            <ion-label class="openMedium15">{{ message.contenido }}</ion-label>
+            <ion-label class="openMedium15 time">{{ message.hora_envio }}</ion-label>
           </div>
         </ion-row>
         <ion-row *ngIf="message.remitente !== 'cliente'" class="other-message">
           <div class="card">
-            <ion-label class="light12">{{ message.contenido }}</ion-label>
-            <ion-label class="light12 time">{{ message.hora_envio }}</ion-label>
+            <ion-label class="openMedium15">{{ message.contenido }}</ion-label>
+            <ion-label class="openMedium15 time">{{ message.hora_envio }}</ion-label>
           </div>
         </ion-row>
       </ng-container>

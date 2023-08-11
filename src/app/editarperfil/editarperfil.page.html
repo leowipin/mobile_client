@@ -28,7 +28,7 @@
           <ion-row class="input">
               <ion-label class="regular12 lbl">Nombre</ion-label>
               <ion-item lines="full">    
-                <ion-input formControlName="name" type="text" class="light12" required></ion-input>
+                <ion-input formControlName="name" type="text" class="openMedium15" required></ion-input>
               </ion-item>
               <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.required">
                 Es necesario al menos un nombre.
@@ -43,7 +43,7 @@
           <ion-row class="input">
             <ion-label class="regular12 lbl">Apellido</ion-label>
             <ion-item lines="full">    
-              <ion-input formControlName="lastname" type="text" class="light12" required></ion-input>
+              <ion-input formControlName="lastname" type="text" class="openMedium15" required></ion-input>
             </ion-item>
             <span class="error ion-padding" *ngIf="isSubmitted && errorControl.lastname.errors?.required">
               Es necesario al menos un apellido.
@@ -58,7 +58,7 @@
           <ion-row class="input">
             <ion-label class="regular12 lbl">Cédula de identidad</ion-label>
             <ion-item lines="full">    
-              <ion-input formControlName="cedula" type="tel" class="light12" maxlength="10" required></ion-input>
+              <ion-input formControlName="cedula" type="tel" class="openMedium15" maxlength="10" required></ion-input>
             </ion-item>
             <span class="error ion-padding" *ngIf="isSubmitted && errorControl.cedula.errors?.required">
               Es necesario ingresar su cédula de identidad.
@@ -70,7 +70,7 @@
           <ion-row class="input">
             <ion-label class="regular12 lbl">Número de celular</ion-label>
             <ion-item lines="full">    
-              <ion-input formControlName="mobile" type="tel" class="light12" minlength="10" maxlength="10" required inputmode="numeric" ></ion-input>
+              <ion-input formControlName="mobile" type="tel" class="openMedium15" minlength="10" maxlength="10" required inputmode="numeric" ></ion-input>
             </ion-item>
             <span class="error ion-padding" *ngIf="isSubmitted && errorControl.mobile.errors?.required">
               Es necesario un número de celular.
@@ -82,7 +82,7 @@
           <ion-row class="input" *ngIf="isProfileInformation">
             <ion-label class="regular12 lbl">Fecha de nacimiento</ion-label>
             <ion-item lines="full">    
-              <ion-input formControlName="bday" type="text" class="light12" placeholder="AAAA-MM-DD" required></ion-input>
+              <ion-input formControlName="bday" type="text" class="openMedium15" placeholder="AAAA-MM-DD" required></ion-input>
             </ion-item>
             <span class="error ion-padding" *ngIf="isSubmitted && errorControl.bday.errors?.required">
               Ingrese su fecha de nacimiento
@@ -94,7 +94,7 @@
           <ion-row class="input">
             <ion-label class="regular12 lbl">Dirección</ion-label>
             <ion-item lines="full">    
-              <ion-input formControlName="direccion" type="text" class="light12" required></ion-input>
+              <ion-input formControlName="direccion" type="text" class="openMedium15" required></ion-input>
             </ion-item>
             <span class="error ion-padding" *ngIf="isSubmitted && errorControl.direccion.errors?.required">
               Es necesario que indique su dirección.
@@ -106,10 +106,10 @@
           <ion-row class="input" *ngIf="isProfileInformation">
             <ion-label class="regular12 lbl">Género</ion-label>
             <ion-item lines="full">
-              <ion-select formControlName="gender" class="light12">
-                <ion-select-option value="masculino" class="light12">masculino</ion-select-option>
-                <ion-select-option value="femenino" class="light12">femenino</ion-select-option>
-                <ion-select-option value="indefinido" class="light12">indefinido</ion-select-option>
+              <ion-select formControlName="gender" class="openMedium15">
+                <ion-select-option value="masculino" class="openMedium15">masculino</ion-select-option>
+                <ion-select-option value="femenino" class="openMedium15">femenino</ion-select-option>
+                <ion-select-option value="indefinido" class="openMedium15">indefinido</ion-select-option>
               </ion-select>
             </ion-item>
             <span class="error ion-padding" *ngIf="isSubmitted && errorControl.gender.errors?.required">
@@ -121,7 +121,7 @@
             <ion-label class="regular12 lbl">Correo eléctronico</ion-label>
             <div class="email-input">
               <ion-item lines="full">
-                <div class="light12">{{email}}</div>
+                <div class="openMedium15">{{email}}</div>
               </ion-item>
             </div>
           </ion-row>
@@ -129,7 +129,7 @@
           <ion-row class="input" *ngIf="!isProfileInformation">
             <ion-label class="regular12 lbl">Correo eléctronico</ion-label>
             <ion-item lines="full">
-              <ion-input formControlName="email" type="email" class="light12" required></ion-input>
+              <ion-input formControlName="email" type="email" class="openMedium15" required></ion-input>
             </ion-item>
             <span class="error ion-padding" *ngIf="isSubmitted && errorControl.email.errors?.required">
               Es necesario ingresar un correo válido.
@@ -139,10 +139,10 @@
             </span>
           </ion-row>
 
-          <ion-row class="dat-btnw"><button class="white-button" *ngIf="isProfileInformation" (click)="changeEmailModal()"><span class="medium12">Cambiar correo electrónico</span></button></ion-row>
+          <!--<ion-row class="dat-btnw"><button class="white-button" *ngIf="isProfileInformation" (click)="changeEmailModal()"><span class="medium12">Cambiar correo electrónico</span></button></ion-row>-->
           <ion-row class="dat-btnw"><button class="white-button" *ngIf="isProfileInformation" (click)="changePasswordModal()"><span class="medium12">Cambiar contraseña</span></button></ion-row>
           <ion-row class="dat-btng"><button class="green-button" *ngIf="isProfileInformation" (click)="submitForm('guardar')"><span class="medium12">Guardar</span></button></ion-row>
-          <ion-row class="dat-btnr"><button class="red-button" *ngIf="isProfileInformation" (click)="deleteAccountModal()" disabled><span class="medium12">Eliminar cuenta</span></button></ion-row>
+          <!--<ion-row class="dat-btnr"><button class="red-button" *ngIf="isProfileInformation" (click)="deleteAccountModal()" disabled><span class="medium12">Eliminar cuenta</span></button></ion-row>-->
           <ion-row class="dat-btnr"><button class="green-button" *ngIf="!isProfileInformation" (click)="submitForm('continuar')"><span class="medium12">Continuar</span></button></ion-row>
         </ion-grid>
       </ion-grid>

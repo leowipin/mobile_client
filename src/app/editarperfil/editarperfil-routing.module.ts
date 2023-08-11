@@ -12,7 +12,11 @@ const routes: Routes = [
     path: 'tarjetas',
     loadChildren: () =>
       import('../metododepago/metododepago.module').then((m) => m.MetododepagoPageModule),
-  }
+  },
+  {
+    path: 'cambiar-password',
+    loadChildren: () => import('../cambiar-password/cambiar-password.module').then( m => m.CambiarPasswordPageModule)
+  },
 ];
 
 @NgModule({

@@ -44,6 +44,37 @@
   src: url('/assets/fonts/LEMONMILK-Light.otf');
 }
 
+@font-face {
+  font-family: 'OpenSansBold';
+  src: url('/assets/fonts/OpenSans-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'OpenSansItalic';
+  src: url('/assets/fonts/OpenSans-Italic.ttf');
+}
+
+@font-face {
+  font-family: 'OpenSansLight';
+  src: url('/assets/fonts/OpenSans-Light.ttf');
+}
+
+@font-face {
+  font-family: 'OpenSansMedium';
+  src: url('/assets/fonts/OpenSans-Medium.ttf');
+}
+
+@font-face {
+  font-family: 'OpenSansRegular';
+  src: url('/assets/fonts/OpenSans-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'OpenSansSemiBold';
+  src: url('/assets/fonts/OpenSans-SemiBold.ttf');
+}
+
+
 :root {
   /** primary **/
   --ion-color-primary: #3880ff;

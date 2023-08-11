@@ -19,7 +19,7 @@
           <ion-row class="input">
               <ion-label class="regular12 lbl">Nombre</ion-label>
               <ion-item lines="full">    
-                <ion-input formControlName="name" type="text" class="light12" required></ion-input>
+                <ion-input formControlName="name" type="text" class="openMedium15" required></ion-input>
               </ion-item>
               <div *ngIf="ionicForm.get('name').invalid && (ionicForm.get('name').dirty || ionicForm.get('name').touched)" class="error-message">
                 <span class="error ion-padding" *ngIf="ionicForm.get('name').hasError('required')">Ingrese un nombre</span>
@@ -30,7 +30,7 @@
           <ion-row class="input">
             <ion-label class="regular12 lbl">Apellido</ion-label>
             <ion-item lines="full">    
-              <ion-input formControlName="lastname" type="text" class="light12" required></ion-input>
+              <ion-input formControlName="lastname" type="text" class="openMedium15" required></ion-input>
             </ion-item>
             <div *ngIf="ionicForm.get('lastname').invalid && (ionicForm.get('lastname').dirty || ionicForm.get('lastname').touched)" class="error-message">
               <span class="error ion-padding" *ngIf="ionicForm.get('lastname').hasError('required')">Ingrese un apellido</span>
@@ -41,7 +41,7 @@
           <ion-row class="input">
             <ion-label class="regular12 lbl">Cédula de identidad</ion-label>
             <ion-item lines="full">    
-              <ion-input formControlName="cedula" type="tel" class="light12" maxlength="10" required></ion-input>
+              <ion-input formControlName="cedula" type="tel" class="openMedium15" maxlength="10" required></ion-input>
             </ion-item>
             <div *ngIf="ionicForm.get('cedula').invalid && (ionicForm.get('cedula').dirty || ionicForm.get('cedula').touched)" class="error-message">
               <span class="error ion-padding" *ngIf="ionicForm.get('cedula').hasError('required')">Ingrese una cédula</span>
@@ -52,7 +52,7 @@
           <ion-row class="input">
             <ion-label class="regular12 lbl">Número de celular</ion-label>
             <ion-item lines="full">    
-              <ion-input formControlName="mobile" type="tel" class="light12" minlength="10" maxlength="10" required inputmode="numeric" ></ion-input>
+              <ion-input formControlName="mobile" type="tel" class="openMedium15" minlength="10" maxlength="10" required inputmode="numeric" ></ion-input>
             </ion-item>
             <div *ngIf="ionicForm.get('mobile').invalid && (ionicForm.get('mobile').dirty || ionicForm.get('mobile').touched)" class="error-message">
               <span class="error ion-padding" *ngIf="ionicForm.get('mobile').hasError('required')">Ingrese un número de teléfono</span>
@@ -63,7 +63,7 @@
           <ion-row class="input">
             <ion-label class="regular12 lbl">Fecha de nacimiento</ion-label>
             <ion-item lines="full">    
-              <ion-input formControlName="bday" type="text" class="light12" placeholder="AAAA-MM-DD" required></ion-input>
+              <ion-input formControlName="bday" type="text" class="openMedium15" placeholder="AAAA-MM-DD" required></ion-input>
             </ion-item>
             <div *ngIf="ionicForm.get('bday').invalid && (ionicForm.get('bday').dirty || ionicForm.get('bday').touched)" class="error-message">
               <span class="error ion-padding" *ngIf="ionicForm.get('bday').hasError('required')">Ingrese su fecha de nacimiento</span>
@@ -85,7 +85,7 @@
           <ion-row class="input">
             <ion-label class="regular12 lbl">Correo eléctronico</ion-label>
             <ion-item lines="full">
-              <ion-input formControlName="email" type="email" class="light12" required></ion-input>
+              <ion-input formControlName="email" type="email" class="openMedium15" required></ion-input>
             </ion-item>
             <div *ngIf="ionicForm.get('email').invalid && (ionicForm.get('email').dirty || ionicForm.get('email').touched)" class="error-message">
               <span class="error ion-padding" *ngIf="ionicForm.get('email').hasError('required')">Ingrese un correo</span>
@@ -102,7 +102,7 @@
                   <ion-icon [hidden]="!showPassword" name="eye-outline"></ion-icon>
                 </button>
               </div>
-              <ion-input type="{{showPassword ? 'text' : 'password'}}" formControlName="password"
+              <ion-input class="openMedium15" type="{{showPassword ? 'text' : 'password'}}" formControlName="password"
               required> </ion-input>
             </ion-item>
             <div *ngIf="ionicForm.get('password').invalid && (ionicForm.get('password').dirty || ionicForm.get('password').touched)" class="error-message">

@@ -119,7 +119,7 @@ export class AppComponent implements AfterViewInit {
     if (token) {
       this.navCtrl.navigateRoot('tabs');
     } else{
-      this.navCtrl.navigateRoot('login')
+      this.navCtrl.navigateRoot('/login')
     }
     // Actualizar detalles del usuario en el menú de hamburguesas
     this.initPushNotifications();
@@ -257,6 +257,23 @@ export class AppComponent implements AfterViewInit {
     localStorage.removeItem('guest');
     localStorage.removeItem('firebase_token');
     location.reload();
+  }
+
+  openQr(){
+    console.log(localStorage.getItem('guest'))
+    if(localStorage.getItem('guest') == 'true'){
+      localStorage.removeItem('token');
+      localStorage.removeItem('guest');
+      localStorage.removeItem('firebase_token');
+      this.alertController.create({
+        header: 'Registro',
+        message: 'Regístrate para disfrutar de todas las funciones de la aplicación',
+        buttons: ['Aceptar']
+      }).then(alert=> alert.present())
+      this.navCtrl.navigateRoot('/registrar');
+    } else{
+      this.navCtrl.navigateRoot(['/tabs/scanner'])
+    }
   }
 
 
