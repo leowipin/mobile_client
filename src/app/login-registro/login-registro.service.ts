@@ -283,6 +283,12 @@ export class ClienteWAService {
     return this.http.get<any>(endpoint, { headers: headers })
   }
 
+  getInfo(token:string): Observable<any>{
+    const endpoint:string = this.DJANGO_DOMAIN_NAME+`users/company/?id=${1}`;
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+    return this.http.get<any>(endpoint, { headers: headers })
+  }
+
   /*getSpecificNotification(token:string, id:string): Observable<SpecificNotification>{
     const endpoint:string = this.DJANGO_DOMAIN_NAME+`notifications/getSpecificClientNoti/?id=${id}`;
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);

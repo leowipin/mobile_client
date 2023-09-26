@@ -28,4 +28,8 @@ export class PoliticasPage implements OnInit {
       }
     });
   }
+
+  backToProfile(){
+    this.navCtrl.navigateBack("/tabs/perfil")
+  }
 }

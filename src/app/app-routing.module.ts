@@ -63,19 +63,13 @@ const routes: Routes = [
     path: 'registrar',
     loadChildren: () => import('./registrar/registrar.module').then( m => m.RegistrarPageModule)
   },
-  {
-    path: 'sucursales',
-    loadChildren: () => import('./sucursales/sucursales.module').then( m => m.SucursalesPageModule)
-  },
+
   {
     path: 'item1-modal',
     loadChildren: () => import('./item1-modal/item1-modal.module').then( m => m.Item1ModalPageModule)
     
   },
-  {
-    path: 'sucursal',
-    loadChildren: () => import('./sucursal/sucursal.module').then( m => m.SucursalPageModule)
-  },
+
   {
     path: 'calificar-servicio',
     loadChildren: () => import('./calificar-servicio/calificar-servicio.module').then( m => m.CalificarServicioPageModule)
@@ -111,7 +105,8 @@ const routes: Routes = [
   {
     path: 'tabs',
     loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule)
-  },  {
+  },
+  {
     path: 'pedido-detalle',
     loadChildren: () => import('./pedido-detalle/pedido-detalle.module').then( m => m.PedidoDetallePageModule)
   },
@@ -147,6 +142,7 @@ const routes: Routes = [
     path: 'cambiar-password',
     loadChildren: () => import('./cambiar-password/cambiar-password.module').then( m => m.CambiarPasswordPageModule)
   },
+  
 
 
 

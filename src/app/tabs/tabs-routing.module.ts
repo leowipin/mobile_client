@@ -47,6 +47,10 @@ const routes: Routes = [
         loadChildren: () => import('../scanner/scanner.module').then( m => m.ScannerPageModule)
       },
       {
+        path: 'contactanos',
+        loadChildren: () => import('../contactanos/contactanos.module').then( m => m.ContactanosPageModule)
+      },
+      {
         path: '',
         redirectTo: 'inicio',
         pathMatch: 'full',

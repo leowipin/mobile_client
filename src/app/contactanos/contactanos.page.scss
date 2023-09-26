@@ -1,0 +1,55 @@
+ion-row.head{
+    margin-top: 3%;
+    margin-bottom: 4%;
+    align-items: center;
+}
+
+ion-row, .ad, .landline {
+    display: flex;
+    flex-direction: column;
+    //align-items: center;
+    justify-content: center;
+}
+
+ion-grid.input-data {
+    width: 85%;
+    margin-bottom: 2%;
+    background-color: white;
+    border: 0.1px solid rgb(189, 189, 189);
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+  }
+
+ion-row.data{
+    margin-bottom: 7px;
+}
+
+.numbers, .addr, .email, .web-page{
+    display: flex;
+}
+
+.icon {
+    margin-right: 10px;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+.icon ion-img{
+    width: 25px;
+}
+
+.landline{
+    margin-right: 25px;
+}
+
+.map{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 5px;
+    width: 85%;
+    height: 300px;
+    margin-left: 7.5%;
+    align-items: center;
+}
