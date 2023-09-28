@@ -1,0 +1,51 @@
+ion-row.header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+ion-grid.enter-password{
+    background-color: white;
+    border: 0.1px solid rgb(189, 189, 189);
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+    padding: 6% 6%;
+}
+
+ion-row.content-pass{
+    margin-top: 2%;
+    color: rgb(161, 161, 161);
+}
+
+ion-row.input{
+    position: relative;
+    margin-top: 4%;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-e{
+    height: 35px;
+    background-color: rgb(231, 231, 231);
+}
+
+.eye-ic{
+    font-size: 25px;
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    color: rgb(155, 155, 155);
+    z-index: 100;
+}
+
+.error-message{
+    color: rgb(172, 0, 0);
+}
+
+ion-row.btn{
+    margin-top: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -433,11 +433,7 @@ export class EditarperfilPage implements OnInit {
   }
 
   async deleteAccountModal() {
-    const modal = await this.modalController.create({
-      component: MyDeleteModalComponent,
-      componentProps: { value: 123 }
-    });
-    return await modal.present();
+    this.navCtrl.navigateForward("/tabs/perfil/editarperfil/eliminar-cuenta")
   }
 
 }

@@ -1,0 +1,34 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <div class="header">
+      <ion-img class="back-arrow" src="assets/img/icono-para-atras.png" routerLink="/tabs/perfil/editarperfil"></ion-img>
+      <ion-img class="logosepro" src="assets/img/logosepro.png"> </ion-img>
+      <div class="line"></div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="main-grid">
+    <ion-row class="header bold16"> Eliminar cuenta</ion-row>
+    <ion-grid class="enter-password">
+      <ion-row class="medium12">Ingresa tu contraseña</ion-row>
+      <ion-row class="content-pass openMedium13">
+        Al presionar el botón de eliminar, se procederá a la eliminación de tu cuenta. Por favor, ten en cuenta que 
+        esta acción no se puede deshacer
+      </ion-row>
+      <form [formGroup]="deleteAccountForm" (ngSubmit)="submitForm()">
+        <ion-row class="input">
+            <ion-input  type="{{showPassword ? 'text' : 'password'}}" formControlName="password" minlength="4" class="input-e openMedium15" placeholder="Contraseña actual">
+            </ion-input>
+            <ion-icon [name]="showPassword ? 'eye-outline' : 'eye-off-outline'" (click)="togglePassword()" class="eye-ic"></ion-icon>
+            <div *ngIf="deleteAccountForm.get('password').invalid && (deleteAccountForm.get('password').dirty || deleteAccountForm.get('password').touched)" class="error-message">
+              <div *ngIf="deleteAccountForm.get('password').hasError('required')" class="openItalic10">Ingrese una contraseña</div>
+              <div *ngIf="deleteAccountForm.get('password').hasError('minlength')" class="openItalic10">La contraseña debe contener mínimo 4 caracteres</div>
+            </div>
+        </ion-row>
+        <ion-row class="btn"> <button class="red-button" type="submit" [disabled]="!deleteAccountForm.valid"><span class="medium12">Eliminar</span></button> </ion-row>
+    </form>
+    </ion-grid>
+  </ion-grid>
+</ion-content>

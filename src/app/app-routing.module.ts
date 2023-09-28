@@ -141,7 +141,11 @@ const routes: Routes = [
   {
     path: 'cambiar-password',
     loadChildren: () => import('./cambiar-password/cambiar-password.module').then( m => m.CambiarPasswordPageModule)
+  },  {
+    path: 'eliminar-cuenta',
+    loadChildren: () => import('./eliminar-cuenta/eliminar-cuenta.module').then( m => m.EliminarCuentaPageModule)
   },
+
   
 
 

@@ -142,7 +142,7 @@
           <!--<ion-row class="dat-btnw"><button class="white-button" *ngIf="isProfileInformation" (click)="changeEmailModal()"><span class="medium12">Cambiar correo electrónico</span></button></ion-row>-->
           <ion-row class="dat-btnw"><button class="white-button" *ngIf="isProfileInformation" (click)="changePasswordModal()"><span class="medium12">Cambiar contraseña</span></button></ion-row>
           <ion-row class="dat-btng"><button class="green-button" *ngIf="isProfileInformation" (click)="submitForm('guardar')"><span class="medium12">Guardar</span></button></ion-row>
-          <!--<ion-row class="dat-btnr"><button class="red-button" *ngIf="isProfileInformation" (click)="deleteAccountModal()" disabled><span class="medium12">Eliminar cuenta</span></button></ion-row>-->
+          <ion-row class="dat-btnr"><button class="red-button" *ngIf="isProfileInformation" (click)="deleteAccountModal()"><span class="medium12">Eliminar cuenta</span></button></ion-row>
           <ion-row class="dat-btnr"><button class="green-button" *ngIf="!isProfileInformation" (click)="submitForm('continuar')"><span class="medium12">Continuar</span></button></ion-row>
         </ion-grid>
       </ion-grid>
